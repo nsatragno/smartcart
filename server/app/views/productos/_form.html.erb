@@ -1,7 +1,7 @@
 <%= form_with(model: producto, local: true) do |form| %>
   <% if producto.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(producto.errors.count, "error") %> prohibited this producto from being saved:</h2>
+      <h2>No se pudo guardar el producto</h2>
 
       <ul>
       <% producto.errors.full_messages.each do |message| %>
@@ -11,22 +11,33 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :nombre %>
-    <%= form.text_field :nombre %>
+    <%= form.text_field :nombre, class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :precio %>
-    <%= form.text_field :precio %>
+    <div class="input-group">
+      <div class="input-group-addon">$</div>
+      <%= form.number_field :precio, class: "form-control" %>
+    </div>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :imagen %>
-    <%= form.text_field :imagen %>
+    <%= form.file_field :imagen %>
   </div>
-
-  <div class="actions">
-    <%= form.submit %>
+  <div class="row m-t-md">
+    <div class="col-md-2 col-md-offset-4">
+      <%= link_to productos_path, class: "btn btn-warning btn-block" do %>
+        <i class="fa fa-arrow-left"></i> Volver
+      <% end %>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary btn-block" type="submit">
+        <i class="fa fa-save"></i> Guardar
+      </button>
+    </div>
   </div>
 <% end %>

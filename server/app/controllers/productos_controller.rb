@@ -7,7 +7,6 @@ class ProductosController < ApplicationController
     @productos = Producto.all
   end
 
-  # GET /productos/1
   # GET /productos/1.json
   def show
   end
@@ -28,7 +27,8 @@ class ProductosController < ApplicationController
 
     respond_to do |format|
       if @producto.save
-        format.html { redirect_to @producto, notice: 'Producto was successfully created.' }
+        flash[:success] = 'Producto creado con éxito'
+        format.html { redirect_to action: "index" }
         format.json { render :show, status: :created, location: @producto }
       else
         format.html { render :new }
@@ -42,8 +42,9 @@ class ProductosController < ApplicationController
   def update
     respond_to do |format|
       if @producto.update(producto_params)
-        format.html { redirect_to @producto, notice: 'Producto was successfully updated.' }
-        format.json { render :show, status: :ok, location: @producto }
+        flash[:success] = 'Producto actualizado con éxito'
+        format.html { redirect_to action: "index" }
+        format.json { render :show, status: :created, location: @producto }
       else
         format.html { render :edit }
         format.json { render json: @producto.errors, status: :unprocessable_entity }

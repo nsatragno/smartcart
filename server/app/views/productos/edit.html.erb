@@ -1,6 +1,14 @@
-<h1>Editing Producto</h1>
+<% content_for :title do %>Productos<% end %>
 
-<%= render 'form', producto: @producto %>
-
-<%= link_to 'Show', @producto %> |
-<%= link_to 'Back', productos_path %>
+<div class="row">
+  <div class="col-md-12">
+     <div class="ibox">
+      <div class="ibox-title">
+        <h5>Editar Producto</h5>
+      </div>
+      <div class="ibox-content">
+        <%= render "form", producto: @producto %>
+      </div>
+    </div>
+  </div>
+</div>

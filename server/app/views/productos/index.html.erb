@@ -1,31 +1,57 @@
-<p id="notice"><%= notice %></p>
+<% content_for :title do %>Productos<% end %>
 
-<h1>Productos</h1>
+<div class="row">
+  <div class="col-md-12">
+     <div class="ibox">
+      <div class="ibox-title">
+        <h5>Listado de Productos</h5>
+      </div>
+      <div class="ibox-content">
+        <% if @productos.any? %>
+          <table class="table table-hover table-clickable">
+            <thead>
+              <tr>
+                <th class="col-md-7">Nombre</th>
+                <th class="col-md-2">Precio</th>
+                <th class="col-md-1" colspan="2"></th>
+              </tr>
+            </thead>
 
-<table>
-  <thead>
-    <tr>
-      <th>Nombre</th>
-      <th>Precio</th>
-      <th>Imagen</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+            <tbody>
+              <% @productos.each do |producto| %>
+                <tr>
+                  <td><%= producto.nombre %></td>
+                  <td><%= number_to_currency producto.precio %></td>
+                  <td>
+                    <%= link_to edit_producto_path(producto), class: "btn btn-primary" do %>
+                      <i class="fa fa-pencil"></i> Editar
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to producto, class: "btn btn-danger", method: :delete, data: { confirm: '¿Seguro?' } do %>
+                      <i class="fa fa-trash"></i> Eliminar
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <div class="alert alert-warning">
+            No hay productos cargados en el sistema.
+          </div>
+        <% end %>
 
-  <tbody>
-    <% @productos.each do |producto| %>
-      <tr>
-        <td><%= producto.nombre %></td>
-        <td><%= producto.precio %></td>
-        <td><%= producto.imagen %></td>
-        <td><%= link_to 'Show', producto %></td>
-        <td><%= link_to 'Edit', edit_producto_path(producto) %></td>
-        <td><%= link_to 'Destroy', producto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+        <br>
 
-<br>
-
-<%= link_to 'New Producto', new_producto_path %>
+        <div class="row m-t-md">
+          <div class="col-md-2 col-md-offset-5">
+            <%= link_to new_producto_path, class: "btn btn-primary btn-block" do %>
+              <i class="fa fa-plus"></i> Nuevo
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
