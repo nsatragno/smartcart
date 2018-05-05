@@ -2,14 +2,70 @@
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
  *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
  *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require_tree .
  *= require_self
+ *= require font-awesome
+ *= require animate/animate.css
+ *= require toastr/toastr
+ *= require bootstrap-datepicker/bootstrap-datepicker.css
+ *= require datatables/datatables.bootstrap.css
+ *= require datatables/datatables.responsive.bootstrap.css
+ *= require bootstrap-toggle/bootstrap-toggle.css
+ *= require style
  */
+
+.admin-body #wrapper{
+	background-color: #442C40;
+}
+
+.admin-body .nav > li.active {
+    background: #38283c;
+}
+
+.admin-body .navbar-default .nav > li > a:hover, .admin-body .navbar-default .nav > li > a:focus {
+  background-color: #38283c;
+  color: white;
+}
+
+
+.admin-body .nav-header{
+	position:relative;
+}
+
+.admin-body .nav-header:before {
+  position: absolute;
+  content:"";
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  opacity:0;
+}
+
+.admin-body .nav-header:before{
+	background-color: #442C40;
+	opacity: 0.6;
+}
+
+tr.soft-deleted td, td.soft-deleted {
+  color: #ED5564;
+}
+
+.soft-deleted img {
+	filter: grayscale(100%);
+}
+
+div.checkbox {
+  padding-top: 20px;
+}
+
+.translation_missing { background-color: red; color: white !important; }
+
+.field_with_errors .select2-selection {
+	border-color: red !important;
+}

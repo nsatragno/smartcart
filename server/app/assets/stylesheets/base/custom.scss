@@ -1,0 +1,200 @@
+// Separador para tres botones.
+.btn-form-container-offset-1 {
+  @extend .col-lg-offset-3;
+}
+
+// Separador para dos botones.
+.btn-form-container-offset-2 {
+  @extend .col-sm-offset-0;
+  @extend .col-md-offset-2;
+  @extend .col-lg-offset-4;
+}
+
+// Separador para un botón.
+.btn-form-container-offset-3 {
+  @extend .col-sm-offset-3;
+  @extend .col-md-offset-4;
+  @extend .col-lg-offset-5;
+}
+
+// Separador para dos botones alineados a la derecha.
+.btn-form-container-offset-4 {
+  @extend .col-md-offset-4;
+  @extend .col-lg-offset-8;
+}
+
+// Contenedor para cuatro botones.
+.btn-form-container-mini {
+  @extend .col-lg-2;
+
+  .btn {
+    width: 100%;
+  }
+}
+
+// Contenedor para tres botones.
+.btn-form-container-compact {
+  @extend .col-md-4;
+  @extend .col-lg-2;
+
+  .btn {
+    width: 100%;
+  }
+}
+
+// Contenedor para uno o dos botones.
+.btn-form-container {
+  @extend .col-sm-6;
+  @extend .col-md-4;
+  @extend .col-lg-2;
+
+  .btn {
+    width: 100%;
+  }
+}
+
+
+// Contenedor para dos botones.
+.btn-form-container-larger {
+  @extend .col-sm-6;
+  @extend .col-md-6;
+  @extend .col-lg-4;
+
+  .btn {
+    width: 100%;
+  }
+}
+
+
+.field_with_errors {
+	@extend .has-error;
+}
+
+tr.has-error {
+	border: 1px solid red !important;
+	> td {
+		border-top: 1px solid red !important;
+		border-bottom: 1px solid red !important;
+	}
+}
+
+td.has-error {
+	border: 1px solid red !important;
+}
+
+select.form-control.input-sm {
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+}
+
+.no-border {
+	border: none !important;
+}
+
+th.has-button {
+	width: 1%;
+}
+
+.table {
+	width: 100% !important;
+}
+
+.member-search-results {
+	background-color: white;
+	transition: opacity .3s ease-in-out;
+	opacity: 0;
+	overflow: hidden;
+	border: 1px solid black;
+	min-width: 900px;
+}
+
+.member-search-results.active {
+	opacity: 1;
+}
+
+#member_search {
+	display: inline-block;
+	width: 300px;
+}
+
+.navbar-form-custom {
+	width: 500px;
+}
+
+#search-spinner {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+div.footer {
+	position: fixed;
+}
+
+.center-datepicker-container {
+	text-align: center;
+	> div {
+		display: inline-block;
+		margin: 0 auto;
+	}
+}
+
+.inline-block {
+	display: inline-block;
+}
+
+.flex-container {
+	display: flex;
+	flex-flow: row wrap;
+}
+
+.datepicker {
+	.datepicker-days {
+		td.disabled {
+			border-radius: 0;
+			background-color: #dddddd !important;
+		}
+	}
+	.datepicker-months, .datepicker-years, .datepicker-decades,
+	.datepicker-centuries {
+		.disabled {
+			color: #eeeeee;
+		}
+	}
+}
+
+@media (min-width: 768px) {
+	.flex-container:nth-child(0) {
+		break-after: always;
+		page-break-after: always;
+	}
+}
+
+@media print {
+	.page-heading {
+		display: none;
+	}
+
+	#toast-container {
+		display: none;
+	}
+}
+
+img.gym-logo {
+	max-height: 155px;
+	max-width: 100%;
+}
+
+.btn-fb-blue {
+	background-color: #4267b2;
+	color: white;
+}
+
+.btn-tw-blue {
+	background-color: #1b95e0;
+	color: white;
+}
+
+.btn-insta-brown {
+	background-color: #e95950;
+	color: white;
+}
