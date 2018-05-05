@@ -1,15 +1,56 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Server</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="turbolinks-cache-control" content="no-cache">
+    <title>SmartCart</title>
 
+    <!-- Main css styles -->
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
 
+    <!-- Main javascript files -->
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= csrf_meta_tags %>
+  </head>
   <body>
-    <%= yield %>
+    <!-- Wrapper-->
+    <div id="wrapper">
+
+      <!-- Page wraper -->
+      <div id="page-wrapper" class="gray-bg">
+        <div class="row wrapper border-bottom white-bg page-heading">
+          <div class="col-lg-10">
+            <h2><%= yield :title %></h2>
+            <ol class="breadcrumb">
+              <li>
+                Home
+              </li>
+              <li class="active">
+                <strong><%= yield :section %></strong>
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Main view  -->
+        <%= yield %>
+
+        <!-- Footer -->
+        <div class="footer">
+          <div>
+            <strong>Copyright</strong> SmartCart &copy; 2018
+          </div>
+        </div>
+
+      </div>
+      <!-- End page wrapper-->
+
+    </div>
+    <!-- End wrapper-->
+
+    <%= render 'layouts/flash_alerts' %>
+
+    <%= yield :local_scripts %>
   </body>
 </html>

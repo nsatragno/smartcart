@@ -1,0 +1,27 @@
+<% if notice %>
+	<div class="alert alert-info alert-dismissable">
+		<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+		<%= notice %>
+	</div>
+<% end %>
+
+<% if alert %>
+	<div class="alert alert-danger alert-dismissable">
+		<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+		<%= alert %>
+	</div>
+<% end %>
+
+<% if flash[:error] %>
+	<div class="alert alert-danger alert-dismissable">
+		<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+		<%= flash[:error] %>
+	</div>
+<% end %>
+
+<% if flash[:success] %>
+	<div class="alert alert-info alert-dismissable">
+		<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+		<%= flash[:success] %>
+	</div>
+<% end %>
