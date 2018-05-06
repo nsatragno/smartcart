@@ -3,4 +3,6 @@ class Usuario < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  validates :nombre, presence: true
 end

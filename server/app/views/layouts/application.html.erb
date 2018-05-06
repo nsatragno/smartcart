@@ -41,6 +41,12 @@
                 <span class="nav-label">Productos</span>
               <% end %>
             </li>
+            <li class="<% if controller_name == 'usuarios' %>active<% end %>">
+              <%= link_to usuarios_path do %>
+                <i class="fa fa-users"></i>
+                <span class="nav-label">Usuarios</span>
+              <% end %>
+            </li>
           </ul>
         </div>
       </nav>
