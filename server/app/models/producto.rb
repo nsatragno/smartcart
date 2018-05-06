@@ -5,4 +5,8 @@ class Producto < ApplicationRecord
 
   validates :nombre, presence: true
   validates :precio, presence: true
+
+  default_scope {
+    order :nombre
+  }
 end

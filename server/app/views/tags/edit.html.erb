@@ -1,0 +1,14 @@
+<% content_for :title do %>Tags<% end %>
+
+<div class="row">
+  <div class="col-md-12">
+     <div class="ibox">
+      <div class="ibox-title">
+        <h5>Editar Tag</h5>
+      </div>
+      <div class="ibox-content">
+        <%= render "form", tag: @tag %>
+      </div>
+    </div>
+  </div>
+</div>

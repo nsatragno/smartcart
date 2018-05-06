@@ -1,0 +1,36 @@
+<%= form_with(model: tag, local: true) do |form| %>
+  <% if tag.errors.any? %>
+    <div id="error_explanation">
+      <h2>No se pudo guardar el tag</h2>
+
+      <ul>
+      <% tag.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :rfid %>
+    <%= form.text_field :rfid, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :producto %>
+    <%= form.collection_select(:producto_id, Producto.all, :id, :nombre, {}, class: "form-control") %>
+  </div>
+
+  <div class="row m-t-md">
+    <div class="col-md-2 col-md-offset-4">
+      <%= link_to tags_path, class: "btn btn-warning btn-block" do %>
+        <i class="fa fa-arrow-left"></i> Volver
+      <% end %>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary btn-block" type="submit">
+        <i class="fa fa-save"></i> Guardar
+      </button>
+    </div>
+  </div>
+<% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_06_190301) do
+ActiveRecord::Schema.define(version: 2018_05_06_192536) do
 
   create_table "productos", force: :cascade do |t|
     t.string "nombre"
@@ -21,6 +21,14 @@ ActiveRecord::Schema.define(version: 2018_05_06_190301) do
     t.datetime "imagen_updated_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "rfid"
+    t.integer "producto_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["producto_id"], name: "index_tags_on_producto_id"
   end
 
   create_table "usuarios", force: :cascade do |t|

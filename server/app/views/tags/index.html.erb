@@ -1,0 +1,57 @@
+<% content_for :title do %>Tags<% end %>
+
+<div class="row">
+  <div class="col-md-12">
+     <div class="ibox">
+      <div class="ibox-title">
+        <h5>Listado de Tags</h5>
+      </div>
+      <div class="ibox-content">
+        <% if @tags.any? %>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th class="col-md-3">Producto</th>
+                <th class="col-md-8">RFID</th>
+                <th class="col-md-1" colspan="2"></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% @tags.each do |tag| %>
+                <tr>
+                  <td><%= tag.producto.nombre %></td>
+                  <td><%= tag.rfid %></td>
+                  <td>
+                    <%= link_to edit_tag_path(tag), class: "btn btn-primary" do %>
+                      <i class="fa fa-pencil"></i> Editar
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to tag, class: "btn btn-danger", method: :delete, data: { confirm: '¿Seguro?' } do %>
+                      <i class="fa fa-trash"></i> Eliminar
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <div class="alert alert-warning">
+            No hay tags cargados en el sistema.
+          </div>
+        <% end %>
+
+        <br>
+
+        <div class="row m-t-md">
+          <div class="col-md-2 col-md-offset-5">
+            <%= link_to new_tag_path, class: "btn btn-primary btn-block" do %>
+              <i class="fa fa-plus"></i> Nueva
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

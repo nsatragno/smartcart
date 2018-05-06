@@ -5,4 +5,8 @@ class Usuario < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   validates :nombre, presence: true
+
+  default_scope {
+    order :nombre
+  }
 end
