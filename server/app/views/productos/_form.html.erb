@@ -24,10 +24,16 @@
     </div>
   </div>
 
+  <% if producto.imagen.present? %>
+    <%= image_tag producto.imagen.url, class: "imagen-producto" %>
+  <% else %>
+      <p>El producto no tiene una imagen cargada todavía.</p>
+  <% end %>
   <div class="form-group">
     <%= form.label :imagen %>
     <%= form.file_field :imagen %>
   </div>
+
   <div class="row m-t-md">
     <div class="col-md-2 col-md-offset-4">
       <%= link_to productos_path, class: "btn btn-warning btn-block" do %>
