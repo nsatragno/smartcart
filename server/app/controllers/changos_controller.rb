@@ -1,6 +1,6 @@
 class ChangosController < ApplicationController
   before_action :authenticate_usuario!
-  before_action :set_chango, only: [:show, :edit, :update, :destroy]
+  before_action :set_chango, only: [:show, :edit, :update, :destroy, :qr]
 
   # GET /changos
   # GET /changos.json
@@ -61,6 +61,11 @@ class ChangosController < ApplicationController
       format.html { redirect_to changos_url }
       format.json { head :no_content }
     end
+  end
+
+  def qr
+    qr = RQRCode::QRCode.new "smartcart://open.chango/#{@chango.id}"
+    send_data qr.as_png(size: 300).to_s, type: "image/png", disposition: "inline"
   end
 
   private

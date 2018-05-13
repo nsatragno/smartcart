@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :changos
+  resources :changos do
+    member do
+      get 'qr'
+    end
+  end
   resources :tags
   resources :productos
 

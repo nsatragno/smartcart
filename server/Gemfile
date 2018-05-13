@@ -42,6 +42,9 @@ gem 'devise'
 # Saving images
 gem 'paperclip'
 
+# Generate QR codes
+gem 'rqrcode'
+
 # Inspinia dependencies.
 gem 'jquery-rails', '4.2.1'
 gem 'font-awesome-rails', '~> 4.7.0.0'
