@@ -1,6 +1,6 @@
 class ProductosController < ApplicationController
   before_action :authenticate_usuario!
-  before_action :set_producto, only: [:show, :edit, :update, :destroy]
+  before_action :set_producto, only: [:show, :edit, :update, :destroy, :imagen]
 
   # GET /productos
   # GET /productos.json
@@ -61,6 +61,10 @@ class ProductosController < ApplicationController
       format.html { redirect_to productos_url }
       format.json { head :no_content }
     end
+  end
+
+  def imagen
+    send_file @producto.imagen.path, type: @producto.imagen.content_type, disposition: "inline"
   end
 
   private

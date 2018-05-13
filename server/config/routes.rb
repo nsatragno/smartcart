@@ -5,7 +5,11 @@ Rails.application.routes.draw do
     end
   end
   resources :tags
-  resources :productos
+  resources :productos do
+    member do
+      get 'imagen'
+    end
+  end
 
   devise_for :usuarios
   resources :usuarios
