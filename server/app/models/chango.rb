@@ -1,0 +1,2 @@
+class Chango < ApplicationRecord
+end

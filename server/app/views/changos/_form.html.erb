@@ -1,0 +1,31 @@
+<%= form_with(model: chango, local: true) do |form| %>
+  <% if chango.errors.any? %>
+    <div id="error_explanation">
+      <h2>No se pudo guardar el chango</h2>
+
+      <ul>
+      <% chango.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :codigo %>
+    <%= form.text_field :codigo, class: "form-control" %>
+  </div>
+
+  <div class="row m-t-md">
+    <div class="col-md-2 col-md-offset-4">
+      <%= link_to changos_path, class: "btn btn-warning btn-block" do %>
+        <i class="fa fa-arrow-left"></i> Volver
+      <% end %>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary btn-block" type="submit">
+        <i class="fa fa-save"></i> Guardar
+      </button>
+    </div>
+  </div>
+<% end %>

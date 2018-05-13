@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :changos
   resources :tags
   resources :productos
 

@@ -1,0 +1,63 @@
+<% content_for :title do %>Changos<% end %>
+
+<div class="row">
+  <div class="col-md-12">
+     <div class="ibox">
+      <div class="ibox-title">
+        <h5>Listado de Changos</h5>
+      </div>
+      <div class="ibox-content">
+        <% if @changos.any? %>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th class="col-md-7">ID</th>
+                <th class="col-md-2">Código</th>
+                <th class="col-md-2 text-center">Actualmente en Uso</th>
+                <th class="col-md-1" colspan="2"></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% @changos.each do |chango| %>
+                <tr>
+                  <td><%= chango.id %></td>
+                  <td><%= chango.codigo %></td>
+                  <td class="text-center">
+                    <span class="label label-danger">
+                      <i class="fa fa-times"></i>
+                    </span>
+                  </td>
+                  <td>
+                    <%= link_to edit_chango_path(chango), class: "btn btn-primary" do %>
+                      <i class="fa fa-pencil"></i> Editar
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to chango, class: "btn btn-danger", method: :delete, data: { confirm: '¿Seguro?' } do %>
+                      <i class="fa fa-trash"></i> Eliminar
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <div class="alert alert-warning">
+            No hay changos cargados en el sistema.
+          </div>
+        <% end %>
+
+        <br>
+
+        <div class="row m-t-md">
+          <div class="col-md-2 col-md-offset-5">
+            <%= link_to new_chango_path, class: "btn btn-primary btn-block" do %>
+              <i class="fa fa-plus"></i> Nuevo
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

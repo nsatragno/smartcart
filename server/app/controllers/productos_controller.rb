@@ -30,7 +30,6 @@ class ProductosController < ApplicationController
       if @producto.save
         flash[:success] = 'Producto creado con éxito'
         format.html { redirect_to action: "index" }
-        format.json { render :show, status: :created, location: @producto }
       else
         format.html { render :new }
         format.json { render json: @producto.errors, status: :unprocessable_entity }
@@ -57,8 +56,9 @@ class ProductosController < ApplicationController
   # DELETE /productos/1.json
   def destroy
     @producto.destroy
+    flash[:success] = 'Producto eliminado con éxito'
     respond_to do |format|
-      format.html { redirect_to productos_url, notice: 'Producto was successfully destroyed.' }
+      format.html { redirect_to productos_url }
       format.json { head :no_content }
     end
   end
