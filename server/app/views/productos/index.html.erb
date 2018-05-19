@@ -11,8 +11,11 @@
           <table class="table table-hover">
             <thead>
               <tr>
-                <th class="col-md-7">Nombre</th>
-                <th class="col-md-2">Precio</th>
+                <th class="col-md-3">Nombre</th>
+                <th class="col-md-3">Descripción</th>
+                <th class="col-md-3">Precio</th>
+                <th class="col-md-1">Apto Celíacos</th>
+                <th class="col-md-1">Apto Diabéticos</th>
                 <th class="col-md-1" colspan="2"></th>
               </tr>
             </thead>
@@ -21,7 +24,30 @@
               <% @productos.each do |producto| %>
                 <tr>
                   <td><%= producto.nombre %></td>
+                  <td><%= producto.descripcion %></td>
                   <td><%= number_to_currency producto.precio %></td>
+                  <td>
+                    <% if producto.apto_celiacos %>
+                      <span class="label label-primary">
+                        <i class="fa fa-check"></i>
+                      </span>
+                    <% else %>
+                      <span class="label label-danger">
+                        <i class="fa fa-times"></i>
+                      </span>
+                    <% end %>
+                  </td>
+                  <td>
+                    <% if producto.apto_diabeticos %>
+                      <span class="label label-primary">
+                        <i class="fa fa-check"></i>
+                      </span>
+                    <% else %>
+                      <span class="label label-danger">
+                        <i class="fa fa-times"></i>
+                      </span>
+                    <% end %>
+                  </td>
                   <td>
                     <%= link_to edit_producto_path(producto), class: "btn btn-primary" do %>
                       <i class="fa fa-pencil"></i> Editar

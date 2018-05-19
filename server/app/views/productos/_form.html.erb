@@ -17,6 +17,21 @@
   </div>
 
   <div class="form-group">
+    <%= form.label :descripcion, "Descripción" %>
+    <%= form.text_field :descripcion, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.check_box :apto_celiacos %>
+    <%= form.label :apto_celiacos, "Apto Celíacos" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.check_box :apto_diabeticos %>
+    <%= form.label :apto_diabeticos, "Apto Diabéticos" %>
+  </div>
+
+  <div class="form-group">
     <%= form.label :precio %>
     <div class="input-group">
       <div class="input-group-addon">$</div>
