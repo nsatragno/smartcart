@@ -34,3 +34,16 @@
     </div>
   </div>
 <% end %>
+
+<% content_for :local_scripts do %>
+  <script>
+    // Evitar que el botón enter mande el form.
+    document.querySelectorAll('input').forEach(input => {
+      input.addEventListener('keypress', function(event) {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+        }
+      });
+    });
+  </script>
+<% end %>
