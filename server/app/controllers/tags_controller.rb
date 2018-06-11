@@ -56,6 +56,12 @@ class TagsController < ApplicationController
     end
   end
 
+  def por_rfid
+    @tag = Tag.find_by_rfid params[:rfid]
+    raise ActionController::RoutingError.new('RFID no encontrado') unless @tag
+    render :edit
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tag

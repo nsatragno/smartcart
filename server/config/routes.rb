@@ -6,7 +6,11 @@ Rails.application.routes.draw do
       get 'remover_tag/:rfid', action: 'remover_tag', as: 'remover_tag'
     end
   end
-  resources :tags
+  resources :tags do
+    collection do
+      get 'por_rfid'
+    end
+  end
   resources :productos do
     member do
       get 'imagen'
