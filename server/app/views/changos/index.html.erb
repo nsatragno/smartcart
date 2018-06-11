@@ -24,9 +24,15 @@
                   <td><%= chango.id %></td>
                   <td><%= chango.codigo %></td>
                   <td class="text-center">
-                    <span class="label label-danger">
-                      <i class="fa fa-times"></i>
-                    </span>
+                    <% if chango.en_uso? %>
+                      <span class="label label-primary">
+                        <i class="fa fa-check"></i>
+                      </span>
+                    <% else %>
+                      <span class="label label-danger">
+                        <i class="fa fa-times"></i>
+                      </span>
+                    <% end %>
                   </td>
                   <td>
                     <%= link_to qr_chango_path(chango), class: "btn btn-success", download: "QR #{chango.codigo}" do %>

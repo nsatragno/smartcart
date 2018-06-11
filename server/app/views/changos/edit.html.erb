@@ -10,5 +10,45 @@
         <%= render "form", chango: @chango %>
       </div>
     </div>
+
+    <div class="ibox">
+      <div class="ibox-title">
+        <h5>Tags</h5>
+      </div>
+      <div class="ibox-content">
+        <table class="table table-stripped">
+          <thead>
+            <tr>
+              <th class="col-md-4">Producto</th>
+              <th class="col-md-6">Tag</th>
+              <th class="col-md-2"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if @chango.tags.empty? %>
+              <tr>
+                <td colspan="99" class="text-center">
+                  <div class="alert alert-warning">
+                    No hay tags asociados al chango
+                  </div>
+                </td>
+              </tr>
+            <% else %>
+              <% @chango.tags.each do |tag| %>
+                <tr>
+                  <td><%= tag.producto.nombre %></td>
+                  <td><%= tag.rfid %></td>
+                  <td>
+                    <%= link_to remover_tag_chango_path(@chango, tag.rfid), class: "btn btn-danger" do %>
+                      <i class="fa fa-times"></i> Quitar manualmente
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </div>
