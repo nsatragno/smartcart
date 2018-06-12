@@ -20,5 +20,5 @@ Rails.application.routes.draw do
   devise_for :usuarios
   resources :usuarios
 
-  root "productos#index"
+  root "dashboard#index"
 end

@@ -1,5 +1,6 @@
 class ChangosController < ApplicationController
   before_action :authenticate_usuario!
+  before_action :validar_gestion
   before_action :set_chango, only: [
     :show, :edit, :update, :destroy, :qr, :insertar_tag, :remover_tag
   ]

@@ -1,5 +1,6 @@
 class UsuariosController < ApplicationController
   before_action :authenticate_usuario!
+  before_action :validar_admin
   before_action :set_usuario, only: [:show, :edit, :update, :destroy]
 
   # GET /usuarios
@@ -66,6 +67,7 @@ class UsuariosController < ApplicationController
         params[:usuario].delete :password
         params[:usuario].delete :password_confirmation
       end
-      params.require(:usuario).permit(:email, :password, :password_confirmation, :nombre)
+      params.require(:usuario).permit(:email, :password, :password_confirmation, :nombre,
+                                      :es_admin, :es_gestion, :es_consulta, :es_tags)
     end
 end

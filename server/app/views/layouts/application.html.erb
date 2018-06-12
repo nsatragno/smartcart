@@ -37,30 +37,36 @@
                 SC
               </div>
             </li>
-            <li class="<% if controller_name == 'productos' %>active<% end %>">
-              <%= link_to productos_path do %>
-                <i class="fa fa-cube"></i>
-                <span class="nav-label">Productos</span>
-              <% end %>
-            </li>
-            <li class="<% if controller_name == 'changos' %>active<% end %>">
-              <%= link_to changos_path do %>
-                <i class="fa fa-shopping-cart"></i>
-                <span class="nav-label">Changos</span>
-              <% end %>
-            </li>
-            <li class="<% if controller_name == 'tags' %>active<% end %>">
-              <%= link_to tags_path do %>
-                <i class="fa fa-tag"></i>
-                <span class="nav-label">Tags</span>
-              <% end %>
-            </li>
-            <li class="<% if controller_name == 'usuarios' %>active<% end %>">
-              <%= link_to usuarios_path do %>
-                <i class="fa fa-users"></i>
-                <span class="nav-label">Usuarios</span>
-              <% end %>
-            </li>
+            <% if current_usuario.es_gestion %>
+              <li class="<% if controller_name == 'productos' %>active<% end %>">
+                <%= link_to productos_path do %>
+                  <i class="fa fa-cube"></i>
+                  <span class="nav-label">Productos</span>
+                <% end %>
+              </li>
+              <li class="<% if controller_name == 'changos' %>active<% end %>">
+                <%= link_to changos_path do %>
+                  <i class="fa fa-shopping-cart"></i>
+                  <span class="nav-label">Changos</span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.es_tags %>
+              <li class="<% if controller_name == 'tags' %>active<% end %>">
+                <%= link_to tags_path do %>
+                  <i class="fa fa-tag"></i>
+                  <span class="nav-label">Tags</span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.es_admin %>
+              <li class="<% if controller_name == 'usuarios' %>active<% end %>">
+                <%= link_to usuarios_path do %>
+                  <i class="fa fa-users"></i>
+                  <span class="nav-label">Usuarios</span>
+                <% end %>
+              </li>
+            <% end %>
           </ul>
         </div>
       </nav>

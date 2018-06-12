@@ -31,6 +31,29 @@
     <%= form.password_field :password_confirmation, class: "form-control" %>
   </div>
 
+  <h3>Roles</h3>
+  <hr>
+
+  <div class="form-group">
+    <%= form.check_box :es_admin %>
+    <%= form.label :es_admin, "Admin" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.check_box :es_gestion %>
+    <%= form.label :es_gestion, "Gestión" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.check_box :es_tags %>
+    <%= form.label :es_tags, "Editor de tags" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.check_box :es_consulta %>
+    <%= form.label :es_consulta, "Consulta" %>
+  </div>
+
   <div class="row m-t-md">
     <div class="col-md-2 col-md-offset-4">
       <%= link_to usuarios_path, class: "btn btn-warning btn-block" do %>
