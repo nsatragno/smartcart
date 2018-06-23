@@ -13,6 +13,5 @@
 //= require jquery
 //= require rails-ujs
 //= require activestorage
-//= require turbolinks
 //= require toastr/toastr.js
 //= require_tree .

@@ -17,15 +17,36 @@
     <%= form.text_field :nombre, class: "form-control" %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :posicion_x %>
-    <%= form.number_field :posicion_x, class: "form-control" %>
-  </div>
+  <% supermercado = Supermercado.first %>
+  <% if supermercado&.plano.present? %>
+    <h4>Seleccione un punto en el plano para la categoría</h4>
+    <canvas id="canvas" style="width: 100%">
+    </canvas>
 
-  <div class="form-group">
-    <%= form.label :posicion_y %>
-    <%= form.number_field :posicion_y, class: "form-control" %>
-  </div>
+    <button class="btn btn-danger" id="quitar_punto" type="button">
+      <i class="fa fa-trash"></i> Quitar Punto
+    </button>
+
+    <%= form.hidden_field :posicion_x, class: "form-control" %>
+    <%= form.hidden_field :posicion_y, class: "form-control" %>
+
+    <script>
+      "use strict";
+      let canvas = document.getElementById("canvas");
+      let inputX = document.getElementById("categoria_posicion_x");
+      let inputY = document.getElementById("categoria_posicion_y");
+      let quitarPunto = document.getElementById("quitar_punto");
+
+      let plano = new Image();
+      plano.onload = function () {
+        cargarSeleccionadorPunto(canvas, plano, inputX, inputY, quitarPunto);
+      };
+      plano.src = "<%= asset_url(supermercado.plano.url) %>";
+    </script>
+  <% else %>
+    <p>El supermercado no posee un plano cargado.</p>
+    <%= link_to "Editar Supermercado", edit_supermercado_path %>
+  <% end %>
 
   <div class="row m-t-md">
     <div class="col-md-2 col-md-offset-4">
