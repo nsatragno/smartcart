@@ -1,0 +1,53 @@
+<% content_for :title do %>Supermercado<% end %>
+
+<div class="row">
+  <div class="col-md-12">
+     <div class="ibox">
+      <div class="ibox-title">
+        <h5>Información del Supermercado</h5>
+      </div>
+      <div class="ibox-content">
+        <%= form_with(model: @supermercado, url: supermercado_path, local: true) do |form| %>
+          <% if @supermercado.errors.any? %>
+            <div id="error_explanation">
+              <h2>No se pudo actualizar la información</h2>
+
+              <ul>
+              <% @supermercado.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <div class="row">
+            <div class="col-md-6 col-lg-4">
+              <div class="form-group">
+                <%= form.label :nombre %>
+                <%= form.text_field :nombre, class: "form-control" %>
+              </div>
+            </div>
+          </div>
+
+          <% if @supermercado.plano.present? %>
+            <%= image_tag @supermercado.plano.url, class: "imagen-supermercado" %>
+          <% else %>
+              <p>El supermercado no tiene un plano cargado todavía.</p>
+          <% end %>
+          <div class="form-group">
+            <%= form.label :plano %>
+            <%= form.file_field :plano %>
+          </div>
+
+          <div class="row m-t-md">
+            <div class="col-md-2 col-md-offset-5">
+              <button class="btn btn-primary btn-block" type="submit">
+                <i class="fa fa-save"></i> Actualizar Información
+              </button>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_11_233856) do
+ActiveRecord::Schema.define(version: 2018_06_23_210728) do
 
   create_table "changos", force: :cascade do |t|
     t.string "codigo"
@@ -30,6 +30,16 @@ ActiveRecord::Schema.define(version: 2018_06_11_233856) do
     t.string "descripcion"
     t.boolean "apto_celiacos"
     t.boolean "apto_diabeticos"
+  end
+
+  create_table "supermercados", force: :cascade do |t|
+    t.string "nombre"
+    t.string "plano_file_name"
+    t.string "plano_content_type"
+    t.integer "plano_file_size"
+    t.datetime "plano_updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 # Could not dump table "tags" because of following StandardError

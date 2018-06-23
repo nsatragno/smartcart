@@ -17,6 +17,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :supermercado
+
   devise_for :usuarios
   resources :usuarios
 
