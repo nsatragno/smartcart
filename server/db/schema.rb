@@ -42,8 +42,15 @@ ActiveRecord::Schema.define(version: 2018_06_23_210728) do
     t.datetime "updated_at", null: false
   end
 
-# Could not dump table "tags" because of following StandardError
-#   Unknown type '' for column 'chango'
+  create_table "tags", force: :cascade do |t|
+    t.string "rfid"
+    t.integer "producto_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "chango_id"
+    t.index ["chango_id"], name: "index_tags_on_chango_id"
+    t.index ["producto_id"], name: "index_tags_on_producto_id"
+  end
 
   create_table "usuarios", force: :cascade do |t|
     t.string "email", default: "", null: false

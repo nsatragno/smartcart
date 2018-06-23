@@ -6,4 +6,12 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Usuario.create(email: "nsatragno@gmail.com", password: "12345678", nombre: "Nina Satragno")
+Usuario.create(email: "nsatragno@gmail.com", password: "12345678", nombre: "Nina Satragno",
+               es_admin: true, es_gestion: true, es_tags: true, es_consulta: true)
+
+Supermercado.create(nombre: "Supermercado SmartCart")
+
+Producto.create(nombre: "Agua Mineral", descripcion: "Agua Fría Como El Hielo", apto_celiacos: true, apto_diabeticos: true, precio: 10)
+Producto.create(nombre: "Dulce de Leche", descripcion: "El mejor dulce", apto_celiacos: true, apto_diabeticos: false, precio: 10)
+
+Chango.create(codigo: "Chango por Defecto")
