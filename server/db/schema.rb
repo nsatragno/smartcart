@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_23_210728) do
+ActiveRecord::Schema.define(version: 2018_06_23_220325) do
+
+  create_table "categorias", force: :cascade do |t|
+    t.string "nombre"
+    t.float "posicion_x"
+    t.float "posicion_y"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "changos", force: :cascade do |t|
     t.string "codigo"
@@ -30,6 +38,8 @@ ActiveRecord::Schema.define(version: 2018_06_23_210728) do
     t.string "descripcion"
     t.boolean "apto_celiacos"
     t.boolean "apto_diabeticos"
+    t.integer "categoria_id"
+    t.index ["categoria_id"], name: "index_productos_on_categoria_id"
   end
 
   create_table "supermercados", force: :cascade do |t|

@@ -44,6 +44,12 @@
                   <span class="nav-label">Supermercado</span>
                 <% end %>
               </li>
+              <li class="<% if controller_name == 'categorias' %>active<% end %>">
+                <%= link_to categorias_path do %>
+                  <i class="fa fa-gift"></i>
+                  <span class="nav-label">Categorías</span>
+                <% end %>
+              </li>
               <li class="<% if controller_name == 'productos' %>active<% end %>">
                 <%= link_to productos_path do %>
                   <i class="fa fa-cube"></i>

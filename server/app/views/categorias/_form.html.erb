@@ -1,0 +1,42 @@
+<%= form_with(model: categoria,
+              url: categoria.id ? categoria_path(categoria) : categorias_path, local: true) do |form| %>
+  <% if categoria.errors.any? %>
+    <div id="error_explanation">
+      <h2>No se pudo guardar la categoría</h2>
+
+      <ul>
+      <% categoria.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :nombre %>
+    <%= form.text_field :nombre, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :posicion_x %>
+    <%= form.number_field :posicion_x, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :posicion_y %>
+    <%= form.number_field :posicion_y, class: "form-control" %>
+  </div>
+
+  <div class="row m-t-md">
+    <div class="col-md-2 col-md-offset-4">
+      <%= link_to categorias_path, class: "btn btn-warning btn-block" do %>
+        <i class="fa fa-arrow-left"></i> Volver
+      <% end %>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary btn-block" type="submit">
+        <i class="fa fa-save"></i> Guardar
+      </button>
+    </div>
+  </div>
+<% end %>

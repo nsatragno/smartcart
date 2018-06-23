@@ -11,7 +11,10 @@ Usuario.create(email: "nsatragno@gmail.com", password: "12345678", nombre: "Nina
 
 Supermercado.create(nombre: "Supermercado SmartCart")
 
-Producto.create(nombre: "Agua Mineral", descripcion: "Agua Fría Como El Hielo", apto_celiacos: true, apto_diabeticos: true, precio: 10)
-Producto.create(nombre: "Dulce de Leche", descripcion: "El mejor dulce", apto_celiacos: true, apto_diabeticos: false, precio: 10)
+bebidas = Categoria.create(nombre: "Bebidas")
+dulces = Categoria.create(nombre: "Dulces")
+
+Producto.create(nombre: "Agua Mineral", descripcion: "Agua Fría Como El Hielo", apto_celiacos: true, apto_diabeticos: true, precio: 10, categoria: bebidas)
+Producto.create(nombre: "Dulce de Leche", descripcion: "El mejor dulce", apto_celiacos: true, apto_diabeticos: false, precio: 10, categoria: dulces)
 
 Chango.create(codigo: "Chango por Defecto")
