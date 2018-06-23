@@ -1,24 +1,29 @@
-# README
+# SmartCart Server
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Configuración de Desarrollo
 
-Things you may want to cover:
+* Instalar Ruby
+  * [En Windows: a partir del subsistema de linux para windows](https://gorails.com/setup/windows/10)
+  * En Linux:
 
-* Ruby version
+        sudo apt-get install build-essential ruby bundler
 
-* System dependencies
+* Instalar dependencias:
 
-* Configuration
+      cd ruta_a_smartcart/server`
+      bundle install
 
-* Database creation
 
-* Database initialization
+* Crear base de datos local
 
-* How to run the test suite
+      rails db:create
+      rails db:migrate
+      rails db:seed
 
-* Services (job queues, cache servers, search engines, etc.)
+## Correr Server en Desarrollo
 
-* Deployment instructions
+    rails s
 
-* ...
+Y visitar http://localhost:3000 cuando haya cargado.
+
+Ver credenciales por defecto en archivo `db/seeds.rb`
