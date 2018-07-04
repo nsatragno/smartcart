@@ -8,7 +8,7 @@ class DashboardController < ApplicationController
       redirect_to tags_path
     elsif current_usuario.es_admin
       redirect_to usuarios_path
-    elsif current_usuario.es_consulta
+    elsif current_usuario.es_cajera
       sign_out current_usuario
       flash[:error] = "El rol consulta no tiene acciones por el momento"
       redirect_to new_usuario_session_path

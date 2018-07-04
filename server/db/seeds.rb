@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 Usuario.create(email: "nsatragno@gmail.com", password: "12345678", nombre: "Nina Satragno",
-               es_admin: true, es_gestion: true, es_tags: true, es_consulta: true)
+               es_admin: true, es_gestion: true, es_tags: true, es_cajera: true)
 
 Supermercado.create(nombre: "Supermercado SmartCart")
 

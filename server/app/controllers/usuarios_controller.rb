@@ -68,6 +68,6 @@ class UsuariosController < ApplicationController
         params[:usuario].delete :password_confirmation
       end
       params.require(:usuario).permit(:email, :password, :password_confirmation, :nombre,
-                                      :es_admin, :es_gestion, :es_consulta, :es_tags)
+                                      :es_admin, :es_gestion, :es_cajera, :es_tags)
     end
 end

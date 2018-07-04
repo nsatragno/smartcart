@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_23_220325) do
+ActiveRecord::Schema.define(version: 2018_07_04_223319) do
 
   create_table "categorias", force: :cascade do |t|
     t.string "nombre"
@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 2018_06_23_220325) do
     t.boolean "es_admin"
     t.boolean "es_gestion"
     t.boolean "es_tags"
-    t.boolean "es_consulta"
+    t.boolean "es_cajera"
     t.index ["email"], name: "index_usuarios_on_email", unique: true
     t.index ["reset_password_token"], name: "index_usuarios_on_reset_password_token", unique: true
   end
