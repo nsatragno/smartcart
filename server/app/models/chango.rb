@@ -2,7 +2,7 @@ class Chango < ApplicationRecord
   has_many :tags
 
   def en_uso?
-    tags.any?
+    tags.any? and tags.find do |tag| tag.disponible? end
   end
 
   def productos

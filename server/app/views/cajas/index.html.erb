@@ -30,7 +30,7 @@
                   </td>
                   <td class="text-right">
                     <%= link_to edit_caja_path(chango), class: "btn btn-primary" do %>
-                      <i class="fa fa-dollar"></i> Pagar
+                      <i class="fa fa-dollar"></i> Cobrar
                     <% end %>
                   </td>
                 </tr>
@@ -39,7 +39,7 @@
           </table>
         <% else %>
           <div class="alert alert-warning">
-            No hay changos con productos
+            No hay changos con productos que no estén pagos
           </div>
         <% end %>
 

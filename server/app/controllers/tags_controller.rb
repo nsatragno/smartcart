@@ -40,6 +40,7 @@ class TagsController < ApplicationController
   # PATCH/PUT /tags/1
   # PATCH/PUT /tags/1.json
   def update
+    @tag.disponible!
     respond_to do |format|
       if @tag.update(tag_params)
         format.html { redirect_to tags_path, notice: 'Tag actualizado con éxito.' }

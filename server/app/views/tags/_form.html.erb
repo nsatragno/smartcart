@@ -21,6 +21,17 @@
     <%= form.collection_select(:producto_id, Producto.all, :id, :nombre, {}, class: "form-control") %>
   </div>
 
+  <p>
+    Estado:
+    <strong>
+      <% if tag.pagado? %>
+        Pagado
+      <% else %>
+        Disponible
+      <% end %>
+    </strong>
+  </p>
+
   <div class="row m-t-md">
     <div class="col-md-2 col-md-offset-4">
       <%= link_to tags_path, class: "btn btn-warning btn-block" do %>

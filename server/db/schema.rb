@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_04_223319) do
+ActiveRecord::Schema.define(version: 2018_07_23_220058) do
 
   create_table "categorias", force: :cascade do |t|
     t.string "nombre"
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 2018_07_04_223319) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "chango_id"
+    t.integer "estado", default: 0
     t.index ["chango_id"], name: "index_tags_on_chango_id"
     t.index ["producto_id"], name: "index_tags_on_producto_id"
   end

@@ -11,4 +11,18 @@ class CajasController < ApplicationController
   def edit
     @chango = Chango.find(params[:id])
   end
+
+  def update
+    Tag.transaction do
+      tag_ids = params[:chango][:tags].map do |tag|
+        Tag.find tag.to_i
+      end.each do |tag|
+        tag.pagado!
+        tag.save!
+      end
+    end
+
+    flash[:success] = "Chango cobrado con éxito"
+    redirect_to action: "index"
+  end
 end
