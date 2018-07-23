@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_23_220058) do
+ActiveRecord::Schema.define(version: 2018_07_23_224541) do
 
   create_table "categorias", force: :cascade do |t|
     t.string "nombre"
@@ -40,6 +40,16 @@ ActiveRecord::Schema.define(version: 2018_07_23_220058) do
     t.boolean "apto_diabeticos"
     t.integer "categoria_id"
     t.index ["categoria_id"], name: "index_productos_on_categoria_id"
+  end
+
+  create_table "promociones", force: :cascade do |t|
+    t.string "nombre"
+    t.string "imagen_file_name"
+    t.string "imagen_content_type"
+    t.integer "imagen_file_size"
+    t.datetime "imagen_updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "supermercados", force: :cascade do |t|

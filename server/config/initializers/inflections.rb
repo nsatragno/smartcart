@@ -14,3 +14,8 @@
 # ActiveSupport::Inflector.inflections(:en) do |inflect|
 #   inflect.acronym 'RESTful'
 # end
+#
+ActiveSupport::Inflector.inflections do |inflect|
+  inflect.plural 'promocion', 'promociones'
+  inflect.singular 'promociones', 'promocion'
+end

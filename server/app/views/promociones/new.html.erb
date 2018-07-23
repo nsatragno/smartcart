@@ -1,0 +1,14 @@
+<% content_for :title do %>Promociones<% end %>
+
+<div class="row">
+  <div class="col-md-12">
+     <div class="ibox">
+      <div class="ibox-title">
+        <h5>Promoción nueva</h5>
+      </div>
+      <div class="ibox-content">
+        <%= render "form", promocion: @promocion %>
+      </div>
+    </div>
+  </div>
+</div>

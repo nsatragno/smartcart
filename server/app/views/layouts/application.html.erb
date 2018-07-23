@@ -43,6 +43,12 @@
                   <span class="nav-label">Supermercado</span>
                 <% end %>
               </li>
+              <li class="<% if controller_name == 'promociones' %>active<% end %>">
+                <%= link_to promociones_path do %>
+                  <i class="fa fa-exclamation"></i>
+                  <span class="nav-label">Promociones</span>
+                <% end %>
+              </li>
               <li class="<% if controller_name == 'categorias' %>active<% end %>">
                 <%= link_to categorias_path do %>
                   <i class="fa fa-gift"></i>
