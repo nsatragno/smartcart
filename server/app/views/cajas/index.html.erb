@@ -1,0 +1,50 @@
+<% content_for :title do %>Caja<% end %>
+
+<div class="row">
+  <div class="col-md-12">
+     <div class="ibox">
+      <div class="ibox-title">
+        <h5>Changos en Uso</h5>
+      </div>
+      <div class="ibox-content">
+        <% if @changos.any? %>
+          <table class="table table-stripped">
+            <thead>
+              <tr>
+                <th class="col-md-2">Código</th>
+                <th class="col-md-6">Productos</th>
+                <th class="col-md-2 text-right">Total</th>
+                <th class="col-md-2"></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% @changos.each do |chango| %>
+                <tr>
+                  <td><%= chango.codigo %></td>
+                  <td>
+                    <%= truncate(chango.productos.map { |p| p.nombre }.join ", ") %>
+                  </td>
+                  <td class="text-right">
+                    <%= number_to_currency(chango.total) %>
+                  </td>
+                  <td class="text-right">
+                    <%= link_to edit_caja_path(chango), class: "btn btn-primary" do %>
+                      <i class="fa fa-dollar"></i> Pagar
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <div class="alert alert-warning">
+            No hay changos con productos
+          </div>
+        <% end %>
+
+        <br>
+      </div>
+    </div>
+  </div>
+</div>

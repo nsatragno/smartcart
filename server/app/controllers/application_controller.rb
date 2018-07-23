@@ -9,8 +9,8 @@ class ApplicationController < ActionController::Base
     validar_rol(:admin)
   end
 
-  def validar_consulta
-    validar_rol(:consulta)
+  def validar_cajera
+    validar_rol(:cajera)
   end
 
   def validar_tags

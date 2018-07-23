@@ -79,6 +79,14 @@
                 <% end %>
               </li>
             <% end %>
+            <% if current_usuario.es_cajera %>
+              <li class="<% if controller_name == 'cajas' %>active<% end %>">
+                <%= link_to cajas_path do %>
+                  <i class="fa fa-money"></i>
+                  <span class="nav-label">Caja</span>
+                <% end %>
+              </li>
+            <% end %>
           </ul>
         </div>
       </nav>

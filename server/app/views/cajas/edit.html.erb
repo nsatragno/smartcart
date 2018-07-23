@@ -1,0 +1,63 @@
+<% content_for :title do %>Caja<% end %>
+
+<div class="row">
+  <div class="col-md-12">
+     <div class="ibox">
+      <div class="ibox-title">
+        <h5>Pagar Chango</h5>
+      </div>
+      <div class="ibox-content">
+        <table class="table table-stripped">
+          <thead>
+            <tr>
+              <th class="col-md-2 text-right">Cantidad</th>
+              <th class="col-md-4">Producto</th>
+              <th class="col-md-2 text-right">Precio Unitario</th>
+              <th class="col-md-2 text-right">Precio Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if @chango.tags.empty? %>
+              <tr>
+                <td colspan="99" class="text-center">
+                  <div class="alert alert-warning">
+                    No hay productos en el chango
+                  </div>
+                </td>
+              </tr>
+            <% else %>
+              <% @chango.productos_with_cantidad.each do |producto_with_cantidad| %>
+                <% producto = producto_with_cantidad[:producto] %>
+                <% cantidad = producto_with_cantidad[:cantidad] %>
+                <tr>
+                  <td class="text-right"><%= cantidad %></td>
+                  <td><%= producto.nombre %></td>
+                  <td class="text-right"><%= number_to_currency producto.precio %></td>
+                  <td class="text-right"><%= number_to_currency(producto.precio * cantidad) %></td>
+                </tr>
+              <% end %>
+              <tr>
+                <th></th>
+                <th></th>
+                <th class="text-right">Total:</th>
+                <th class="text-right"><%= number_to_currency @chango.total %></th>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <div class="row m-t-md">
+          <div class="col-md-2 col-md-offset-4">
+            <%= link_to cajas_path, class: "btn btn-warning btn-block" do %>
+              <i class="fa fa-arrow-left"></i> Volver
+            <% end %>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-primary btn-block" type="submit">
+              <i class="fa fa-dollar"></i> Pagar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
