@@ -26,5 +26,10 @@ Rails.application.routes.draw do
   devise_for :usuarios
   resources :usuarios
 
-  root "dashboard#index"
+  defaults format: :json do
+    post 'usuarios_app/login', to: 'usuarios_app#login'
+    post 'usuarios_app/signup', to: 'usuarios_app#signup'
+  end
+
+  root 'dashboard#index'
 end
