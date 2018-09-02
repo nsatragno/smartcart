@@ -9,10 +9,17 @@ CHANGO_ID=1
 TIME_BETWEEN_READS = 3 # seconds
 
 print("clearing existing tags")
-try:
-    print(urllib2.urlopen(URL + "/changos/" + str(CHANGO_ID) + "/limpiar_tags.json").read())
-except urllib2.HTTPError as e:
-    print("Error: " + str(e))
+connected = False
+while not connected:
+    try:
+        print(urllib2.urlopen(URL + "/changos/" + str(CHANGO_ID) + "/limpiar_tags.json").read())
+        connected = True
+    except urllib2.HTTPError as e:
+        print("HTTP Error: " + str(e))
+        print("Retrying")
+    except urllib2.URLError as e:
+        print("Connection error: " + str(e))
+        print("Retrying")
 
 print("setting up reader")
 reader = mercury.Reader("tmr:///dev/ttyUSB0", baudrate=9600)
