@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       get 'qr'
       get 'insertar_tag/:rfid', action: 'insertar_tag', as: 'insertar_tag'
       get 'remover_tag/:rfid', action: 'remover_tag', as: 'remover_tag'
+      get 'limpiar_tags', action: 'limpiar_tags', as: 'limpiar_tags'
     end
   end
   resources :tags do

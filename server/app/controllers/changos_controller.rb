@@ -1,8 +1,8 @@
 class ChangosController < ApplicationController
-  before_action :authenticate_usuario!
-  before_action :validar_gestion
+  before_action :authenticate_usuario!, except: [ :insertar_tag, :remover_tag, :limpiar_tags ]
+  before_action :validar_gestion, except: [ :insertar_tag, :remover_tag, :limpiar_tags ]
   before_action :set_chango, only: [
-    :show, :edit, :update, :destroy, :qr, :insertar_tag, :remover_tag
+    :show, :edit, :update, :destroy, :qr, :insertar_tag, :remover_tag, :limpiar_tags
   ]
   before_action :set_rfid, only: [ :insertar_tag, :remover_tag ]
 
@@ -81,6 +81,15 @@ class ChangosController < ApplicationController
     @chango.tags.delete @tag
     @chango.save!
     flash[:success] = 'Tag removido con éxito'
+    respond_to do |format|
+      format.html { render :edit }
+      format.json { render :show, status: :ok, location: @chango }
+    end
+  end
+
+  def limpiar_tags
+    @chango.tags.delete_all
+    flash[:success] = 'Tags removidos con éxito'
     respond_to do |format|
       format.html { render :edit }
       format.json { render :show, status: :ok, location: @chango }
