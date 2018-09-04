@@ -4,7 +4,7 @@ import urllib2
 
 # Settings
 POWER=1500 # centidBm
-URL="http://192.168.1.109:3000"
+URL="http://192.168.1.110:3000"
 CHANGO_ID=1
 TIME_BETWEEN_READS = 3 # seconds
 
