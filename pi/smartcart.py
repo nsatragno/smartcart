@@ -3,7 +3,7 @@ import time
 import urllib2
 
 # Settings
-POWER=1500 # centidBm
+POWER=2000 # centidBm
 URL="http://192.168.1.110:3000"
 CHANGO_ID=1
 TIME_BETWEEN_READS = 3 # seconds
