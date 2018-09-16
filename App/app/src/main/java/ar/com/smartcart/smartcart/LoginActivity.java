@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,8 +31,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import ar.com.smartcart.smartcart.communication.LoginManager;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -170,7 +174,7 @@ public class LoginActivity extends Activity {
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    public class UserLoginTask extends AsyncTask<Void, Void, String> {
 
         private final String mEmail;
         private final String mPassword;
@@ -181,32 +185,27 @@ public class LoginActivity extends Activity {
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
+        protected String doInBackground(Void... params) {
             try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
+                return LoginManager.login(mEmail, mPassword) ?
+                        "ok" : getString(R.string.login_error);
+            } catch (IOException e) {
+                Log.e("Smartcart", e.getMessage());
+                return getString(R.string.connection_error);
             }
-
-            // TODO: register the new account here.
-            return true;
         }
 
         @Override
-        protected void onPostExecute(final Boolean success) {
+        protected void onPostExecute(final String response) {
             mAuthTask = null;
             showProgress(false);
 
-            if (success) {
-                Intent myIntent = new Intent(LoginActivity.this, PrincipalActivity.class);
-//                myIntent.putExtras(newbundle);
+            if (response.equals("ok")) {
+                Intent myIntent = new Intent(LoginActivity.this, PrincipalActivity.class);;
                 startActivity(myIntent);
                 finish();
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
+                mPasswordView.setError(response);
                 mPasswordView.requestFocus();
             }
         }

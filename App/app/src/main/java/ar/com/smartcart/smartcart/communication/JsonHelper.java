@@ -10,12 +10,6 @@ import ar.com.smartcart.smartcart.modelo.Producto;
  */
 public class JsonHelper {
 
-    private final HTTPHelper httpHelper;
-
-    public JsonHelper() {
-        httpHelper = new HTTPHelper();
-    }
-
     public List<Producto> getCartContent(String cartID) throws IOException, JSONException {
 //        // the string is the result of our request.
 //        String uri = "localhost:3000/changos/" + cartID + ".json";
