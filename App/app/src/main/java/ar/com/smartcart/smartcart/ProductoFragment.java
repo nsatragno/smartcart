@@ -1,19 +1,26 @@
 package ar.com.smartcart.smartcart;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
+import android.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import ar.com.smartcart.smartcart.communication.LoginManager;
+import ar.com.smartcart.smartcart.communication.ProductosManager;
 import ar.com.smartcart.smartcart.dummy.DummyContent;
 import ar.com.smartcart.smartcart.dummy.DummyContent.DummyItem;
+import ar.com.smartcart.smartcart.modelo.Chango;
+import ar.com.smartcart.smartcart.modelo.Producto;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -22,44 +29,32 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class ItemProductoFragment extends ListFragment {
+public class ProductoFragment extends android.support.v4.app.Fragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
+
     private OnListFragmentInteractionListener mListener;
+    private Chango chango;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public ItemProductoFragment() {
-    }
-
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static ItemProductoFragment newInstance(int columnCount) {
-        ItemProductoFragment fragment = new ItemProductoFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
+    public ProductoFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
+        GetProductosTask task = new GetProductosTask();
+        task.execute();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_itemproducto_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_producto_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -70,7 +65,7 @@ public class ItemProductoFragment extends ListFragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new ItemProductoAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MyProductoRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         }
         return view;
     }
@@ -106,5 +101,29 @@ public class ItemProductoFragment extends ListFragment {
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListFragmentInteraction(DummyItem item);
+    }
+
+    public class GetProductosTask extends AsyncTask<Void, Void, Chango> {
+        @Override
+        protected Chango doInBackground(Void... params) {
+            try {
+                return ProductosManager.getChango();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e("Smartcart", e.getMessage());
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(final Chango response) {
+            chango = response;
+            Log.d("smartcart", chango.getProductos().get(0).getProducto().getNombre());
+            // showProgress(false);
+        }
+
+        @Override
+        protected void onCancelled() {
+        }
     }
 }

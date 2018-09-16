@@ -11,12 +11,12 @@ import ar.com.smartcart.smartcart.modelo.LoginResponse;
 
 public class LoginManager {
     private final static String URL_LOGIN =
-            "http://192.168.1.109:3000/usuarios_app/login?email={email}&password={pass}";
+            HTTPHelper.URL + "/usuarios_app/login?email={email}&password={pass}";
 
     public static boolean login(String email, String password) throws IOException {
         String response = HTTPHelper.request(
                 URL_LOGIN.replace("{email}", URLEncoder.encode(email))
-                        .replace("{pass}", URLEncoder.encode(password)));
+                        .replace("{pass}", URLEncoder.encode(password)), "POST");
         Log.d("Smartcart", response);
         LoginResponse login = new Gson().fromJson(response, LoginResponse.class);
         return login.ok;

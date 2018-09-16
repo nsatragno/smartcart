@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import ar.com.smartcart.smartcart.ItemProductoFragment.OnListFragmentInteractionListener;
+import ar.com.smartcart.smartcart.ProductoFragment.OnListFragmentInteractionListener;
 import ar.com.smartcart.smartcart.dummy.DummyContent.DummyItem;
 
 import java.util.List;
@@ -16,12 +16,12 @@ import java.util.List;
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class ItemProductoAdapter extends RecyclerView.Adapter<ItemProductoAdapter.ViewHolder> {
+public class MyProductoRecyclerViewAdapter extends RecyclerView.Adapter<MyProductoRecyclerViewAdapter.ViewHolder> {
 
     private final List<DummyItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public ItemProductoAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyProductoRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -29,7 +29,7 @@ public class ItemProductoAdapter extends RecyclerView.Adapter<ItemProductoAdapte
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_itemproducto, parent, false);
+                .inflate(R.layout.fragment_producto, parent, false);
         return new ViewHolder(view);
     }
 

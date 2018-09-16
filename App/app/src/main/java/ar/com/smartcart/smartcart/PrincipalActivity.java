@@ -11,8 +11,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import ar.com.smartcart.smartcart.dummy.DummyContent;
+
 public class PrincipalActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ProductoFragment.OnListFragmentInteractionListener {
 
     private static final int INICIO_FRAGMENT = 0;
     private static final int ADMIN_LIST = 1;
@@ -106,9 +108,14 @@ public class PrincipalActivity extends AppCompatActivity
                 fragMng.beginTransaction().replace(R.id.fragment_container, iniFrag).commit();
                 break;
             case 1:
-                ItemProductoFragment listFrag = new ItemProductoFragment();
+                ProductoFragment listFrag = new ProductoFragment();
                 fragMng.beginTransaction().replace(R.id.fragment_container, listFrag).commit();
                 break;
         }
+    }
+
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+
     }
 }

@@ -1,6 +1,6 @@
 class ChangosController < ApplicationController
-  before_action :authenticate_usuario!, except: [ :insertar_tag, :remover_tag, :limpiar_tags ]
-  before_action :validar_gestion, except: [ :insertar_tag, :remover_tag, :limpiar_tags ]
+  before_action :authenticate_usuario!, except: [ :insertar_tag, :remover_tag, :limpiar_tags, :show]
+  before_action :validar_gestion, except: [ :insertar_tag, :remover_tag, :limpiar_tag, :show ]
   before_action :set_chango, only: [
     :show, :edit, :update, :destroy, :qr, :insertar_tag, :remover_tag, :limpiar_tags
   ]
