@@ -1,6 +1,6 @@
 package ar.com.smartcart.smartcart.modelo;
 
-public class ProductoChango {
+public class ProductoEnLista {
     private int cantidad;
     private Producto producto;
 

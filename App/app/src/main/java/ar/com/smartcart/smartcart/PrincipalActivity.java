@@ -1,5 +1,6 @@
 package ar.com.smartcart.smartcart;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
@@ -11,13 +12,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 import ar.com.smartcart.smartcart.dummy.DummyContent;
+import ar.com.smartcart.smartcart.modelo.Chango;
+import ar.com.smartcart.smartcart.modelo.ProductoEnLista;
 
 public class PrincipalActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ProductoFragment.OnListFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+                    ProductoFragment.OnListFragmentInteractionListener,
+                    QRScanFragment.OnFragmentInteractionListener{
 
-    private static final int INICIO_FRAGMENT = 0;
-    private static final int ADMIN_LIST = 1;
+    public static final int INICIO = 0;
+    public static final int QR_SCAN = 1;
+    public static final int ADMIN_LIST = 2;
+
+    private Chango chango;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +44,7 @@ public class PrincipalActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        setFragment(INICIO_FRAGMENT);
+        setFragment(INICIO);
     }
 
     @Override
@@ -78,23 +88,18 @@ public class PrincipalActivity extends AppCompatActivity
         item.setChecked(true);
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
-
+            setFragment(QR_SCAN);
         } else if (id == R.id.nav_gallery) {
-//            Intent intent = new Intent(this, DynamicListActivity.class);
-//            startActivity(intent);
             setFragment(ADMIN_LIST);
-
         } else if (id == R.id.nav_slideshow) {
-
+            setFragment(INICIO);
         } else if (id == R.id.nav_manage) {
-
+            setFragment(INICIO);
         } else if (id == R.id.nav_share) {
-
+            setFragment(ADMIN_LIST);
         } else if (id == R.id.nav_send) {
-
+            setFragment(ADMIN_LIST);
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -103,11 +108,15 @@ public class PrincipalActivity extends AppCompatActivity
     public void setFragment(int position) {
         FragmentManager fragMng = getSupportFragmentManager();
         switch (position) {
-            case 0:
+            case INICIO:
                 InicioFragment iniFrag = new InicioFragment();
                 fragMng.beginTransaction().replace(R.id.fragment_container, iniFrag).commit();
                 break;
-            case 1:
+            case QR_SCAN:
+                QRScanFragment qrFrag = new QRScanFragment();
+                fragMng.beginTransaction().replace(R.id.fragment_container, qrFrag).commit();
+                break;
+            case ADMIN_LIST:
                 ProductoFragment listFrag = new ProductoFragment();
                 fragMng.beginTransaction().replace(R.id.fragment_container, listFrag).commit();
                 break;
@@ -116,6 +125,22 @@ public class PrincipalActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(DummyContent.DummyItem item) {
+
+    }
+
+    public Chango getChango() {
+        return chango;
+    }
+
+    public void setChango(Chango chango) {
+        this.chango = chango;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+//        System.out.println("No se que cuerno hago");
+//        QRScanFragment articleFrag = (QRScanFragment)
+//                getSupportFragmentManager().findFragmentById(R.id.fragment_container);
 
     }
 }

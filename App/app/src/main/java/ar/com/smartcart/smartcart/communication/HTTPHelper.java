@@ -12,26 +12,31 @@ import java.net.URL;
 
 public class HTTPHelper {
 
-    public final static String URL = "http://192.168.1.109:3000";
+    public final static String SERVER_IP = "http://192.168.1.110";
+    public final static String SERVER_PUERTO = "3000";
+    public final static String METODO_GET = "GET";
+    public final static String METODO_POST = "POST";
 
-    public static String request(String uri) throws IOException {
-        return request(uri, "GET");
+    public static String crearURL(String servicio){
+        return SERVER_IP + ":" + SERVER_PUERTO + "/" + servicio;
     }
 
-    public static String request(String uri, String method) throws IOException {
+    public static String request(String uri) throws IOException {
+        return request(uri, METODO_GET);
+    }
+
+    public static String request(String urlServicio, String method) throws IOException {
+        String uri = crearURL(urlServicio);
         Log.d("smartcart", "Intentando conexión a " + uri);
         StringBuilder sb = new StringBuilder();
         URL url = new URL(uri);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestProperty("Content-Type", "application/json");
         conn.setRequestProperty("Accept","application/json");
-
-        if (method.equals("POST"))
-            conn.setDoOutput(true);
         conn.setRequestMethod(method);
-
+//        conn.setDoOutput(true);
         conn.connect();
-        Log.d("smartcart", "Conectado");
+        Log.d("smartcart", "Conectado con servidor");
 
         try {
             InputStream in = new BufferedInputStream(conn.getInputStream());

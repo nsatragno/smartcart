@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Chango {
     private Long id;
     private String codigo;
-    private ArrayList<ProductoChango> productos;
+    private ArrayList<ProductoEnLista> productos;
     private BigDecimal subtotal = BigDecimal.ZERO;
 
     public Long getId() {
@@ -17,7 +17,7 @@ public class Chango {
         return codigo;
     }
 
-    public ArrayList<ProductoChango> getProductos() {
+    public ArrayList<ProductoEnLista> getProductos() {
         return productos;
     }
 

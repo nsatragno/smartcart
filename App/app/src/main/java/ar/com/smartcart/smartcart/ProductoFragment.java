@@ -13,14 +13,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import ar.com.smartcart.smartcart.communication.ContenidoChangoAsyncTask;
 import ar.com.smartcart.smartcart.communication.LoginManager;
 import ar.com.smartcart.smartcart.communication.ProductosManager;
 import ar.com.smartcart.smartcart.dummy.DummyContent;
 import ar.com.smartcart.smartcart.dummy.DummyContent.DummyItem;
 import ar.com.smartcart.smartcart.modelo.Chango;
 import ar.com.smartcart.smartcart.modelo.Producto;
+import ar.com.smartcart.smartcart.modelo.ProductoEnLista;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,7 +38,6 @@ public class ProductoFragment extends android.support.v4.app.Fragment {
     private int mColumnCount = 1;
 
     private OnListFragmentInteractionListener mListener;
-    private Chango chango;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -47,7 +49,12 @@ public class ProductoFragment extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        GetProductosTask task = new GetProductosTask();
+        ContenidoChangoAsyncTask task = new ContenidoChangoAsyncTask(){
+            @Override
+            protected void onPostExecute(final Chango response) {
+                ((PrincipalActivity) getActivity()).setChango(response);
+            }
+        };
         task.execute();
     }
 
@@ -55,6 +62,7 @@ public class ProductoFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_producto_list, container, false);
+        ((PrincipalActivity) getActivity()).getSupportActionBar().setTitle("Contenido del Chango");
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -69,7 +77,6 @@ public class ProductoFragment extends android.support.v4.app.Fragment {
         }
         return view;
     }
-
 
     @Override
     public void onAttach(Context context) {
@@ -101,29 +108,5 @@ public class ProductoFragment extends android.support.v4.app.Fragment {
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListFragmentInteraction(DummyItem item);
-    }
-
-    public class GetProductosTask extends AsyncTask<Void, Void, Chango> {
-        @Override
-        protected Chango doInBackground(Void... params) {
-            try {
-                return ProductosManager.getChango();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.e("Smartcart", e.getMessage());
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(final Chango response) {
-            chango = response;
-            Log.d("smartcart", chango.getProductos().get(0).getProducto().getNombre());
-            // showProgress(false);
-        }
-
-        @Override
-        protected void onCancelled() {
-        }
     }
 }
