@@ -42,6 +42,8 @@ public class PrincipalActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        chango = new Chango();
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         setFragment(INICIO);
@@ -137,10 +139,6 @@ public class PrincipalActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
-//        System.out.println("No se que cuerno hago");
-//        QRScanFragment articleFrag = (QRScanFragment)
-//                getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-
+    public void onFragmentInteraction(Long changoID) {
     }
 }

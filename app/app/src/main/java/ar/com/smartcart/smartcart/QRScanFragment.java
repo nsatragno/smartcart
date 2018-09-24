@@ -1,11 +1,16 @@
 package ar.com.smartcart.smartcart;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.design.internal.NavigationMenu;
+import android.support.design.widget.NavigationView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -38,7 +43,6 @@ public class QRScanFragment extends android.support.v4.app.Fragment {
     private OnFragmentInteractionListener mListener;
 
     public QRScanFragment() {
-        // Required empty public constructor
     }
 
     /**
@@ -71,10 +75,8 @@ public class QRScanFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_qrscan, container, false);
-        scanFromFragment();
         return view;
     }
 
@@ -82,19 +84,13 @@ public class QRScanFragment extends android.support.v4.app.Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        displayToast();
+        scanFromFragment();
     }
 
     public void scanFromFragment() {
-        IntentIntegrator integrator = new IntentIntegrator(this.getActivity());
-        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
-        integrator.setPrompt("Scan a barcode");
-        integrator.setCameraId(0);  // Use a specific camera of the device
-        integrator.setBeepEnabled(true);
-        integrator.setBarcodeImageEnabled(true);
-        integrator.initiateScan();
-//        IntentIntegrator.forSupportFragment(this).initiateScan();
+        IntentIntegrator.forSupportFragment(this).setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
+                .setPrompt("Escaneá el código QR del Chango")
+                .initiateScan();
     }
 
     private void displayToast() {
@@ -109,22 +105,19 @@ public class QRScanFragment extends android.support.v4.app.Fragment {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if(result != null) {
             if(result.getContents() == null) {
-                toast = "Cancelled from fragment";
+                toast = "Vinculación de Chango cancelada";
             } else {
-                toast = "Código de Chango: " + result.getContents();
+                String[] datosChango = result.getContents().split("\\|");
+                Long idChango = Long.parseLong(datosChango[0]);
+                String codChango = datosChango[1];
+                toast = "Chango: " + codChango + " vinculado.";
+                vincularChangoApp(idChango, codChango);
             }
 
             // At this point we may or may not have a reference to the activity
             displayToast();
             ((PrincipalActivity) getActivity())
                     .setFragment(((PrincipalActivity) getActivity()).ADMIN_LIST);
-        }
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
         }
     }
 
@@ -156,7 +149,15 @@ public class QRScanFragment extends android.support.v4.app.Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(Long changoID);
+    }
+
+    public void vincularChangoApp(Long id, String cod){
+        ((PrincipalActivity) getActivity()).getChango().setId(id);
+        ((PrincipalActivity) getActivity()).getChango().setCodigo(cod);
+        NavigationView navigationView = (NavigationView)
+                ((PrincipalActivity) getActivity()).findViewById(R.id.nav_view);
+        TextView txt = (TextView) navigationView.findViewById(R.id.textView);
+        txt.setText(cod);
     }
 }

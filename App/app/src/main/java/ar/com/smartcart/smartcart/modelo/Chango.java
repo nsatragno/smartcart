@@ -13,15 +13,31 @@ public class Chango {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getCodigo() {
         return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public ArrayList<ProductoEnLista> getProductos() {
         return productos;
     }
 
+    public void setProductos(ArrayList<ProductoEnLista> productos) {
+        this.productos = productos;
+    }
+
     public BigDecimal getSubtotal() {
         return subtotal;
+    }
+
+    public void setSubtotal(BigDecimal subtotal) {
+        this.subtotal = subtotal;
     }
 }
