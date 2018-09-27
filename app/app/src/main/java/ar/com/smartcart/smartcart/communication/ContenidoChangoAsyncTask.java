@@ -6,11 +6,11 @@ import java.io.IOException;
 
 import ar.com.smartcart.smartcart.modelo.Chango;
 
-public class ContenidoChangoAsyncTask extends AsyncTask<Void, Void, Chango> {
+public class ContenidoChangoAsyncTask extends AsyncTask<Long, Void, Chango> {
         @Override
-        protected Chango doInBackground(Void... params) {
+        protected Chango doInBackground(Long... params) {
             try {
-                return ProductosManager.getContenidoChango("1");
+                return ProductosManager.getContenidoChango(params[0]);
             } catch (IOException e) {
                 e.printStackTrace();
                 Log.e("Smartcart", e.getMessage());

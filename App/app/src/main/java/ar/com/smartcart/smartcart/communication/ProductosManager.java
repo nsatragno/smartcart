@@ -17,8 +17,8 @@ public class ProductosManager {
     private final static String SERVICIO_CONTENIDO_CHANGO = "changos/{id}";
     private final static String SERVICIO_ALL_PRODUCTOS = "productos";
 
-    public static Chango getContenidoChango(String idChango) throws IOException {
-        String response = HTTPHelper.request(SERVICIO_CONTENIDO_CHANGO.replace("{id}", idChango));
+    public static Chango getContenidoChango(Long idChango) throws IOException {
+        String response = HTTPHelper.request(SERVICIO_CONTENIDO_CHANGO.replace("{id}", idChango.toString()));
         Log.d("Contenido Chango:", response);
         return new Gson().fromJson(response, Chango.class);
     }

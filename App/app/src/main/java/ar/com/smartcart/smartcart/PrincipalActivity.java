@@ -1,6 +1,5 @@
 package ar.com.smartcart.smartcart;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
@@ -11,16 +10,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
-import java.util.ArrayList;
-
-import ar.com.smartcart.smartcart.dummy.DummyContent;
+import ar.com.smartcart.smartcart.communication.ContenidoChangoAsyncTask;
+import ar.com.smartcart.smartcart.dummy.ProductoContent;
 import ar.com.smartcart.smartcart.modelo.Chango;
 import ar.com.smartcart.smartcart.modelo.ProductoEnLista;
 
 public class PrincipalActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-                    ProductoFragment.OnListFragmentInteractionListener,
+                    ListaProductoFragment.OnListFragmentInteractionListener,
                     QRScanFragment.OnFragmentInteractionListener{
 
     public static final int INICIO = 0;
@@ -119,16 +118,12 @@ public class PrincipalActivity extends AppCompatActivity
                 fragMng.beginTransaction().replace(R.id.fragment_container, qrFrag).commit();
                 break;
             case ADMIN_LIST:
-                ProductoFragment listFrag = new ProductoFragment();
+                ListaProductoFragment listFrag = new ListaProductoFragment();
                 fragMng.beginTransaction().replace(R.id.fragment_container, listFrag).commit();
                 break;
         }
     }
 
-    @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
-
-    }
 
     public Chango getChango() {
         return chango;
@@ -139,6 +134,22 @@ public class PrincipalActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFragmentInteraction(Long changoID) {
+    public void onFragmentInteraction(Long changoID, String changoCod) {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        TextView txt = (TextView) navigationView.findViewById(R.id.textView);
+        txt.setText(changoCod);
+        ContenidoChangoAsyncTask task = new ContenidoChangoAsyncTask(){
+            @Override
+            protected void onPostExecute(final Chango response) {
+                setChango(response);
+                setFragment(ADMIN_LIST);
+            }
+        };
+        task.execute(changoID);
+    }
+
+    @Override
+    public void onListFragmentInteraction(ProductoEnLista item) {
+
     }
 }

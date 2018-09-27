@@ -12,7 +12,6 @@ public class Producto {
     private Boolean apto_diabeticos = Boolean.FALSE;
     private Categoria categoria;
     private String url;
-    private Long cantidad;
 
     public Long getId() {
         return id;
@@ -76,13 +75,5 @@ public class Producto {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public Long getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(Long cantidad) {
-        this.cantidad = cantidad;
     }
 }

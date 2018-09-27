@@ -1,14 +1,20 @@
 package ar.com.smartcart.smartcart.modelo;
 
-public class ProductoEnLista {
-    private int cantidad;
-    private Producto producto;
+import java.math.BigDecimal;
 
-    public int getCantidad() {
+public class ProductoEnLista {
+    private Producto producto;
+    private Long cantidad;
+
+    public Long getCantidad() {
         return cantidad;
     }
 
     public Producto getProducto() {
         return producto;
+    }
+
+    public BigDecimal getSubtotal() {
+        return producto.getPrecio().multiply(BigDecimal.valueOf(cantidad));
     }
 }

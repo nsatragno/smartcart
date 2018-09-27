@@ -1,30 +1,16 @@
 package ar.com.smartcart.smartcart;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import ar.com.smartcart.smartcart.communication.ContenidoChangoAsyncTask;
-import ar.com.smartcart.smartcart.communication.LoginManager;
-import ar.com.smartcart.smartcart.communication.ProductosManager;
-import ar.com.smartcart.smartcart.dummy.DummyContent;
-import ar.com.smartcart.smartcart.dummy.DummyContent.DummyItem;
+import ar.com.smartcart.smartcart.dummy.ProductoContent;
 import ar.com.smartcart.smartcart.modelo.Chango;
-import ar.com.smartcart.smartcart.modelo.Producto;
 import ar.com.smartcart.smartcart.modelo.ProductoEnLista;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -32,7 +18,7 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class ProductoFragment extends android.support.v4.app.Fragment {
+public class ListaProductoFragment extends android.support.v4.app.Fragment {
 
     // TODO: Customize parameters
     private int mColumnCount = 1;
@@ -43,19 +29,12 @@ public class ProductoFragment extends android.support.v4.app.Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public ProductoFragment() {
+    public ListaProductoFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ContenidoChangoAsyncTask task = new ContenidoChangoAsyncTask(){
-            @Override
-            protected void onPostExecute(final Chango response) {
-                ((PrincipalActivity) getActivity()).setChango(response);
-            }
-        };
-        task.execute();
     }
 
     @Override
@@ -63,6 +42,7 @@ public class ProductoFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_producto_list, container, false);
         ((PrincipalActivity) getActivity()).getSupportActionBar().setTitle("Contenido del Chango");
+        Chango chango = ((PrincipalActivity) getActivity()).getChango();
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -73,7 +53,7 @@ public class ProductoFragment extends android.support.v4.app.Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyProductoRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new ProductoViewAdapter(chango.getProductos(), mListener));
         }
         return view;
     }
@@ -107,6 +87,6 @@ public class ProductoFragment extends android.support.v4.app.Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(ProductoEnLista item);
     }
 }

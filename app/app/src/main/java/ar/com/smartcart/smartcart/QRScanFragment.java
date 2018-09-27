@@ -113,11 +113,7 @@ public class QRScanFragment extends android.support.v4.app.Fragment {
                 toast = "Chango: " + codChango + " vinculado.";
                 vincularChangoApp(idChango, codChango);
             }
-
-            // At this point we may or may not have a reference to the activity
             displayToast();
-            ((PrincipalActivity) getActivity())
-                    .setFragment(((PrincipalActivity) getActivity()).ADMIN_LIST);
         }
     }
 
@@ -138,26 +134,11 @@ public class QRScanFragment extends android.support.v4.app.Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Long changoID);
+        public void onFragmentInteraction(Long changoID, String changoCod);
     }
 
     public void vincularChangoApp(Long id, String cod){
-        ((PrincipalActivity) getActivity()).getChango().setId(id);
-        ((PrincipalActivity) getActivity()).getChango().setCodigo(cod);
-        NavigationView navigationView = (NavigationView)
-                ((PrincipalActivity) getActivity()).findViewById(R.id.nav_view);
-        TextView txt = (TextView) navigationView.findViewById(R.id.textView);
-        txt.setText(cod);
+        mListener.onFragmentInteraction(id, cod);
     }
 }
