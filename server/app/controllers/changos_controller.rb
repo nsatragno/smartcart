@@ -1,4 +1,4 @@
-class ChangosController < ApplicationController
+﻿class ChangosController < ApplicationController
   before_action :authenticate_usuario!, except: [ :insertar_tag, :remover_tag, :limpiar_tags, :show]
   before_action :validar_gestion, except: [ :insertar_tag, :remover_tag, :limpiar_tag, :show ]
   before_action :set_chango, only: [
@@ -97,7 +97,7 @@ class ChangosController < ApplicationController
   end
 
   def qr
-    qr = RQRCode::QRCode.new "smartcart://open.chango/#{@chango.id}"
+    qr = RQRCode::QRCode.new "#{@chango.id}|#{@chango.codigo}"
     send_data qr.as_png(size: 300).to_s, type: "image/png", disposition: "inline"
   end
 
