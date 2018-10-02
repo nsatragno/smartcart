@@ -6,8 +6,9 @@
     android:name="ar.com.smartcart.smartcart.ProductoFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
+    android:layout_marginLeft="0dp"
+    android:layout_marginRight="0dp"
     app:layoutManager="LinearLayoutManager"
+    android:layout_centerHorizontal="true"
     tools:context=".ListaProductoFragment"
     tools:listitem="@layout/fragment_producto" />

@@ -3,26 +3,36 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
-
+    <ImageView
+        android:id="@+id/img_prod"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:contentDescription="icon"/>
     <TextView
-        android:id="@+id/desc_producto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
+        android:id="@+id/nombre_prod"
+        android:layout_width="160dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
         android:textAppearance="?attr/textAppearanceListItem" />
-
     <TextView
-        android:id="@+id/cant_producto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
+        android:id="@+id/cant_prod"
+        android:layout_width="30dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
         android:textAppearance="?attr/textAppearanceListItem" />
-
     <TextView
-        android:id="@+id/precio_producto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
+        android:id="@+id/precio_prod"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
         android:textAppearance="?attr/textAppearanceListItem" />
-
 </LinearLayout>

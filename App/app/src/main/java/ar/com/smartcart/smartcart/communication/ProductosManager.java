@@ -3,6 +3,7 @@ package ar.com.smartcart.smartcart.communication;
 import android.util.Log;
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,5 +30,9 @@ public class ProductosManager {
         Type listType = new TypeToken<ArrayList<Producto>>(){}.getType();
         ArrayList<Producto> productos = new Gson().fromJson(response, listType);
         return productos;
+    }
+
+    public static String convertirEnPrecio(BigDecimal precio){
+        return "$ " + precio.setScale(2).toString();
     }
 }

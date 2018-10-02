@@ -1,5 +1,6 @@
 package ar.com.smartcart.smartcart;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ar.com.smartcart.smartcart.communication.ContenidoChangoAsyncTask;
 import ar.com.smartcart.smartcart.dummy.ProductoContent;
@@ -150,6 +152,8 @@ public class PrincipalActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(ProductoEnLista item) {
-
+        Toast.makeText(this, item.getProducto().getDescripcion(), Toast.LENGTH_LONG).show();
+        Intent myIntent = new Intent(PrincipalActivity.this, DescProductoActivity.class);;
+        startActivity(myIntent);
     }
 }

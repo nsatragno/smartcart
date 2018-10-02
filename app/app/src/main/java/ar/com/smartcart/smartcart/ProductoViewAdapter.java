@@ -1,14 +1,16 @@
 package ar.com.smartcart.smartcart;
 
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
-
 import ar.com.smartcart.smartcart.ListaProductoFragment.OnListFragmentInteractionListener;
+import ar.com.smartcart.smartcart.communication.DescargaImagenAsyncTask;
+import ar.com.smartcart.smartcart.communication.ProductosManager;
 import ar.com.smartcart.smartcart.modelo.ProductoEnLista;
-
 import java.util.List;
 
 public class ProductoViewAdapter extends RecyclerView.Adapter<ProductoViewAdapter.ViewHolder> {
@@ -31,9 +33,16 @@ public class ProductoViewAdapter extends RecyclerView.Adapter<ProductoViewAdapte
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.txtDescripcion.setText(mValues.get(position).getProducto().getNombre());
-        holder.txtCantidad.setText(mValues.get(position).getCantidad().toString());
-        holder.txtPrecio.setText(mValues.get(position).getSubtotal().toString());
+        DescargaImagenAsyncTask task = new DescargaImagenAsyncTask(){
+            @Override
+            protected void onPostExecute(final Bitmap response) {
+                holder.imgProd.setImageBitmap(response);
+            }
+        };
+        task.execute(holder.mItem.getProducto().getUrl());
+        holder.txtNombre.setText(holder.mItem.getProducto().getNombre());
+        holder.txtCantidad.setText(holder.mItem.getCantidad().toString());
+        holder.txtPrecio.setText(ProductosManager.convertirEnPrecio(holder.mItem.getSubtotal()));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,18 +63,20 @@ public class ProductoViewAdapter extends RecyclerView.Adapter<ProductoViewAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView txtDescripcion;
+        public final TextView txtNombre;
         public final TextView txtCantidad;
         public final TextView txtPrecio;
+        public final ImageView imgProd;
 
         public ProductoEnLista mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            txtDescripcion = (TextView) view.findViewById(R.id.desc_producto);
-            txtCantidad = (TextView) view.findViewById(R.id.cant_producto);
-            txtPrecio = (TextView) view.findViewById(R.id.precio_producto);
+            txtNombre = (TextView) view.findViewById(R.id.nombre_prod);
+            txtCantidad = (TextView) view.findViewById(R.id.cant_prod);
+            txtPrecio = (TextView) view.findViewById(R.id.precio_prod);
+            imgProd = (ImageView) view.findViewById(R.id.img_prod);
         }
     }
 }

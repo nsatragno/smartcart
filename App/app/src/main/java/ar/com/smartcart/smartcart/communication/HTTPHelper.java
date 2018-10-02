@@ -1,6 +1,9 @@
 package ar.com.smartcart.smartcart.communication;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.widget.ImageView;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -34,10 +37,8 @@ public class HTTPHelper {
         conn.setRequestProperty("Content-Type", "application/json");
         conn.setRequestProperty("Accept","application/json");
         conn.setRequestMethod(method);
-//        conn.setDoOutput(true);
         conn.connect();
         Log.d("smartcart", "Conectado con servidor");
-
         try {
             InputStream in = new BufferedInputStream(conn.getInputStream());
             BufferedReader bin = new BufferedReader(new InputStreamReader(in));
@@ -52,5 +53,26 @@ public class HTTPHelper {
             conn.disconnect();
         }
         return sb.toString();
+    }
+
+    public static Bitmap descargarImg(String uri) throws IOException {
+//        if (uri == null) {
+//            return null;
+//        }
+        uri = "https://cdn0.woolworths.media/content/wowproductimages/large/032731.jpg";
+        URL url = new URL(uri);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod(METODO_GET);
+        conn.connect();
+        Log.d("smartcart", "Conectado con servidor");
+        try {
+            InputStream in = new BufferedInputStream(conn.getInputStream());
+            Log.d("smartcart", "Respuesta:");
+            Bitmap bmap = BitmapFactory.decodeStream(in);
+            in.close();
+            return bmap;
+        } finally {
+            conn.disconnect();
+        }
     }
 }
