@@ -15,13 +15,13 @@ import java.net.URL;
 
 public class HTTPHelper {
 
-    public final static String SERVER_IP = "http://192.168.1.110";
-    public final static String SERVER_PUERTO = "3000";
+    public static String SERVER_URL;
     public final static String METODO_GET = "GET";
     public final static String METODO_POST = "POST";
+    public final static int TIMEOUT_DEFAULT = 2000;
 
     public static String crearURL(String servicio){
-        return SERVER_IP + ":" + SERVER_PUERTO + "/" + servicio;
+        return "http://" + SERVER_URL + "/" + servicio;
     }
 
     public static String request(String uri) throws IOException {
@@ -34,6 +34,7 @@ public class HTTPHelper {
         StringBuilder sb = new StringBuilder();
         URL url = new URL(uri);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setConnectTimeout(TIMEOUT_DEFAULT);
         conn.setRequestProperty("Content-Type", "application/json");
         conn.setRequestProperty("Accept","application/json");
         conn.setRequestMethod(method);

@@ -3,7 +3,9 @@ package ar.com.smartcart.smartcart;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 
@@ -35,6 +37,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.com.smartcart.smartcart.communication.HTTPHelper;
 import ar.com.smartcart.smartcart.communication.LoginManager;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -57,6 +60,14 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences preferences = getSharedPreferences("smartcart", Context.MODE_PRIVATE);
+        if (!preferences.contains("URL_SERVIDOR")) {
+            Intent myIntent = new Intent(LoginActivity.this, ConfigurarConexionActivity.class);
+            startActivity(myIntent);
+            return;
+        }
+        HTTPHelper.SERVER_URL = preferences.getString("URL_SERVIDOR", "192.168.1.3:3000");
+
         setContentView(R.layout.activity_login);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -83,6 +94,15 @@ public class LoginActivity extends Activity {
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        TextView configurarConexion = findViewById(R.id.configurar_conexion);
+        configurarConexion.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(LoginActivity.this, ConfigurarConexionActivity.class);
+                startActivity(myIntent);
+            }
+        });
     }
 
     /**

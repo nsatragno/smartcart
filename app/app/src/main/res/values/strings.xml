@@ -31,4 +31,6 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="configurar_conexion">Configurar Conexión</string>
+    <string name="title_activity_configurar_conexion">ConfigurarConexionActivity</string>
 </resources>
