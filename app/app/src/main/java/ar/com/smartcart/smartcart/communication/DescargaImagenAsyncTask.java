@@ -5,8 +5,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 import java.io.IOException;
 
-import ar.com.smartcart.smartcart.modelo.Chango;
-
 public class DescargaImagenAsyncTask extends AsyncTask<String, Integer, Bitmap> {
     @Override
     protected Bitmap doInBackground(String... params) {

@@ -1,4 +1,4 @@
-package ar.com.smartcart.smartcart;
+package ar.com.smartcart.smartcart.presentacion;
 
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
@@ -7,18 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import ar.com.smartcart.smartcart.ListaProductoFragment.OnListFragmentInteractionListener;
+import ar.com.smartcart.smartcart.ContenidoChangoFragment.OnListFragmentInteractionListener;
+import ar.com.smartcart.smartcart.R;
 import ar.com.smartcart.smartcart.communication.DescargaImagenAsyncTask;
 import ar.com.smartcart.smartcart.communication.ProductosManager;
-import ar.com.smartcart.smartcart.modelo.ProductoEnLista;
+
 import java.util.List;
 
-public class ProductoViewAdapter extends RecyclerView.Adapter<ProductoViewAdapter.ViewHolder> {
+public class ProductoEnChangoViewAdapter extends RecyclerView.Adapter<ProductoEnChangoViewAdapter.ViewHolder> {
 
     private final List<ProductoEnLista> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public ProductoViewAdapter(List<ProductoEnLista> items, OnListFragmentInteractionListener listener) {
+    public ProductoEnChangoViewAdapter(List<ProductoEnLista> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -26,7 +27,7 @@ public class ProductoViewAdapter extends RecyclerView.Adapter<ProductoViewAdapte
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_producto, parent, false);
+                .inflate(R.layout.fragment_contenido_chango_row, parent, false);
         return new ViewHolder(view);
     }
 
@@ -44,12 +45,10 @@ public class ProductoViewAdapter extends RecyclerView.Adapter<ProductoViewAdapte
         holder.txtCantidad.setText(holder.mItem.getCantidad().toString());
         holder.txtPrecio.setText(ProductosManager.convertirEnPrecio(holder.mItem.getSubtotal()));
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
+        holder.txtNombre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
                     mListener.onListFragmentInteraction(holder.mItem);
                 }
             }

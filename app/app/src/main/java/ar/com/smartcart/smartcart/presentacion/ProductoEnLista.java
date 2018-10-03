@@ -1,6 +1,8 @@
-package ar.com.smartcart.smartcart.modelo;
+package ar.com.smartcart.smartcart.presentacion;
 
 import java.math.BigDecimal;
+
+import ar.com.smartcart.smartcart.modelo.Producto;
 
 public class ProductoEnLista {
     private Producto producto;

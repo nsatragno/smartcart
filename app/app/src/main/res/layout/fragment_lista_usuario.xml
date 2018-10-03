@@ -3,12 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list"
-    android:name="ar.com.smartcart.smartcart.ProductoFragment"
+    android:name="ar.com.smartcart.smartcart.ListaUsuarioFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="0dp"
-    android:layout_marginRight="0dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    android:layout_centerHorizontal="true"
-    tools:context=".ListaProductoFragment"
-    tools:listitem="@layout/fragment_producto" />
+    tools:context=".ListaUsuarioFragment"
+    tools:listitem="@layout/fragment_lista_usuario_row" />

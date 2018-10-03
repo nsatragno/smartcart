@@ -1,6 +1,5 @@
 package ar.com.smartcart.smartcart;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -16,13 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ar.com.smartcart.smartcart.communication.ContenidoChangoAsyncTask;
-import ar.com.smartcart.smartcart.dummy.ProductoContent;
 import ar.com.smartcart.smartcart.modelo.Chango;
-import ar.com.smartcart.smartcart.modelo.ProductoEnLista;
+import ar.com.smartcart.smartcart.presentacion.ProductoEnLista;
 
 public class PrincipalActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-                    ListaProductoFragment.OnListFragmentInteractionListener,
+                    ContenidoChangoFragment.OnListFragmentInteractionListener,
                     QRScanFragment.OnFragmentInteractionListener{
 
     public static final int INICIO = 0;
@@ -121,7 +119,7 @@ public class PrincipalActivity extends AppCompatActivity
                 fragMng.beginTransaction().replace(R.id.fragment_container, qrFrag).commit();
                 break;
             case ADMIN_LIST:
-                ListaProductoFragment listFrag = new ListaProductoFragment();
+                ContenidoChangoFragment listFrag = new ContenidoChangoFragment();
                 fragMng.beginTransaction().replace(R.id.fragment_container, listFrag).commit();
                 break;
         }

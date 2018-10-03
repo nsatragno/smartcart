@@ -57,10 +57,10 @@ public class HTTPHelper {
     }
 
     public static Bitmap descargarImg(String uri) throws IOException {
-//        if (uri == null) {
-//            return null;
-//        }
-        uri = "https://cdn0.woolworths.media/content/wowproductimages/large/032731.jpg";
+        if (uri == null) {
+            return null;
+        }
+//        uri = "https://cdn0.woolworths.media/content/wowproductimages/large/032731.jpg";
         URL url = new URL(uri);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod(METODO_GET);

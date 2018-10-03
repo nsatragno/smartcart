@@ -8,9 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import ar.com.smartcart.smartcart.dummy.ProductoContent;
 import ar.com.smartcart.smartcart.modelo.Chango;
-import ar.com.smartcart.smartcart.modelo.ProductoEnLista;
+import ar.com.smartcart.smartcart.presentacion.ProductoEnLista;
+import ar.com.smartcart.smartcart.presentacion.ProductoEnChangoViewAdapter;
 
 /**
  * A fragment representing a list of Items.
@@ -18,7 +18,7 @@ import ar.com.smartcart.smartcart.modelo.ProductoEnLista;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class ListaProductoFragment extends android.support.v4.app.Fragment {
+public class ContenidoChangoFragment extends android.support.v4.app.Fragment {
 
     // TODO: Customize parameters
     private int mColumnCount = 1;
@@ -29,7 +29,7 @@ public class ListaProductoFragment extends android.support.v4.app.Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public ListaProductoFragment() {
+    public ContenidoChangoFragment() {
     }
 
     @Override
@@ -40,7 +40,7 @@ public class ListaProductoFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_producto_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_contenido_chango, container, false);
         ((PrincipalActivity) getActivity()).getSupportActionBar().setTitle("Contenido del Chango");
         Chango chango = ((PrincipalActivity) getActivity()).getChango();
 
@@ -67,7 +67,7 @@ public class ListaProductoFragment extends android.support.v4.app.Fragment {
             chango.getProductos().add(chango.getProductos().get(0));
             chango.getProductos().add(chango.getProductos().get(0));
             chango.getProductos().add(chango.getProductos().get(0));
-            recyclerView.setAdapter(new ProductoViewAdapter(chango.getProductos(), mListener));
+            recyclerView.setAdapter(new ProductoEnChangoViewAdapter(chango.getProductos(), mListener));
         }
         return view;
     }

@@ -3,6 +3,8 @@ package ar.com.smartcart.smartcart.modelo;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import ar.com.smartcart.smartcart.presentacion.ProductoEnLista;
+
 public class Chango {
     private Long id;
     private String codigo;

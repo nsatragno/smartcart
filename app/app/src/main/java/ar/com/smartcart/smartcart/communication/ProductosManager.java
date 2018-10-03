@@ -4,13 +4,11 @@ import android.util.Log;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
+
 import ar.com.smartcart.smartcart.modelo.Chango;
-import ar.com.smartcart.smartcart.modelo.LoginResponse;
 import ar.com.smartcart.smartcart.modelo.Producto;
-import ar.com.smartcart.smartcart.modelo.ProductoEnLista;
+
 import java.lang.reflect.Type;
 import com.google.gson.reflect.TypeToken;
 
