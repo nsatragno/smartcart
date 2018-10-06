@@ -34,7 +34,10 @@
             android:label="@string/title_activity_desc_producto" />
         <activity
             android:name=".ConfigurarConexionActivity"
-            android:label="@string/title_activity_configurar_conexion"></activity>
+            android:label="@string/title_activity_configurar_conexion" />
+        <activity
+            android:name=".SignupActivity"
+            android:label="@string/title_activity_signup"></activity>
     </application>
 
 </manifest>

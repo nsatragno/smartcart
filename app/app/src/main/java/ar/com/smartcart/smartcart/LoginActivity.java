@@ -108,6 +108,14 @@ public class LoginActivity extends Activity {
                 startActivity(myIntent);
             }
         });
+
+        findViewById(R.id.sign_up).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(LoginActivity.this, SignupActivity.class);
+                startActivity(myIntent);
+            }
+        });
     }
 
     /**

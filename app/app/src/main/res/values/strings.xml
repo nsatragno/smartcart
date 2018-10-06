@@ -33,4 +33,5 @@
     <string name="title_notifications">Notifications</string>
     <string name="configurar_conexion">Configurar Conexión</string>
     <string name="title_activity_configurar_conexion">ConfigurarConexionActivity</string>
+    <string name="title_activity_signup">SignupActivity</string>
 </resources>

@@ -10,6 +10,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -25,10 +27,14 @@ public class HTTPHelper {
     }
 
     public static String request(String uri) throws IOException {
-        return request(uri, METODO_GET);
+        return request(uri, METODO_GET, null);
     }
 
-    public static String request(String urlServicio, String method) throws IOException {
+    public static String request(String uri, String method) throws IOException {
+        return request(uri, method, null);
+    }
+
+    public static String request(String urlServicio, String method, String payload) throws IOException {
         String uri = crearURL(urlServicio);
         Log.d("smartcart", "Intentando conexión a " + uri);
         StringBuilder sb = new StringBuilder();
@@ -38,6 +44,11 @@ public class HTTPHelper {
         conn.setRequestProperty("Content-Type", "application/json");
         conn.setRequestProperty("Accept","application/json");
         conn.setRequestMethod(method);
+        if (payload != null) {
+            try (OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream())) {
+                writer.write(payload);
+            }
+        }
         conn.connect();
         Log.d("smartcart", "Conectado con servidor");
         try {
