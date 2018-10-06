@@ -36,6 +36,7 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.prefs.Preferences;
 
 import ar.com.smartcart.smartcart.communication.HTTPHelper;
 import ar.com.smartcart.smartcart.communication.LoginManager;
@@ -56,11 +57,12 @@ public class LoginActivity extends Activity {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences preferences = getSharedPreferences("smartcart", Context.MODE_PRIVATE);
+        preferences = getSharedPreferences("smartcart", Context.MODE_PRIVATE);
         if (!preferences.contains("URL_SERVIDOR")) {
             Intent myIntent = new Intent(LoginActivity.this, ConfigurarConexionActivity.class);
             startActivity(myIntent);
@@ -68,11 +70,14 @@ public class LoginActivity extends Activity {
         }
         HTTPHelper.SERVER_URL = preferences.getString("URL_SERVIDOR", "192.168.1.3:3000");
 
+
         setContentView(R.layout.activity_login);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mEmailView.setText(preferences.getString("USUARIO", ""));
 
         mPasswordView = (EditText) findViewById(R.id.password);
+        mPasswordView.setText(preferences.getString("PASSWORD", ""));
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -221,6 +226,11 @@ public class LoginActivity extends Activity {
             showProgress(false);
 
             if (response.equals("ok")) {
+                SharedPreferences.Editor edit = preferences.edit();
+                edit.putString("USUARIO", mEmail);
+                edit.putString("PASSWORD", mPassword);
+                edit.commit();
+
                 Intent myIntent = new Intent(LoginActivity.this, PrincipalActivity.class);;
                 startActivity(myIntent);
                 finish();
