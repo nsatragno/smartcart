@@ -81,7 +81,6 @@ public class PrincipalActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
 
@@ -101,6 +100,10 @@ public class PrincipalActivity extends AppCompatActivity
             setFragment(ADMIN_LIST);
         } else if (id == R.id.nav_send) {
             setFragment(ADMIN_LIST);
+        } else if (id == R.id.nav_logout) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            return true;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

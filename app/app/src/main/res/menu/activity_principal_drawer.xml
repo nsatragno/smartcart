@@ -35,4 +35,12 @@
         </menu>
     </item>
 
+    <item android:title="Cuenta">
+        <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_dialog_close_dark"
+                android:title="Cerrar Sesión" />
+        </menu>
+    </item>
 </menu>
