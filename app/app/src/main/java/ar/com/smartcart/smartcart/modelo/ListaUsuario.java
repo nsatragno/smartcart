@@ -1,5 +1,6 @@
 package ar.com.smartcart.smartcart.modelo;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,6 @@ public class ListaUsuario {
     private String nombre;
     private Boolean activa = Boolean.FALSE;
     private List<ProductoEnLista> productos = new ArrayList<ProductoEnLista>();
-    private Long cantidad;
 
     public Long getId() {
         return id;
@@ -44,7 +44,19 @@ public class ListaUsuario {
         this.productos = productos;
     }
 
-    public Long getCantidad() {
-        return cantidad;
+    public Long getCantEnChango() {
+        Long cant = 0L;
+        for(ProductoEnLista prod : getProductos()){
+            cant += prod.getEnChango() ? prod.getCantidad() : 0L;
+        }
+        return cant;
+    }
+
+    public Long getCantRestante() {
+        Long cant = 0L;
+        for(ProductoEnLista prod : getProductos()){
+            cant += !prod.getEnChango() ? prod.getCantidad() : 0L;
+        }
+        return cant;
     }
 }

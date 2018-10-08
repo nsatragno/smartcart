@@ -71,7 +71,6 @@ public class HTTPHelper {
         if (uri == null) {
             return null;
         }
-//        uri = "https://cdn0.woolworths.media/content/wowproductimages/large/032731.jpg";
         URL url = new URL(uri);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod(METODO_GET);

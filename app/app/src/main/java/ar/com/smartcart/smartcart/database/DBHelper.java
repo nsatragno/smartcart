@@ -1,165 +1,405 @@
 package ar.com.smartcart.smartcart.database;
 
-/**
- * Created by Munoz on 10/05/2015.
- */
-public class DBHelper { //extends SQLiteOpenHelper {
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.DatabaseUtils;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import ar.com.smartcart.smartcart.modelo.Categoria;
+import ar.com.smartcart.smartcart.modelo.ListaUsuario;
+import ar.com.smartcart.smartcart.modelo.Producto;
+import ar.com.smartcart.smartcart.presentacion.ProductoEnLista;
+
+public class DBHelper extends SQLiteOpenHelper {
+
     private static DBHelper instance = null;
     public static final String DATABASE_NAME = "smartCart.db";
-    public static final String TABLE_NAME = "PRODUCT";
-    public static final String COL_TITLE = "TITLE";
-    public static final String COL_CONTENT = "CONTENT";
-    public static final String COL_X = "X";
-    public static final String COL_Y = "Y";
-    public static final String COL_Z = "Z";
+    public static final String COL_ID = "ID";
+    public static final String COL_NOMBRE = "NOMBRE";
 
-//    //Singleton Pattern
-//    public static DBHelper getInstance(Context context) {
-//        if (instance == null) {
-//            instance = new DBHelper(context);
-//        }
-//        return instance;
-//    }
-//
-//    private DBHelper(Context context) {
-//        super(context, DATABASE_NAME, null, 1);
-//    }
-//
-//    //These is where we need to write create table statements. This is called when database is created.
-//    @Override
-//    public void onCreate(SQLiteDatabase db) {
-////        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(" +
-////                COL_TITLE + " TEXT, " +
-////                COL_CONTENT + " TEXT, " +
-////                COL_X + " NUMBER, " +
-////                COL_Y + " NUMBER, " +
-////                COL_Z + " NUMBER);");
-//    }
-//
-//    //This method is called when database is upgraded like modifying the table structure,
-//    // adding constraints to database, etc.
-//    @Override
-//    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-//        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-//        onCreate(db);
-//    }
-//
-//    public boolean insertNote (Note note)
-//    {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put(COL_TITLE, note.getTitle());
-//        contentValues.put(COL_CONTENT, note.getContent());
-//        contentValues.put(COL_X, note.getX());
-//        contentValues.put(COL_Y, note.getY());
-//        contentValues.put(COL_Z, note.getZ());
-//
-//        db.insert(TABLE_NAME, null, contentValues);
-//        return true;
-//    }
-//
-//    public boolean insertNoteWithoutDuplicate (Note note)
-//    {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put(COL_TITLE, note.getTitle());
-//        contentValues.put(COL_CONTENT, note.getContent());
-//        contentValues.put(COL_X, note.getX());
-//        contentValues.put(COL_Y, note.getY());
-//        contentValues.put(COL_Z, note.getZ());
-//
-//        if(this.existNote(note.getTitle())){
-//            this.deleteNote(note.getTitle());
-//        }
-//        db.insert(TABLE_NAME, null, contentValues);
-//        return true;
-//    }
-//
-//    //Note ID is the Title
-//    public Note getNote(String title){
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        Note note = new Note();
-//        Cursor res =  db.rawQuery( "SELECT * " +
-//                                   "FROM " + TABLE_NAME +
-//                                   " WHERE " + COL_TITLE + " = '" + title + "'", null );
-//        res.moveToFirst();
-//
-//        if(res.isAfterLast() == Boolean.FALSE){
-//            note.setTitle(res.getString(res.getColumnIndex(COL_TITLE)));
-//            note.setContent(res.getString(res.getColumnIndex(COL_CONTENT)));
-//            note.setX(res.getInt(res.getColumnIndex(COL_X)));
-//            note.setY(res.getInt(res.getColumnIndex(COL_Y)));
-//            note.setZ(res.getInt(res.getColumnIndex(COL_Z)));
-//        }
-//        return note;
-//    }
-//    public boolean validateKey(Note note){
-//        Note noteOrig = getNote(note.getTitle());
-//
-//        return noteOrig.getX().equals(note.getX()) && noteOrig.getY().equals(note.getY()) && noteOrig.getZ().equals(note.getZ());
-//    }
-//    public Boolean existNote(String tittle){
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        String query = "SELECT * " +
-//                "FROM " + TABLE_NAME +
-//                " WHERE " + COL_TITLE + " = '" + tittle + "'";
-//        Cursor res =  db.rawQuery( query, null );
-//        return res.moveToFirst();
-//    }
-//
-//    public Boolean updateNote (String oldTittle,Note note)
-//    {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put(COL_TITLE, note.getTitle());
-//        contentValues.put(COL_CONTENT, note.getContent());
-//        contentValues.put(COL_X, note.getX());
-//        contentValues.put(COL_Y, note.getY());
-//        contentValues.put(COL_Z, note.getZ());
-//        db.update(TABLE_NAME, contentValues, COL_TITLE + " = ? ", new String[] {oldTittle});
-//        return Boolean.TRUE;
-//    }
-//
-//    public Boolean updateNoteWithoutEncrypt (String oldTittle,Note note)
-//    {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put(COL_TITLE, note.getTitle());
-//        contentValues.put(COL_CONTENT, note.getContent());
-//        db.update(TABLE_NAME, contentValues, COL_TITLE + " = ? ", new String[] {oldTittle});
-//        return Boolean.TRUE;
-//    }
-//
-//    public Integer deleteNote (String title)
-//    {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        return db.delete(TABLE_NAME, COL_TITLE + " = ? ", new String[] { title });
-//    }
-//
-//    public Integer numberOfRows(){
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        int numRows = (int) DatabaseUtils.queryNumEntries(db, TABLE_NAME);
-//        return numRows;
-//    }
-//
-//    public ArrayList<Note> getAllNotes()
-//    {
-//        ArrayList<Note> notes = new ArrayList<Note>();
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        Cursor res =  db.rawQuery( "SELECT * FROM " + TABLE_NAME, null );
-//        res.moveToFirst();
-//        while(res.isAfterLast() == Boolean.FALSE){
-//            Note note = new Note();
-//            note.setTitle(res.getString(res.getColumnIndex(COL_TITLE)));
-//            note.setContent(res.getString(res.getColumnIndex(COL_CONTENT)));
-//            note.setX((res.getColumnIndex(COL_X)));
-//            note.setY((res.getColumnIndex(COL_Y)));
-//            note.setZ((res.getColumnIndex(COL_Z)));
-//
-//            notes.add(note);
-//
-//            res.moveToNext();
-//        }
-//        return notes;
-//    }
+    public static final String TBL_LISTA_USUTARIO = "LISTA_USUTARIO";
+    public static final String COL_ACTIVA = "ACTIVA";
+
+    public static final String TBL_PRODUCTO_LISTA = "PRODUCTO_LISTA";
+    public static final String COL_PRODUCTO_ID = "PRODUCTO_ID";
+    public static final String COL_LISTA_USUARIO_ID = "LISTA_USUARIO_ID";
+    public static final String COL_CANTIDAD = "CANTIDAD";
+    public static final String COL_EN_CHANGO = "EN_CHANGO";
+
+    public static final String TBL_PRODUCTO = "PRODUCTO";
+    public static final String COL_DESC = "DESCRIPCION";
+    public static final String COL_PRECIO = "PRECIO";
+    public static final String COL_CELIACOS = "APTO_CELIACOS";
+    public static final String COL_DIABETICOS = "APTO_DIABETICOS";
+    public static final String COL_URL = "URL";
+    public static final String COL_CATEGORIA_ID = "CATEGORIA_ID";
+
+    public static final String TBL_CATEGORIA = "CATEGORIA";
+    public static final String COL_POS_X = "POS_X";
+    public static final String COL_POS_Y = "POS_Y";
+
+    //Singleton Pattern
+    public static DBHelper getInstance(Context context) {
+        if (instance == null) {
+            instance = new DBHelper(context);
+        }
+        return instance;
+    }
+
+    private DBHelper(Context context) {
+        super(context, DATABASE_NAME, null, 1);
+    }
+
+    //These is where we need to write create table statements. This is called when database is created.
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_LISTA_USUTARIO + "(" +
+                COL_ID + " NUMBER, " +
+                COL_NOMBRE + " TEXT, " +
+                COL_CANTIDAD + " NUMBER, " +
+                COL_ACTIVA + " BOOLEAN);");
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_PRODUCTO + "(" +
+                COL_ID + " NUMBER, " +
+                COL_NOMBRE + " TEXT, " +
+                COL_DESC + " TEXT, " +
+                COL_PRECIO + " NUMBER, " +
+                COL_CELIACOS + " BOOLEAN, " +
+                COL_DIABETICOS + " BOOLEAN, " +
+                COL_URL + " TEXT);");
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_PRODUCTO_LISTA + "(" +
+                COL_PRODUCTO_ID + " NUMBER, " +
+                COL_LISTA_USUARIO_ID + " NUMBER, " +
+                COL_EN_CHANGO + " BOOLEAN, " +
+                COL_CANTIDAD + " NUMBER);");
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_CATEGORIA + "(" +
+                COL_ID + " NUMBER, " +
+                COL_NOMBRE + " TEXT, " +
+                COL_POS_X + " NUMBER, " +
+                COL_POS_Y + " NUMBER);");
+    }
+
+    //This method is called when database is upgraded like modifying the table structure,
+    // adding constraints to database, etc.
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + TBL_LISTA_USUTARIO);
+        db.execSQL("DROP TABLE IF EXISTS " + TBL_PRODUCTO);
+        db.execSQL("DROP TABLE IF EXISTS " + TBL_PRODUCTO_LISTA);
+        db.execSQL("DROP TABLE IF EXISTS " + TBL_CATEGORIA);
+        onCreate(db);
+    }
+
+    //Inserts
+    public Boolean insertProducto(Producto prod)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_ID, prod.getId());
+        contentValues.put(COL_NOMBRE, prod.getNombre());
+        contentValues.put(COL_DESC, prod.getDescripcion());
+        contentValues.put(COL_PRECIO, prod.getPrecio().floatValue());
+        contentValues.put(COL_CELIACOS, prod.getApto_celiacos());
+        contentValues.put(COL_DIABETICOS, prod.getApto_diabeticos());
+        contentValues.put(COL_URL, prod.getUrl());
+        contentValues.put(COL_CATEGORIA_ID, prod.getCategoria().getId());
+        db.insert(TBL_PRODUCTO, null, contentValues);
+        return true;
+    }
+
+    public Boolean insertarProductos(ArrayList<Producto> productos){
+        Boolean result = Boolean.FALSE;
+        for (Producto prod : productos) {
+            result = insertProducto(prod);
+        }
+        return result;
+    }
+
+    public Boolean insertCategoria(Categoria cat)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_ID, cat.getId());
+        contentValues.put(COL_NOMBRE, cat.getNombre());
+        contentValues.put(COL_POS_X, cat.getPosicion_x().floatValue());
+        contentValues.put(COL_POS_Y, cat.getPosicion_y().floatValue());
+        db.insert(TBL_CATEGORIA, null, contentValues);
+        return true;
+    }
+
+    public Boolean insertarListaUsuario(ListaUsuario lista){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_ID, lista.getId());
+        contentValues.put(COL_NOMBRE, lista.getNombre());
+        contentValues.put(COL_ACTIVA, lista.getActiva());
+        long result = db.insert(TBL_LISTA_USUTARIO, null, contentValues);
+        if(result == 1L && !lista.getProductos().isEmpty()){
+            insertarProductosEnLista(lista);
+        }
+        return true;
+    }
+
+    public Boolean insertarProductosEnLista(ListaUsuario lista){
+        SQLiteDatabase db = this.getWritableDatabase();
+        for(ProductoEnLista prod : lista.getProductos()){
+            ContentValues contentValues = new ContentValues();
+            contentValues = new ContentValues();
+            contentValues.put(COL_PRODUCTO_ID, prod.getProducto().getId());
+            contentValues.put(COL_LISTA_USUARIO_ID, prod.getCantidad());
+            contentValues.put(COL_EN_CHANGO, prod.getEnChango());
+            contentValues.put(COL_CANTIDAD, prod.getCantidad());
+            db.insert(TBL_PRODUCTO_LISTA, null, contentValues);
+        }
+        return true;
+    }
+
+    //Deletes
+    public Boolean borrarProducto (Long id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Integer result = db.delete(TBL_PRODUCTO, COL_ID + " = ? ", new String[] { id.toString()});
+        if(result == 1){
+            return true;
+        }
+        return false;
+    }
+
+    public Boolean borrarAllProductos(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Integer result = db.delete(TBL_PRODUCTO, null, null);
+        return true;
+    }
+
+    public Boolean borrarCategoria (Long id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Integer result = db.delete(TBL_CATEGORIA, COL_ID + " = ? ", new String[] { id.toString()});
+        if(result == 1){
+            return true;
+        }
+        return false;
+    }
+
+    public Boolean borrarListaUsuario (Long id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Integer result = db.delete(TBL_LISTA_USUTARIO, COL_ID + " = ? ", new String[] { id.toString()});
+        if(result == 1){
+            return borrarProductosLista(id);
+        }
+        return false;
+    }
+
+    public Boolean borrarProductosLista (Long idLista){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Integer result = db.delete(TBL_PRODUCTO_LISTA,
+                COL_LISTA_USUARIO_ID + " = ? ", new String[] { idLista.toString()});
+        if(result == 1){
+            return true;
+        }
+        return false;
+    }
+
+    //Getters
+    public Producto getProducto(Long id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Producto prod = new Producto();
+        Cursor res =  db.rawQuery( " SELECT * " +
+                                   " FROM " + TBL_PRODUCTO +
+                                   " WHERE " + COL_ID + " = " + id, null );
+        res.moveToFirst();
+        if(res.isAfterLast() == Boolean.FALSE){
+          fillProducto(prod, res);
+        }
+        return prod;
+    }
+
+    public void fillProducto(Producto prod, Cursor res){
+        prod.setId(res.getLong(res.getColumnIndex(COL_ID)));
+        prod.setNombre(res.getString(res.getColumnIndex(COL_NOMBRE)));
+        prod.setDescripcion(res.getString(res.getColumnIndex(COL_DESC)));
+        prod.setPrecio(new BigDecimal(res.getFloat(res.getColumnIndex(COL_PRECIO))));
+        prod.setUrl(res.getString(res.getColumnIndex(COL_URL)));
+        prod.setApto_celiacos(res.getLong(res.getColumnIndex(COL_CELIACOS)) == 1L
+                ? Boolean.TRUE : Boolean.FALSE);
+        prod.setApto_celiacos(res.getLong(res.getColumnIndex(COL_CELIACOS)) == 1L
+                ? Boolean.TRUE : Boolean.FALSE);
+    }
+
+    public ArrayList<Producto> getAllProductos(){
+        ArrayList<Producto> productos = new ArrayList<Producto>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery( " SELECT * "
+                                + " FROM " + TBL_PRODUCTO, null );
+        res.moveToFirst();
+        while(res.isAfterLast() == Boolean.FALSE){
+            Producto prod = new Producto();
+            fillProducto(prod, res);
+            productos.add(prod);
+            res.moveToNext();
+        }
+        return productos;
+    }
+
+    public List<Producto> getProductosLikeNombre(String nombre){
+        ArrayList<Producto> productos = new ArrayList<Producto>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery( " SELECT * " +
+                                   " FROM " + TBL_PRODUCTO +
+                                   " WHERE " + COL_NOMBRE +
+                                        " LIKE '" + nombre + "'", null );
+        res.moveToFirst();
+        while(res.isAfterLast() == Boolean.FALSE){
+            Producto prod = new Producto();
+            fillProducto(prod, res);
+            productos.add(prod);
+            res.moveToNext();
+        }
+        return productos;
+    }
+
+    public ListaUsuario getPlainListaUsuario(Long id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ListaUsuario lista = new ListaUsuario();
+        Cursor res =  db.rawQuery( " SELECT * " +
+                " FROM " + TBL_LISTA_USUTARIO +
+                " WHERE " + COL_ID + " = " + id, null );
+        res.moveToFirst();
+        if(res.isAfterLast() == Boolean.FALSE){
+           fillPlainListaUsuario(lista, res);
+        }
+        return lista;
+    }
+
+    public ArrayList<ListaUsuario> getAllPlainListaUsuario(){
+        ArrayList<ListaUsuario> listas = new ArrayList<ListaUsuario>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery( " SELECT * "
+                + " FROM " + TBL_LISTA_USUTARIO, null );
+        res.moveToFirst();
+        while(res.isAfterLast() == Boolean.FALSE){
+            ListaUsuario lista = new ListaUsuario();
+            fillPlainListaUsuario(lista, res);
+            listas.add(lista);
+            res.moveToNext();
+        }
+        return listas;
+    }
+
+    public void fillPlainListaUsuario(ListaUsuario lista, Cursor res){
+        lista.setId(res.getLong(res.getColumnIndex(COL_ID)));
+        lista.setNombre(res.getString(res.getColumnIndex(COL_NOMBRE)));
+        lista.setActiva(res.getLong(res.getColumnIndex(COL_ACTIVA)) == 1L
+                ? Boolean.TRUE : Boolean.FALSE);
+    }
+
+    public ListaUsuario getListaUsuario(Long id){
+        ListaUsuario lista = getPlainListaUsuario(id);
+        if(lista != null){
+            lista.setProductos(getProductosEnLista(id));
+        }
+        return lista;
+    }
+
+    public ArrayList<ProductoEnLista> getProductosEnLista(Long idLista){
+        ArrayList<ProductoEnLista> productos = new ArrayList<ProductoEnLista>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery( " SELECT * " +
+                                " FROM " + TBL_PRODUCTO_LISTA + " PL " +
+                                    " JOIN " + TBL_PRODUCTO + " P " +
+                                        " ON (PL." + COL_PRODUCTO_ID + " = " +
+                                              "P." + COL_ID + ")" +
+                                " WHERE " + COL_LISTA_USUARIO_ID + " = " + idLista, null );
+        res.moveToFirst();
+        while(res.isAfterLast() == Boolean.FALSE){
+            ProductoEnLista prod = new ProductoEnLista();
+            fillProductoEnLista(prod, res);
+            productos.add(prod);
+            res.moveToNext();
+        }
+        return productos;
+    }
+
+    public Integer getCantAllProductos(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        int numRows = (int) DatabaseUtils.queryNumEntries(db, TBL_PRODUCTO);
+        return numRows;
+    }
+
+    public void fillProductoEnLista(ProductoEnLista prod, Cursor res){
+        Producto p = new Producto();
+        fillProducto(p, res);
+        prod.setCantidad(res.getLong(res.getColumnIndex(COL_CANTIDAD)));
+        prod.setEnChango(res.getLong(res.getColumnIndex(COL_EN_CHANGO)) == 1L
+                ? Boolean.TRUE : Boolean.FALSE);
+    }
+
+    //Updates
+    public Boolean actualizarPlainListaUsuario(ListaUsuario lista){
+        ListaUsuario listaDB = getPlainListaUsuario(lista.getId());
+        if(listaDB.getId() == null){
+            return false;
+        }
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_NOMBRE, lista.getNombre());
+        contentValues.put(COL_ACTIVA, lista.getActiva());
+        Integer result = db.update(TBL_LISTA_USUTARIO, contentValues,
+                            COL_ID + " = ? ", new String[] {lista.getId().toString()});
+        if(result == 1){
+            return true;
+        }
+        return false;
+    }
+
+    public Boolean activarListaUsuario(Long id){
+        Boolean result = Boolean.FALSE;
+        ListaUsuario listaDB = getPlainListaUsuario(id);
+        if(listaDB.getId() == null){
+            return false;
+        }
+        listaDB.setActiva(Boolean.TRUE);
+        result = actualizarPlainListaUsuario(listaDB);
+        if(result){
+            result = desactivarListas(id);
+        }
+        return result;
+    }
+
+    public Boolean desactivarListas(Long id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_ACTIVA, Boolean.FALSE);
+        Integer result = db.update(TBL_LISTA_USUTARIO, contentValues,
+                COL_ID + " <> ? ", new String[] {id.toString()});
+        if(result == 1){
+            return true;
+        }
+        return false;
+    }
+
+    public Boolean actualizarProdsListaUsuario(ListaUsuario lista){
+        if(getPlainListaUsuario(lista.getId()).getId() == null){
+            return false;
+        }
+        Boolean result = borrarProductosLista(lista.getId());
+        if(result){
+            return insertarProductosEnLista(lista);
+        }
+        return false;
+    }
+
+    public Boolean actualizarProductos(ArrayList<Producto> productos){
+        Boolean result = borrarAllProductos();
+        if(result){
+            return insertarProductos(productos);
+        }
+        return false;
+    }
 }

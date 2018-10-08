@@ -53,21 +53,9 @@ public class ContenidoChangoFragment extends android.support.v4.app.Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            chango.getProductos().add(chango.getProductos().get(0));
-            chango.getProductos().add(chango.getProductos().get(0));
-            chango.getProductos().add(chango.getProductos().get(0));
-            chango.getProductos().add(chango.getProductos().get(0));
-            chango.getProductos().add(chango.getProductos().get(0));
-            chango.getProductos().add(chango.getProductos().get(0));
-            chango.getProductos().add(chango.getProductos().get(0));
-            chango.getProductos().add(chango.getProductos().get(0));
-            chango.getProductos().add(chango.getProductos().get(0));
-            chango.getProductos().add(chango.getProductos().get(0));
-            chango.getProductos().add(chango.getProductos().get(0));
-            chango.getProductos().add(chango.getProductos().get(0));
-            chango.getProductos().add(chango.getProductos().get(0));
-            chango.getProductos().add(chango.getProductos().get(0));
-            recyclerView.setAdapter(new ProductoEnChangoViewAdapter(chango.getProductos(), mListener));
+            if(chango != null){
+                recyclerView.setAdapter(new ProductoEnChangoViewAdapter(chango.getProductos(), mListener));
+            }
         }
         return view;
     }

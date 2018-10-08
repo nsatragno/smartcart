@@ -1,5 +1,6 @@
 package ar.com.smartcart.smartcart;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -14,8 +15,13 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import ar.com.smartcart.smartcart.communication.AllProductosAsyncTask;
 import ar.com.smartcart.smartcart.communication.ContenidoChangoAsyncTask;
+import ar.com.smartcart.smartcart.database.DBHelper;
 import ar.com.smartcart.smartcart.modelo.Chango;
+import ar.com.smartcart.smartcart.modelo.Producto;
 import ar.com.smartcart.smartcart.presentacion.ProductoEnLista;
 
 public class PrincipalActivity extends AppCompatActivity
@@ -25,9 +31,14 @@ public class PrincipalActivity extends AppCompatActivity
 
     public static final int INICIO = 0;
     public static final int QR_SCAN = 1;
-    public static final int ADMIN_LIST = 2;
+    public static final int CONTENIDO_CHANGO = 2;
+    public static final int LISTA_ACTIVA = 3;
+    public static final int UBIC_PRODS = 4;
+    public static final int ADMIN_LISTAS = 5;
+    public static final int PROMOS = 6;
 
     private Chango chango;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,17 +46,24 @@ public class PrincipalActivity extends AppCompatActivity
         setContentView(R.layout.activity_principal);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        context = getApplicationContext();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        chango = new Chango();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        habilitarContenidoChangoMenuItem(Boolean.FALSE);
         navigationView.setNavigationItemSelectedListener(this);
+
+        AllProductosAsyncTask task = new AllProductosAsyncTask(){
+            @Override
+            protected void onPostExecute(final ArrayList<Producto> response) {
+                Toast.makeText(PrincipalActivity.this, "Productos actualizados correctamente.", Toast.LENGTH_LONG).show();
+            }
+        };
+        task.execute(context);
         setFragment(INICIO);
     }
 
@@ -74,32 +92,31 @@ public class PrincipalActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_logout) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         item.setChecked(true);
-
         if (id == R.id.nav_camera) {
             setFragment(QR_SCAN);
         } else if (id == R.id.nav_gallery) {
-            setFragment(ADMIN_LIST);
+            setFragment(CONTENIDO_CHANGO);
         } else if (id == R.id.nav_slideshow) {
             setFragment(INICIO);
         } else if (id == R.id.nav_manage) {
             setFragment(INICIO);
         } else if (id == R.id.nav_share) {
-            setFragment(ADMIN_LIST);
+            setFragment(CONTENIDO_CHANGO);
         } else if (id == R.id.nav_send) {
-            setFragment(ADMIN_LIST);
+            setFragment(CONTENIDO_CHANGO);
         } else if (id == R.id.nav_logout) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
@@ -121,7 +138,7 @@ public class PrincipalActivity extends AppCompatActivity
                 QRScanFragment qrFrag = new QRScanFragment();
                 fragMng.beginTransaction().replace(R.id.fragment_container, qrFrag).commit();
                 break;
-            case ADMIN_LIST:
+            case CONTENIDO_CHANGO:
                 ContenidoChangoFragment listFrag = new ContenidoChangoFragment();
                 fragMng.beginTransaction().replace(R.id.fragment_container, listFrag).commit();
                 break;
@@ -146,10 +163,11 @@ public class PrincipalActivity extends AppCompatActivity
             @Override
             protected void onPostExecute(final Chango response) {
                 setChango(response);
-                setFragment(ADMIN_LIST);
+                setFragment(CONTENIDO_CHANGO);
             }
         };
         task.execute(changoID);
+        habilitarContenidoChangoMenuItem(Boolean.TRUE);
     }
 
     @Override
@@ -157,5 +175,14 @@ public class PrincipalActivity extends AppCompatActivity
         Toast.makeText(this, item.getProducto().getDescripcion(), Toast.LENGTH_LONG).show();
         Intent myIntent = new Intent(PrincipalActivity.this, DescProductoActivity.class);;
         startActivity(myIntent);
+    }
+
+    public void habilitarContenidoChangoMenuItem(Boolean enable){
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        Menu menu = navigationView.getMenu();
+        MenuItem item = menu.findItem(R.id.nav_gallery);
+        if(item != null){
+            item.setEnabled(enable);
+        }
     }
 }
