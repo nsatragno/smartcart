@@ -1,6 +1,7 @@
 package ar.com.smartcart.smartcart.communication;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
 

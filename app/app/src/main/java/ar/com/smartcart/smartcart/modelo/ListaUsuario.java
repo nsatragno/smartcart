@@ -37,6 +37,9 @@ public class ListaUsuario {
     }
 
     public List<ProductoEnLista> getProductos() {
+        if(productos == null){
+            productos = new ArrayList<ProductoEnLista>();
+        }
         return productos;
     }
 

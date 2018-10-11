@@ -5,21 +5,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import ar.com.smartcart.smartcart.ContenidoChangoFragment.OnListFragmentInteractionListener;
+
+import ar.com.smartcart.smartcart.ListaActivaFragment.OnListFragmentInteractionListener;
 import ar.com.smartcart.smartcart.R;
 import ar.com.smartcart.smartcart.communication.DescargaImagenAsyncTask;
-import ar.com.smartcart.smartcart.communication.ProductosManager;
 
 import java.util.List;
 
-public class ProductoEnChangoViewAdapter extends RecyclerView.Adapter<ProductoEnChangoViewAdapter.ViewHolder> {
+public class ListaActivaViewAdapter extends RecyclerView.Adapter<ListaActivaViewAdapter.ViewHolder> {
 
     private final List<ProductoEnLista> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public ProductoEnChangoViewAdapter(List<ProductoEnLista> items, OnListFragmentInteractionListener listener) {
+    public ListaActivaViewAdapter(List<ProductoEnLista> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -27,7 +28,7 @@ public class ProductoEnChangoViewAdapter extends RecyclerView.Adapter<ProductoEn
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_contenido_chango_row, parent, false);
+                .inflate(R.layout.fragment_lista_activa_row, parent, false);
         return new ViewHolder(view);
     }
 
@@ -44,18 +45,9 @@ public class ProductoEnChangoViewAdapter extends RecyclerView.Adapter<ProductoEn
         };
         task.execute(holder.mItem.getProducto().getUrl());
 
+        holder.chkEnChango.setSelected(holder.mItem.getEnChango());
         holder.txtNombre.setText(holder.mItem.getProducto().getNombre());
         holder.txtCantidad.setText(holder.mItem.getCantidad().toString());
-        holder.txtPrecio.setText(ProductosManager.convertirEnPrecio(holder.mItem.getSubtotal()));
-
-        holder.txtNombre.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
-            }
-        });
     }
 
     @Override
@@ -65,20 +57,20 @@ public class ProductoEnChangoViewAdapter extends RecyclerView.Adapter<ProductoEn
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
+        public final CheckBox chkEnChango;
+        public final ImageView imgProd;
         public final TextView txtNombre;
         public final TextView txtCantidad;
-        public final TextView txtPrecio;
-        public final ImageView imgProd;
 
         public ProductoEnLista mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
+            chkEnChango = (CheckBox) view.findViewById(R.id.chk_en_chango);
+            imgProd = (ImageView) view.findViewById(R.id.img_prod);
             txtNombre = (TextView) view.findViewById(R.id.nombre_prod);
             txtCantidad = (TextView) view.findViewById(R.id.cant_prod);
-            txtPrecio = (TextView) view.findViewById(R.id.precio_prod);
-            imgProd = (ImageView) view.findViewById(R.id.img_prod);
         }
     }
 }

@@ -34,4 +34,7 @@
     <string name="configurar_conexion">Configurar Conexión</string>
     <string name="title_activity_configurar_conexion">ConfigurarConexionActivity</string>
     <string name="title_activity_signup">SignupActivity</string>
+    <string name="title_activity_edit_lista_usuario">EditListaUsuarioActivity</string>
+    <string name="title_activity_ejemplo">EjemploActivity</string>
+    <string name="action_settings">Settings</string>
 </resources>

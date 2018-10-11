@@ -1,8 +1,10 @@
 package ar.com.smartcart.smartcart;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,69 +12,66 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import ar.com.smartcart.smartcart.dummy.DummyContent;
-import ar.com.smartcart.smartcart.dummy.DummyContent.DummyItem;
+import java.util.ArrayList;
+
+import ar.com.smartcart.smartcart.database.DBHelper;
+import ar.com.smartcart.smartcart.modelo.ListaUsuario;
 import ar.com.smartcart.smartcart.presentacion.ListaUsuarioViewAdapter;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
-public class ListaUsuarioFragment extends Fragment {
+public class ListaUsuarioFragment extends android.support.v4.app.Fragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public ListaUsuarioFragment() {
-    }
-
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static ListaUsuarioFragment newInstance(int columnCount) {
-        ListaUsuarioFragment fragment = new ListaUsuarioFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_lista_usuario, container, false);
+        RecyclerView view = (RecyclerView) inflater.inflate
+                        (R.layout.fragment_lista_usuario, container, false);
+        Context context = view.getContext();
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new ListaUsuarioViewAdapter(DummyContent.ITEMS, mListener));
+        ((PrincipalActivity) getActivity()).getSupportActionBar().setTitle("Administración de Listas");
+        ArrayList<ListaUsuario> listas = DBHelper.getInstance(
+                context).getAllPlainListaUsuario();
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+        view.setLayoutManager(layoutManager);
+        DividerItemDecoration div = new DividerItemDecoration(view.getContext(),
+                layoutManager.getOrientation());
+        view.addItemDecoration(div);
+
+//        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.btn_new_list);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent in = new Intent(getActivity(), EditListaUsuarioActivity.class);
+//                startActivity(in);
+//            }
+//        });
+
+        if(listas.isEmpty()){
+            listas = new ArrayList<ListaUsuario>();
+            ListaUsuario l1 = new ListaUsuario();
+            l1.setId(1l);
+            l1.setActiva(true);
+            l1.setNombre("Mi señora");
+            listas.add(l1);
+            ListaUsuario l2 = new ListaUsuario();
+            l2.setId(2l);
+            l2.setActiva(false);
+            l2.setNombre("Lionel List");
+            listas.add(l2);
         }
+        view.setAdapter(new ListaUsuarioViewAdapter(listas, mListener));
         return view;
     }
-
 
     @Override
     public void onAttach(Context context) {
@@ -91,18 +90,8 @@ public class ListaUsuarioFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(ListaUsuario item);
     }
 }

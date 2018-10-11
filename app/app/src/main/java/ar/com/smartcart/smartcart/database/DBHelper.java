@@ -20,6 +20,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static DBHelper instance = null;
     public static final String DATABASE_NAME = "smartCart.db";
+    private static final int DATABASE_VERSION = 1;
     public static final String COL_ID = "ID";
     public static final String COL_NOMBRE = "NOMBRE";
 
@@ -53,7 +54,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     private DBHelper(Context context) {
-        super(context, DATABASE_NAME, null, 1);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     //These is where we need to write create table statements. This is called when database is created.
@@ -72,6 +73,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 COL_PRECIO + " NUMBER, " +
                 COL_CELIACOS + " BOOLEAN, " +
                 COL_DIABETICOS + " BOOLEAN, " +
+                COL_CATEGORIA_ID + " BOOLEAN, " +
                 COL_URL + " TEXT);");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_PRODUCTO_LISTA + "(" +
@@ -165,7 +167,8 @@ public class DBHelper extends SQLiteOpenHelper {
     //Deletes
     public Boolean borrarProducto (Long id){
         SQLiteDatabase db = this.getWritableDatabase();
-        Integer result = db.delete(TBL_PRODUCTO, COL_ID + " = ? ", new String[] { id.toString()});
+        Integer result = db.delete(TBL_PRODUCTO, COL_ID + " = ? ",
+                new String[] { id.toString()});
         if(result == 1){
             return true;
         }
@@ -189,7 +192,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public Boolean borrarListaUsuario (Long id){
         SQLiteDatabase db = this.getWritableDatabase();
-        Integer result = db.delete(TBL_LISTA_USUTARIO, COL_ID + " = ? ", new String[] { id.toString()});
+        Integer result = db.delete(TBL_LISTA_USUTARIO, COL_ID + " = ? ",
+                new String[] { id.toString()});
         if(result == 1){
             return borrarProductosLista(id);
         }
@@ -307,6 +311,22 @@ public class DBHelper extends SQLiteOpenHelper {
         return lista;
     }
 
+    public ListaUsuario getListaUsuarioActiva(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ListaUsuario lista = new ListaUsuario();
+        Cursor res =  db.rawQuery( " SELECT * " +
+                " FROM " + TBL_LISTA_USUTARIO +
+                " WHERE " + COL_ACTIVA + " = " + 1, null );
+        res.moveToFirst();
+        if(res.isAfterLast() == Boolean.FALSE){
+            fillPlainListaUsuario(lista, res);
+        }
+        if(lista.getId() != null){
+            lista.setProductos(getProductosEnLista(lista.getId()));
+        }
+        return lista;
+    }
+
     public ArrayList<ProductoEnLista> getProductosEnLista(Long idLista){
         ArrayList<ProductoEnLista> productos = new ArrayList<ProductoEnLista>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -359,17 +379,15 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public Boolean activarListaUsuario(Long id){
-        Boolean result = Boolean.FALSE;
-        ListaUsuario listaDB = getPlainListaUsuario(id);
-        if(listaDB.getId() == null){
-            return false;
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_ACTIVA, Boolean.TRUE);
+        Integer result = db.update(TBL_LISTA_USUTARIO, contentValues,
+                COL_ID + " = ? ", new String[] {id.toString()});
+        if(result == 1){
+            return desactivarListas(id);
         }
-        listaDB.setActiva(Boolean.TRUE);
-        result = actualizarPlainListaUsuario(listaDB);
-        if(result){
-            result = desactivarListas(id);
-        }
-        return result;
+        return false;
     }
 
     public Boolean desactivarListas(Long id){

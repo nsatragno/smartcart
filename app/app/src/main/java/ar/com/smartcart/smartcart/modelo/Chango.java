@@ -2,6 +2,7 @@ package ar.com.smartcart.smartcart.modelo;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 import ar.com.smartcart.smartcart.presentacion.ProductoEnLista;
 
@@ -28,6 +29,9 @@ public class Chango {
     }
 
     public ArrayList<ProductoEnLista> getProductos() {
+        if(productos == null){
+            productos = new ArrayList<ProductoEnLista>();
+        }
         return productos;
     }
 

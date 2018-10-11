@@ -19,15 +19,17 @@ import java.util.ArrayList;
 
 import ar.com.smartcart.smartcart.communication.AllProductosAsyncTask;
 import ar.com.smartcart.smartcart.communication.ContenidoChangoAsyncTask;
-import ar.com.smartcart.smartcart.database.DBHelper;
 import ar.com.smartcart.smartcart.modelo.Chango;
+import ar.com.smartcart.smartcart.modelo.ListaUsuario;
 import ar.com.smartcart.smartcart.modelo.Producto;
 import ar.com.smartcart.smartcart.presentacion.ProductoEnLista;
 
 public class PrincipalActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
                     ContenidoChangoFragment.OnListFragmentInteractionListener,
-                    QRScanFragment.OnFragmentInteractionListener{
+                    QRScanFragment.OnFragmentInteractionListener,
+                    ListaUsuarioFragment.OnListFragmentInteractionListener,
+                    ListaActivaFragment.OnListFragmentInteractionListener {
 
     public static final int INICIO = 0;
     public static final int QR_SCAN = 1;
@@ -46,7 +48,12 @@ public class PrincipalActivity extends AppCompatActivity
         setContentView(R.layout.activity_principal);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
         context = getApplicationContext();
+
+        //Borrado de la BD
+//        context.deleteDatabase(DBHelper.DATABASE_NAME);
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -110,13 +117,13 @@ public class PrincipalActivity extends AppCompatActivity
         } else if (id == R.id.nav_gallery) {
             setFragment(CONTENIDO_CHANGO);
         } else if (id == R.id.nav_slideshow) {
-            setFragment(INICIO);
+            setFragment(LISTA_ACTIVA);
         } else if (id == R.id.nav_manage) {
-            setFragment(INICIO);
+            setFragment(UBIC_PRODS);
         } else if (id == R.id.nav_share) {
-            setFragment(CONTENIDO_CHANGO);
+            setFragment(ADMIN_LISTAS);
         } else if (id == R.id.nav_send) {
-            setFragment(CONTENIDO_CHANGO);
+            //Promos
         } else if (id == R.id.nav_logout) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
@@ -139,12 +146,19 @@ public class PrincipalActivity extends AppCompatActivity
                 fragMng.beginTransaction().replace(R.id.fragment_container, qrFrag).commit();
                 break;
             case CONTENIDO_CHANGO:
-                ContenidoChangoFragment listFrag = new ContenidoChangoFragment();
-                fragMng.beginTransaction().replace(R.id.fragment_container, listFrag).commit();
+                ContenidoChangoFragment changoFrag = new ContenidoChangoFragment();
+                fragMng.beginTransaction().replace(R.id.fragment_container, changoFrag).commit();
+                break;
+            case LISTA_ACTIVA:
+                ListaActivaFragment listActivaFrag = new ListaActivaFragment();
+                fragMng.beginTransaction().replace(R.id.fragment_container, listActivaFrag).commit();
+                break;
+            case ADMIN_LISTAS:
+                ListaUsuarioFragment adminListFrag = new ListaUsuarioFragment();
+                fragMng.beginTransaction().replace(R.id.fragment_container, adminListFrag).commit();
                 break;
         }
     }
-
 
     public Chango getChango() {
         return chango;
@@ -174,6 +188,13 @@ public class PrincipalActivity extends AppCompatActivity
     public void onListFragmentInteraction(ProductoEnLista item) {
         Toast.makeText(this, item.getProducto().getDescripcion(), Toast.LENGTH_LONG).show();
         Intent myIntent = new Intent(PrincipalActivity.this, DescProductoActivity.class);;
+        startActivity(myIntent);
+    }
+
+    @Override
+    public void onListFragmentInteraction(ListaUsuario item) {
+        Toast.makeText(this, item.getNombre(), Toast.LENGTH_LONG).show();
+        Intent myIntent = new Intent(PrincipalActivity.this, EditListaUsuarioActivity.class);;
         startActivity(myIntent);
     }
 

@@ -4,25 +4,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import ar.com.smartcart.smartcart.ListaUsuarioFragment.OnListFragmentInteractionListener;
 import ar.com.smartcart.smartcart.R;
-import ar.com.smartcart.smartcart.dummy.DummyContent.DummyItem;
+import ar.com.smartcart.smartcart.database.DBHelper;
+import ar.com.smartcart.smartcart.modelo.ListaUsuario;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class ListaUsuarioViewAdapter extends RecyclerView.Adapter<ListaUsuarioViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<ListaUsuario> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public ListaUsuarioViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public ListaUsuarioViewAdapter(List<ListaUsuario> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -35,19 +33,38 @@ public class ListaUsuarioViewAdapter extends RecyclerView.Adapter<ListaUsuarioVi
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.rdbActiva.setSelected(mValues.get(position).getActiva());
+        holder.txtNombre.setText(mValues.get(position).getNombre());
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
+        holder.rdbActiva.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(ListaUsuario lista : mValues){
+                    if(!holder.mItem.getId().equals(lista.getId())){
+                        holder.rdbActiva.setSelected(Boolean.FALSE);
+                        lista.setActiva(Boolean.FALSE);
+                    }
+                }
+                DBHelper.getInstance(holder.mView.getContext())
+                        .activarListaUsuario(holder.mItem.getId());
+            }
+        });
+        holder.editView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
                     mListener.onListFragmentInteraction(holder.mItem);
                 }
+            }
+        });
+        holder.deleteView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DBHelper.getInstance(holder.mView.getContext())
+                        .borrarListaUsuario(holder.mItem.getId());
+                mValues.remove(position);
             }
         });
     }
@@ -59,20 +76,20 @@ public class ListaUsuarioViewAdapter extends RecyclerView.Adapter<ListaUsuarioVi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public final RadioButton rdbActiva;
+        public final TextView txtNombre;
+        public final ImageView editView;
+        public final ImageView deleteView;
+
+        public ListaUsuario mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
-        }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            rdbActiva = (RadioButton) view.findViewById(R.id.rdb_activa);
+            txtNombre = (TextView) view.findViewById(R.id.nombre_lista);
+            editView = (ImageView) view.findViewById(R.id.ico_edit);
+            deleteView = (ImageView) view.findViewById(R.id.ico_delete);
         }
     }
 }
