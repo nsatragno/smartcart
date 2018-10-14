@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+
 import ar.com.smartcart.smartcart.modelo.Chango;
 import ar.com.smartcart.smartcart.presentacion.ProductoEnLista;
 import ar.com.smartcart.smartcart.presentacion.ProductoEnChangoViewAdapter;
@@ -38,15 +40,14 @@ public class ContenidoChangoFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        RecyclerView view = (RecyclerView) inflater.inflate(
+        LinearLayout parentLayout = (LinearLayout) inflater.inflate(
                                 R.layout.fragment_contenido_chango, container, false);
         ((PrincipalActivity) getActivity()).getSupportActionBar().setTitle("Contenido del Chango");
         Chango chango = ((PrincipalActivity) getActivity()).getChango();
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        view.setLayoutManager(layoutManager);
-        DividerItemDecoration div = new DividerItemDecoration(view.getContext(),
-                layoutManager.getOrientation());
+
+        RecyclerView view = (RecyclerView) parentLayout.getChildAt(0);
+        DividerItemDecoration div = new DividerItemDecoration(view.getContext(), LinearLayout.VERTICAL);
         view.addItemDecoration(div);
 
         // Set the adapter
@@ -55,7 +56,8 @@ public class ContenidoChangoFragment extends android.support.v4.app.Fragment {
         if(chango != null){
             view.setAdapter(new ProductoEnChangoViewAdapter(chango.getProductos(), mListener));
         }
-        return view;
+
+        return parentLayout;
     }
 
     @Override

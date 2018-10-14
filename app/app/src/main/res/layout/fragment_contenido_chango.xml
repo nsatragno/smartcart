@@ -1,14 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/list"
-    android:name="ar.com.smartcart.smartcart.ProductoFragment"
-    android:layout_width="match_parent"
+
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
-    android:layout_marginLeft="0dp"
-    android:layout_marginRight="0dp"
-    app:layoutManager="LinearLayoutManager"
-    android:layout_centerHorizontal="true"
-    tools:context=".ContenidoChangoFragment"
-    tools:listitem="@layout/fragment_contenido_chango_row" />
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:weightSum="6"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/lista_productos_chango"
+        android:name="ar.com.smartcart.smartcart.ProductoFragment"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:scrollbars="vertical"
+        android:layout_centerHorizontal="true"
+        android:fadeScrollbars="false"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        android:layout_weight="1"
+        tools:context=".ContenidoChangoFragment"
+        tools:listitem="@layout/fragment_contenido_chango_row" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="5"
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="Cantidad Items: 6" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="Total: $120"
+                android:textAlignment="textEnd" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_height="fill_parent">
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@android:color/darker_gray"
+                android:text="Pagar en Efectivo" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:text="Pagar con Tarjeta"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
