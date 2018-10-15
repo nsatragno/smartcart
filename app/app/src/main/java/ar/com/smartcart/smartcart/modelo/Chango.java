@@ -10,7 +10,6 @@ public class Chango {
     private Long id;
     private String codigo;
     private ArrayList<ProductoEnLista> productos;
-    private BigDecimal subtotal = BigDecimal.ZERO;
 
     public Long getId() {
         return id;
@@ -39,11 +38,19 @@ public class Chango {
         this.productos = productos;
     }
 
-    public BigDecimal getSubtotal() {
-        return subtotal;
+    public BigDecimal getTotal() {
+        BigDecimal total = BigDecimal.ZERO;
+        for (ProductoEnLista prod : getProductos()) {
+            total = total.add(prod.getSubtotal());
+        }
+        return total;
     }
 
-    public void setSubtotal(BigDecimal subtotal) {
-        this.subtotal = subtotal;
+    public Long getCantidadTotal() {
+        Long cant = 0L;
+        for (ProductoEnLista prod : getProductos()) {
+            cant += (prod.getCantidad());
+        }
+        return cant;
     }
 }

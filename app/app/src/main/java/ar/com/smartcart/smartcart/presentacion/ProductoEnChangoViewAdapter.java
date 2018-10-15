@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ProductoEnChangoViewAdapter extends RecyclerView.Adapter<ProductoEnChangoViewAdapter.ViewHolder> {
 
-    private final List<ProductoEnLista> mValues;
+    private List<ProductoEnLista> mValues;
     private final OnListFragmentInteractionListener mListener;
 
     public ProductoEnChangoViewAdapter(List<ProductoEnLista> items, OnListFragmentInteractionListener listener) {
@@ -80,5 +80,13 @@ public class ProductoEnChangoViewAdapter extends RecyclerView.Adapter<ProductoEn
             txtPrecio = (TextView) view.findViewById(R.id.precio_prod);
             imgProd = (ImageView) view.findViewById(R.id.img_prod);
         }
+    }
+
+    public List<ProductoEnLista> getmValues() {
+        return mValues;
+    }
+
+    public void setmValues(List<ProductoEnLista> mValues) {
+        this.mValues = mValues;
     }
 }

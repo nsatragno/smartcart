@@ -3,6 +3,7 @@ package ar.com.smartcart.smartcart;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import ar.com.smartcart.smartcart.communication.AllProductosAsyncTask;
 import ar.com.smartcart.smartcart.communication.ContenidoChangoAsyncTask;
@@ -31,16 +34,25 @@ public class PrincipalActivity extends AppCompatActivity
                     ListaUsuarioFragment.OnListFragmentInteractionListener,
                     ListaActivaFragment.OnListFragmentInteractionListener {
 
-    public static final int INICIO = 0;
-    public static final int QR_SCAN = 1;
-    public static final int CONTENIDO_CHANGO = 2;
-    public static final int LISTA_ACTIVA = 3;
-    public static final int UBIC_PRODS = 4;
-    public static final int ADMIN_LISTAS = 5;
-    public static final int PROMOS = 6;
+    public static final String INICIO = "INICIO";
+    public static final String QR_SCAN = "QR_SCAN";
+    public static final String CONTENIDO_CHANGO = "CONTENIDO_CHANGO";
+    public static final String LISTA_ACTIVA = "LISTA_ACTIVA";
+    public static final String UBIC_PRODS = "UBIC_PRODS";
+    public static final String ADMIN_LISTAS = "ADMIN_LISTAS";
+    public static final String PROMOS = "PROMOS";
+    public static final int READ_TIME = 3000;
 
     private Chango chango;
     private Context context;
+
+    public Chango getChango() {
+        return chango;
+    }
+
+    public void setChango(Chango chango) {
+        this.chango = chango;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,7 +146,7 @@ public class PrincipalActivity extends AppCompatActivity
         return true;
     }
 
-    public void setFragment(int position) {
+    public void setFragment(String position) {
         FragmentManager fragMng = getSupportFragmentManager();
         switch (position) {
             case INICIO:
@@ -147,11 +159,13 @@ public class PrincipalActivity extends AppCompatActivity
                 break;
             case CONTENIDO_CHANGO:
                 ContenidoChangoFragment changoFrag = new ContenidoChangoFragment();
+                fragMng.beginTransaction().add(R.id.fragment_container, changoFrag, CONTENIDO_CHANGO).commit();
                 fragMng.beginTransaction().replace(R.id.fragment_container, changoFrag).commit();
                 break;
             case LISTA_ACTIVA:
-                ListaActivaFragment listActivaFrag = new ListaActivaFragment();
-                fragMng.beginTransaction().replace(R.id.fragment_container, listActivaFrag).commit();
+                ListaActivaFragment listActFrag = new ListaActivaFragment();
+                fragMng.beginTransaction().add(R.id.fragment_container, listActFrag, LISTA_ACTIVA).commit();
+                fragMng.beginTransaction().replace(R.id.fragment_container, listActFrag).commit();
                 break;
             case ADMIN_LISTAS:
                 ListaUsuarioFragment adminListFrag = new ListaUsuarioFragment();
@@ -160,12 +174,33 @@ public class PrincipalActivity extends AppCompatActivity
         }
     }
 
-    public Chango getChango() {
-        return chango;
-    }
-
-    public void setChango(Chango chango) {
-        this.chango = chango;
+    public void callContenidoChangoTask(final Long changoID) {
+        final Handler handler = new Handler();
+        Timer timer = new Timer();
+        final Long id = changoID;
+        TimerTask doAsynchronousTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {
+                        ContenidoChangoAsyncTask task = new ContenidoChangoAsyncTask(){
+                            @Override
+                            protected void onPostExecute(final Chango response) {
+                                setChango(response);
+                                FragmentManager fragMng = getSupportFragmentManager();
+                                ContenidoChangoFragment changoFrg = ((ContenidoChangoFragment)fragMng
+                                        .findFragmentByTag(CONTENIDO_CHANGO));
+                                if(changoFrg != null){
+                                    changoFrg.updateView();
+                                }
+                            }
+                        };
+                        task.execute(id);
+                    }
+                });
+            }
+        };
+        timer.schedule(doAsynchronousTask, 0, READ_TIME);
     }
 
     @Override
@@ -173,14 +208,8 @@ public class PrincipalActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         TextView txt = (TextView) navigationView.findViewById(R.id.textView);
         txt.setText(changoCod);
-        ContenidoChangoAsyncTask task = new ContenidoChangoAsyncTask(){
-            @Override
-            protected void onPostExecute(final Chango response) {
-                setChango(response);
-                setFragment(CONTENIDO_CHANGO);
-            }
-        };
-        task.execute(changoID);
+        callContenidoChangoTask(changoID);
+        setFragment(CONTENIDO_CHANGO);
         habilitarContenidoChangoMenuItem(Boolean.TRUE);
     }
 

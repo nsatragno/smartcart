@@ -49,6 +49,7 @@ public class ListaUsuarioViewAdapter extends RecyclerView.Adapter<ListaUsuarioVi
                 }
                 DBHelper.getInstance(holder.mView.getContext())
                         .activarListaUsuario(holder.mItem.getId());
+                notifyDataSetChanged();
             }
         });
         holder.editView.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +57,7 @@ public class ListaUsuarioViewAdapter extends RecyclerView.Adapter<ListaUsuarioVi
             public void onClick(View v) {
                 if (null != mListener) {
                     mListener.onListFragmentInteraction(holder.mItem);
+                    notifyDataSetChanged();
                 }
             }
         });
@@ -65,6 +67,7 @@ public class ListaUsuarioViewAdapter extends RecyclerView.Adapter<ListaUsuarioVi
                 DBHelper.getInstance(holder.mView.getContext())
                         .borrarListaUsuario(holder.mItem.getId());
                 mValues.remove(position);
+                notifyDataSetChanged();
             }
         });
     }

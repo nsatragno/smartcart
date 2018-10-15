@@ -1,7 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="fill_parent"
+    android:background="@drawable/login_background"
     android:orientation="vertical" >
 
     <Button
@@ -11,7 +12,9 @@
         android:layout_gravity="center"
         android:layout_marginTop="75dp"
         android:text="Vincular Chango"
-        android:textSize="20sp" />
+        android:textColor="#ffffff"
+        android:background="@color/colorPrimary"
+        android:textSize="20sp"/>
 
     <Button
         android:id="@+id/btn_admin_list"
@@ -20,7 +23,9 @@
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
         android:text="Administrar Listas"
-        android:textSize="20sp" />
+        android:textColor="#ffffff"
+        android:background="@android:color/holo_red_dark"
+        android:textSize="20sp"/>
 
     <Button
         android:id="@+id/btn_promos"
@@ -29,5 +34,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
         android:text="Promos Vigentes"
+        android:textColor="#ffffff"
+        android:background="@android:color/holo_orange_dark"
         android:textSize="20sp" />
 </LinearLayout>
