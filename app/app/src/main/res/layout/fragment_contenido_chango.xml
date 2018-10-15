@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="6"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:weightSum="5">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="181dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
         android:orientation="horizontal"
         android:weightSum="3">
 
         <TextView
             android:layout_width="520dp"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@color/colorPrimary"
@@ -27,7 +27,7 @@
 
         <TextView
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@color/colorPrimary"
@@ -39,7 +39,7 @@
 
         <TextView
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@color/colorPrimary"
@@ -54,9 +54,9 @@
         android:id="@+id/lista_productos_chango"
         android:name="ar.com.smartcart.smartcart.ProductoFragment"
         android:layout_width="match_parent"
-        android:layout_height="760dp"
+        android:layout_height="fill_parent"
         android:layout_centerHorizontal="true"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:fadeScrollbars="false"
         android:scrollbars="vertical"
         tools:context=".ContenidoChangoFragment" />
@@ -64,14 +64,13 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="2"
+        android:layout_weight="4"
         android:orientation="vertical"
-        android:paddingBottom="10dp"
         android:weightSum="2">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:layout_weight="1"
             android:orientation="horizontal"
             android:weightSum="2">
@@ -79,7 +78,7 @@
             <TextView
                 android:id="@+id/txt_cantidad"
                 android:layout_width="fill_parent"
-                android:layout_height="match_parent"
+                android:layout_height="fill_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@color/place_autocomplete_search_text"
@@ -87,7 +86,7 @@
                 android:text="Cantidad: "
                 android:textAlignment="center"
                 android:textColor="#ffffff"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/txt_total"
@@ -100,18 +99,19 @@
                 android:text="Total: "
                 android:textAlignment="center"
                 android:textColor="#ffffff"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:layout_weight="1"
             android:orientation="horizontal"
             android:weightSum="2">
 
             <Button
                 android:layout_width="fill_parent"
-                android:layout_height="40dp"
+                android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:background="@android:color/holo_red_dark"
                 android:text="Pagar en Efectivo"
@@ -119,7 +119,7 @@
 
             <Button
                 android:layout_width="fill_parent"
-                android:layout_height="40dp"
+                android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
                 android:text="Pagar con Tarjeta"
