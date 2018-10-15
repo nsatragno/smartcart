@@ -36,11 +36,11 @@ public class ListaUsuarioFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        LinearLayout principalLayout = (LinearLayout) inflater.inflate(
+        ViewGroup principalLayout = (ViewGroup) inflater.inflate(
                 R.layout.fragment_lista_usuario, container, false);
         ((PrincipalActivity) getActivity()).getSupportActionBar().setTitle("Administración de Listas");
 
-        recyclerView = (RecyclerView) principalLayout.getChildAt(1);
+        recyclerView = (RecyclerView) ((ViewGroup) principalLayout.getChildAt(0)).getChildAt(1);
         DividerItemDecoration div = new DividerItemDecoration(recyclerView.getContext(),
                 LinearLayout.VERTICAL);
         recyclerView.addItemDecoration(div);

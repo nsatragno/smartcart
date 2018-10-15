@@ -1,74 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:weightSum="6">
+    android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:weightSum="3">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
 
-        <TextView
-            android:layout_width="435dp"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:text="Activa"
-            android:textAlignment="center"
-            android:textColor="#ffffff"
-            android:textSize="14sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:weightSum="3">
 
-        <TextView
-            android:layout_width="545dp"
-            android:layout_height="72dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:text="Nombre"
-            android:textAlignment="center"
-            android:textColor="#ffffff"
-            android:textSize="14sp" />
+            <TextView
+                android:layout_width="435dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:text="Activa"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
 
-        <TextView
-            android:layout_width="483dp"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center"
+            <TextView
+                android:layout_width="545dp"
+                android:layout_height="72dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:text="Nombre"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="483dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:text="Acciones"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/lista_usuario"
+            android:name="ar.com.smartcart.smartcart.ListaUsuarioFragment"
+            android:layout_width="match_parent"
+            android:layout_height="447dp"
+            android:layout_centerHorizontal="true"
             android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:text="Acciones"
-            android:textAlignment="center"
-            android:textColor="#ffffff"
-            android:textSize="14sp" />
+            android:fadeScrollbars="false"
+            android:scrollbars="vertical"
+            tools:context=".ListaUsuarioFragment" />
+
+
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/lista_usuario"
-        android:name="ar.com.smartcart.smartcart.ListaUsuarioFragment"
-        android:layout_width="match_parent"
-        android:layout_height="447dp"
-        android:layout_centerHorizontal="true"
-        android:layout_weight="2"
-        android:fadeScrollbars="false"
-        android:scrollbars="vertical"
-        tools:context=".ListaUsuarioFragment" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fbtn_nueva_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="28dp"
+        android:layout_marginEnd="24dp"
         android:backgroundTint="@color/zxing_viewfinder_laser"
-        android:src="@drawable/ic_new_white_24dp" />
+        android:src="@drawable/ic_new_white_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-</LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
