@@ -62,10 +62,6 @@ public class PrincipalActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         setSupportActionBar(toolbar);
         context = getApplicationContext();
-
-        //Borrado de la BD
-//        context.deleteDatabase(DBHelper.DATABASE_NAME);
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -192,6 +188,12 @@ public class PrincipalActivity extends AppCompatActivity
                                         .findFragmentByTag(CONTENIDO_CHANGO));
                                 if(changoFrg != null){
                                     changoFrg.updateView();
+                                }else{
+                                    ListaActivaFragment listActviaFrg = ((ListaActivaFragment)fragMng
+                                            .findFragmentByTag(LISTA_ACTIVA));
+                                    if(listActviaFrg != null){
+                                        listActviaFrg.updateView();
+                                    }
                                 }
                             }
                         };

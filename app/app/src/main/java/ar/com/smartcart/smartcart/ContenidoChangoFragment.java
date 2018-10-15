@@ -18,24 +18,13 @@ import ar.com.smartcart.smartcart.modelo.Chango;
 import ar.com.smartcart.smartcart.presentacion.ProductoEnLista;
 import ar.com.smartcart.smartcart.presentacion.ProductoEnChangoViewAdapter;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
 public class ContenidoChangoFragment extends android.support.v4.app.Fragment {
 
-    private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private TextView txtCantidad;
     private TextView txtTotal;
     private RecyclerView recyclerView;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public ContenidoChangoFragment() {
     }
 
@@ -55,13 +44,14 @@ public class ContenidoChangoFragment extends android.support.v4.app.Fragment {
         DividerItemDecoration div = new DividerItemDecoration(recyclerView.getContext(),
                                                                 LinearLayout.VERTICAL);
         recyclerView.addItemDecoration(div);
-        LinearLayout bottomLayout = (LinearLayout) principalLayout.getChildAt(2);
-        txtCantidad = bottomLayout.findViewById(R.id.txtCantidad);
-        txtTotal = bottomLayout.findViewById(R.id.txtTotal);
-
-        // Set the adapter
         Context context = recyclerView.getContext();
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+        LinearLayout bottomLayout = (LinearLayout) principalLayout.getChildAt(2);
+        txtCantidad = bottomLayout.findViewById(R.id.txt_cantidad);
+        txtTotal = bottomLayout.findViewById(R.id.txt_total);
+
+        // Sets adapter
         updateView();
         return principalLayout;
     }

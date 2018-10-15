@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,7 @@ import ar.com.smartcart.smartcart.presentacion.ListaUsuarioViewAdapter;
 public class ListaUsuarioFragment extends android.support.v4.app.Fragment {
 
     private OnListFragmentInteractionListener mListener;
+    private RecyclerView recyclerView;
 
     public ListaUsuarioFragment() {
     }
@@ -33,28 +35,29 @@ public class ListaUsuarioFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        RecyclerView view = (RecyclerView) inflater.inflate
-                        (R.layout.fragment_lista_usuario, container, false);
-        Context context = view.getContext();
 
+        LinearLayout principalLayout = (LinearLayout) inflater.inflate(
+                R.layout.fragment_lista_usuario, container, false);
         ((PrincipalActivity) getActivity()).getSupportActionBar().setTitle("Administración de Listas");
+
+        recyclerView = (RecyclerView) principalLayout.getChildAt(1);
+        DividerItemDecoration div = new DividerItemDecoration(recyclerView.getContext(),
+                LinearLayout.VERTICAL);
+        recyclerView.addItemDecoration(div);
+        Context context = recyclerView.getContext();
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
         ArrayList<ListaUsuario> listas = DBHelper.getInstance(
                 context).getAllPlainListaUsuario();
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-        view.setLayoutManager(layoutManager);
-        DividerItemDecoration div = new DividerItemDecoration(view.getContext(),
-                layoutManager.getOrientation());
-        view.addItemDecoration(div);
-
-//        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.btn_new_list);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent in = new Intent(getActivity(), EditListaUsuarioActivity.class);
-//                startActivity(in);
-//            }
-//        });
+        FloatingActionButton fbtnNew = (FloatingActionButton) principalLayout.findViewById(R.id.fbtn_nueva_list);
+        fbtnNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent in = new Intent(getActivity(), EditListaUsuarioActivity.class);
+                startActivity(in);
+            }
+        });
 
         if(listas.isEmpty()){
             listas = new ArrayList<ListaUsuario>();
@@ -69,8 +72,8 @@ public class ListaUsuarioFragment extends android.support.v4.app.Fragment {
             l2.setNombre("Lionel List");
             listas.add(l2);
         }
-        view.setAdapter(new ListaUsuarioViewAdapter(listas, mListener));
-        return view;
+        recyclerView.setAdapter(new ListaUsuarioViewAdapter(listas, mListener));
+        return principalLayout;
     }
 
     @Override

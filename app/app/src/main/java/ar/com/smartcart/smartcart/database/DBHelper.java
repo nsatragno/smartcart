@@ -31,7 +31,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COL_PRODUCTO_ID = "PRODUCTO_ID";
     public static final String COL_LISTA_USUARIO_ID = "LISTA_USUARIO_ID";
     public static final String COL_CANTIDAD = "CANTIDAD";
-    public static final String COL_EN_CHANGO = "EN_CHANGO";
 
     public static final String TBL_PRODUCTO = "PRODUCTO";
     public static final String COL_DESC = "DESCRIPCION";
@@ -79,7 +78,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_PRODUCTO_LISTA + "(" +
                 COL_PRODUCTO_ID + " NUMBER, " +
                 COL_LISTA_USUARIO_ID + " NUMBER, " +
-                COL_EN_CHANGO + " BOOLEAN, " +
                 COL_CANTIDAD + " NUMBER);");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_CATEGORIA + "(" +
@@ -157,7 +155,6 @@ public class DBHelper extends SQLiteOpenHelper {
             contentValues = new ContentValues();
             contentValues.put(COL_PRODUCTO_ID, prod.getProducto().getId());
             contentValues.put(COL_LISTA_USUARIO_ID, prod.getCantidad());
-            contentValues.put(COL_EN_CHANGO, prod.getEnChango());
             contentValues.put(COL_CANTIDAD, prod.getCantidad());
             db.insert(TBL_PRODUCTO_LISTA, null, contentValues);
         }
@@ -356,8 +353,6 @@ public class DBHelper extends SQLiteOpenHelper {
         Producto p = new Producto();
         fillProducto(p, res);
         prod.setCantidad(res.getLong(res.getColumnIndex(COL_CANTIDAD)));
-        prod.setEnChango(res.getLong(res.getColumnIndex(COL_EN_CHANGO)) == 1L
-                ? Boolean.TRUE : Boolean.FALSE);
     }
 
     //Updates

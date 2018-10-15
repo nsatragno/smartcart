@@ -47,7 +47,7 @@ public class ListaUsuario {
         this.productos = productos;
     }
 
-    public Long getCantEnChango() {
+    public Long getSeleccionado() {
         Long cant = 0L;
         for(ProductoEnLista prod : getProductos()){
             cant += prod.getEnChango() ? prod.getCantidad() : 0L;
@@ -55,7 +55,7 @@ public class ListaUsuario {
         return cant;
     }
 
-    public Long getCantRestante() {
+    public Long getPendiente() {
         Long cant = 0L;
         for(ProductoEnLista prod : getProductos()){
             cant += !prod.getEnChango() ? prod.getCantidad() : 0L;
