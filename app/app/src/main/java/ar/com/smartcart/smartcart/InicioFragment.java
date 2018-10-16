@@ -47,6 +47,14 @@ public class InicioFragment extends Fragment {
                         .setFragment(((PrincipalActivity) getActivity()).ADMIN_LISTAS);
             }
         });
+
+//        btnPromos.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ((PrincipalActivity) getActivity())
+//                        .setFragment(((PrincipalActivity) getActivity()).PROMOS);
+//            }
+//        });
         return view;
     }
 }

@@ -137,7 +137,7 @@ public class ListaActivaFragment extends android.support.v4.app.Fragment {
                 recyclerView.setAdapter(adapter);
             }
             txtPendiente.setText("Pendientes: " + listaActiva.getPendiente().toString());
-            txtSeleccion.setText("Seleccionados: " + listaActiva.getSeleccionado().toString());
+            txtSeleccion.setText("Listos: " + listaActiva.getSeleccionado().toString());
         }
     }
 }

@@ -40,7 +40,9 @@ public class PrincipalActivity extends AppCompatActivity
     public static final String LISTA_ACTIVA = "LISTA_ACTIVA";
     public static final String UBIC_PRODS = "UBIC_PRODS";
     public static final String ADMIN_LISTAS = "ADMIN_LISTAS";
+    public static final String DESC_PRODS = "DESC_PRODS";
     public static final String PROMOS = "PROMOS";
+
     public static final int READ_TIME = 3000;
 
     private Chango chango;

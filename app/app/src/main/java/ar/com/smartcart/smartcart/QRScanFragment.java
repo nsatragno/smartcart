@@ -106,6 +106,7 @@ public class QRScanFragment extends android.support.v4.app.Fragment {
         if(result != null) {
             if(result.getContents() == null) {
                 toast = "Vinculación de Chango cancelada";
+                ((PrincipalActivity)getActivity()).setFragment(PrincipalActivity.INICIO);
             } else {
                 String[] datosChango = result.getContents().split("\\|");
                 Long idChango = Long.parseLong(datosChango[0]);

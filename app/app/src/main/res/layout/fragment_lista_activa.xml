@@ -84,7 +84,7 @@
                 android:layout_weight="1"
                 android:background="@color/place_autocomplete_search_text"
                 android:gravity="center"
-                android:text="Seleccionados: "
+                android:text="Listos: "
                 android:textAlignment="center"
                 android:textColor="#ffffff"
                 android:textSize="18sp"/>
