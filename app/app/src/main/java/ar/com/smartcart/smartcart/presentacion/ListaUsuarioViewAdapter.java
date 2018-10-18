@@ -1,6 +1,8 @@
 package ar.com.smartcart.smartcart.presentacion;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,13 +39,12 @@ public class ListaUsuarioViewAdapter extends RecyclerView.Adapter<ListaUsuarioVi
         holder.mItem = mValues.get(position);
         holder.rdbActiva.setSelected(mValues.get(position).getActiva());
         holder.txtNombre.setText(mValues.get(position).getNombre());
-
         holder.rdbActiva.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                holder.mItem.setActiva(Boolean.TRUE);
                 for(ListaUsuario lista : mValues){
                     if(!holder.mItem.getId().equals(lista.getId())){
-                        holder.rdbActiva.setSelected(Boolean.FALSE);
                         lista.setActiva(Boolean.FALSE);
                     }
                 }
@@ -57,7 +58,6 @@ public class ListaUsuarioViewAdapter extends RecyclerView.Adapter<ListaUsuarioVi
             public void onClick(View v) {
                 if (null != mListener) {
                     mListener.onListFragmentInteraction(holder.mItem);
-                    notifyDataSetChanged();
                 }
             }
         });

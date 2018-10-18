@@ -1,15 +1,19 @@
 package ar.com.smartcart.smartcart;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +26,7 @@ import java.util.TimerTask;
 
 import ar.com.smartcart.smartcart.communication.AllProductosAsyncTask;
 import ar.com.smartcart.smartcart.communication.ContenidoChangoAsyncTask;
+import ar.com.smartcart.smartcart.database.DBHelper;
 import ar.com.smartcart.smartcart.modelo.Chango;
 import ar.com.smartcart.smartcart.modelo.ListaUsuario;
 import ar.com.smartcart.smartcart.modelo.Producto;
@@ -32,6 +37,7 @@ public class PrincipalActivity extends AppCompatActivity
                     ContenidoChangoFragment.OnListFragmentInteractionListener,
                     QRScanFragment.OnFragmentInteractionListener,
                     ListaUsuarioFragment.OnListFragmentInteractionListener,
+                    EditListaFragment.OnListFragmentInteractionListener,
                     ListaActivaFragment.OnListFragmentInteractionListener {
 
     public static final String INICIO = "INICIO";
@@ -40,18 +46,20 @@ public class PrincipalActivity extends AppCompatActivity
     public static final String LISTA_ACTIVA = "LISTA_ACTIVA";
     public static final String UBIC_PRODS = "UBIC_PRODS";
     public static final String ADMIN_LISTAS = "ADMIN_LISTAS";
+    public static final String EDIT_LISTA = "EDIT_LISTA";
     public static final String DESC_PRODS = "DESC_PRODS";
     public static final String PROMOS = "PROMOS";
 
     public static final int READ_TIME = 3000;
+    private SearchView searchView;
+    private Context context;
 
     private Chango chango;
-    private Context context;
+    private RecyclerView.Adapter adapter;
 
     public Chango getChango() {
         return chango;
     }
-
     public void setChango(Chango chango) {
         this.chango = chango;
     }
@@ -69,6 +77,9 @@ public class PrincipalActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        //Borrado de la BD
+        context.deleteDatabase(DBHelper.DATABASE_NAME);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         habilitarContenidoChangoMenuItem(Boolean.FALSE);
@@ -96,22 +107,50 @@ public class PrincipalActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.principal, menu);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        //Obtengo el Fragment y su adapter
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+//                FragmentManager fragMng = getSupportFragmentManager();
+//                Fragment fragment = fragMng.findFragmentByTag(CONTENIDO_CHANGO);
+//                if(fragment instanceof ContenidoChangoFragment){
+//                    adapter = ((ContenidoChangoFragment) fragment).getAdapter();
+//                    ((ProductoEnChangoViewAdapter)adapter).getFilter().filter(query);
+//                }
+//                if(fragment instanceof EditListaFragment){
+//                    adapter = ((EditListaFragment) fragment).getAdapter();
+//                    ((EditListaFragment)adapter).getFilter().filter(query);
+//                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+//                FragmentManager fragMng = getSupportFragmentManager();
+//                Fragment fragment = fragMng.findFragmentByTag(CONTENIDO_CHANGO);
+//                if(fragment instanceof ContenidoChangoFragment){
+//                    adapter = ((ContenidoChangoFragment) fragment).getAdapter();
+//                    ((ProductoEnChangoViewAdapter)adapter).getFilter().filter(query);
+//                }
+//                if(fragment instanceof EditListaFragment){
+//                    adapter = ((EditListaFragment) fragment).getAdapter();
+//                    ((EditListaFragment)adapter).getFilter().filter(query);
+//                }
+                return false;
+            }
+        });
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_logout) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
+         int id = item.getItemId();
+         if (id == R.id.action_search) {
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -144,30 +183,44 @@ public class PrincipalActivity extends AppCompatActivity
         return true;
     }
 
+    public Fragment getFragment(String tag){
+        FragmentManager fragMng = getSupportFragmentManager();
+        Fragment fragment = fragMng.findFragmentByTag(tag);
+        return fragment;
+    }
+
     public void setFragment(String position) {
         FragmentManager fragMng = getSupportFragmentManager();
         switch (position) {
             case INICIO:
                 InicioFragment iniFrag = new InicioFragment();
-                fragMng.beginTransaction().replace(R.id.fragment_container, iniFrag).commit();
+                fragMng.beginTransaction().replace(R.id.fragment_container, iniFrag,
+                                                                            INICIO).commit();
                 break;
             case QR_SCAN:
                 QRScanFragment qrFrag = new QRScanFragment();
-                fragMng.beginTransaction().replace(R.id.fragment_container, qrFrag).commit();
+                fragMng.beginTransaction().replace(R.id.fragment_container, qrFrag,
+                                                                        QR_SCAN).commit();
                 break;
             case CONTENIDO_CHANGO:
                 ContenidoChangoFragment changoFrag = new ContenidoChangoFragment();
-                fragMng.beginTransaction().add(R.id.fragment_container, changoFrag, CONTENIDO_CHANGO).commit();
-                fragMng.beginTransaction().replace(R.id.fragment_container, changoFrag).commit();
+                fragMng.beginTransaction().replace(R.id.fragment_container, changoFrag,
+                                                                    CONTENIDO_CHANGO).commit();
                 break;
             case LISTA_ACTIVA:
                 ListaActivaFragment listActFrag = new ListaActivaFragment();
-                fragMng.beginTransaction().add(R.id.fragment_container, listActFrag, LISTA_ACTIVA).commit();
-                fragMng.beginTransaction().replace(R.id.fragment_container, listActFrag).commit();
+                fragMng.beginTransaction().replace(R.id.fragment_container, listActFrag,
+                                                                        LISTA_ACTIVA).commit();
                 break;
             case ADMIN_LISTAS:
                 ListaUsuarioFragment adminListFrag = new ListaUsuarioFragment();
-                fragMng.beginTransaction().replace(R.id.fragment_container, adminListFrag).commit();
+                fragMng.beginTransaction().replace(R.id.fragment_container, adminListFrag,
+                                                                        ADMIN_LISTAS).commit();
+                break;
+            case EDIT_LISTA:
+                EditListaFragment editListFrag = new EditListaFragment();
+                fragMng.beginTransaction().replace(R.id.fragment_container, editListFrag,
+                        EDIT_LISTA).commit();
                 break;
         }
     }
@@ -226,9 +279,9 @@ public class PrincipalActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(ListaUsuario item) {
-        Toast.makeText(this, item.getNombre(), Toast.LENGTH_LONG).show();
-        Intent myIntent = new Intent(PrincipalActivity.this, EditListaUsuarioActivity.class);;
-        startActivity(myIntent);
+        setFragment(EDIT_LISTA);
+        EditListaFragment listFrag = (EditListaFragment) getFragment(EDIT_LISTA);
+        listFrag.setLista(item);
     }
 
     public void habilitarContenidoChangoMenuItem(Boolean enable){

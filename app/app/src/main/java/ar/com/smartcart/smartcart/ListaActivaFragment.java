@@ -30,6 +30,7 @@ public class ListaActivaFragment extends android.support.v4.app.Fragment {
     private TextView txtSeleccion;
     private TextView txtPendiente;
     private RecyclerView recyclerView;
+    private Context context;
     private ListaUsuario listaActiva;
 
     public ListaActivaFragment() {
@@ -52,17 +53,13 @@ public class ListaActivaFragment extends android.support.v4.app.Fragment {
         DividerItemDecoration div = new DividerItemDecoration(recyclerView.getContext(),
                                                                         LinearLayout.VERTICAL);
         recyclerView.addItemDecoration(div);
-        Context context = recyclerView.getContext();
+        context = recyclerView.getContext();
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         LinearLayout bottomLayout = (LinearLayout) principalLayout.getChildAt(2);
         txtSeleccion = bottomLayout.findViewById(R.id.txt_seleccion);
         txtPendiente = bottomLayout.findViewById(R.id.txt_pendiente);
 
-        //Lista activa de DB
-        listaActiva = DBHelper.getInstance(context).getListaUsuarioActiva();
-
-        // Sets adapter
         updateView();
         return principalLayout;
     }
@@ -90,54 +87,32 @@ public class ListaActivaFragment extends android.support.v4.app.Fragment {
     }
 
     public void updateView(){
-        ListaActivaViewAdapter adapter = (ListaActivaViewAdapter) recyclerView.getAdapter();
+
+        //Lista activa de DB
+        listaActiva = DBHelper.getInstance(context).getListaUsuarioActiva();
         Chango chango = ((PrincipalActivity) getActivity()).getChango();
         if(chango != null){
-            if(adapter != null){
-                listaActiva = new ListaUsuario();
-                listaActiva.setNombre("Mi Señora");
-                listaActiva.setProductos(chango.getProductos());
-                listaActiva.getProductos().get(3).setEnChango(Boolean.FALSE);
-                listaActiva.getProductos().get(2).setEnChango(Boolean.FALSE);
-                listaActiva.getProductos().get(1).setEnChango(Boolean.TRUE);
-                listaActiva.getProductos().get(0).setEnChango(Boolean.TRUE);
+            if (listaActiva != null && listaActiva.getActiva() &&
+                                          !listaActiva.getProductos().isEmpty()){
+                for (ProductoEnLista prod : listaActiva.getProductos()) {
+                    prod.setEnChango(chango.getProductos().contains(prod));
+                }
                 Collections.sort(listaActiva.getProductos(), new Comparator<ProductoEnLista>() {
                     @Override
                     public int compare(ProductoEnLista p1, ProductoEnLista p2) {
                         return Boolean.compare(p1.getEnChango(), p2.getEnChango());
                     }
                 });
+                ListaActivaViewAdapter adapter = (ListaActivaViewAdapter) recyclerView.getAdapter();
+                if(adapter == null){
+                    adapter = new ListaActivaViewAdapter(listaActiva.getProductos(), mListener);
+                    recyclerView.setAdapter(adapter);
+                }
                 adapter.setmValues(listaActiva.getProductos());
                 adapter.notifyDataSetChanged();
-            }else{
-                if(listaActiva.getId() != null){
-                    ((PrincipalActivity) getActivity()).getSupportActionBar().setTitle(listaActiva.getNombre());
-                }else{
-                    //Lista activa de DB
-                    Context context = recyclerView.getContext();
-                    listaActiva = DBHelper.getInstance(context).getListaUsuarioActiva();
-                    if(listaActiva.getId() == null){
-                        listaActiva = new ListaUsuario();
-                        listaActiva.setNombre("Mi Señora");
-                        listaActiva.setProductos(chango.getProductos());
-                        listaActiva.getProductos().get(3).setEnChango(Boolean.FALSE);
-                        listaActiva.getProductos().get(2).setEnChango(Boolean.FALSE);
-                        listaActiva.getProductos().get(1).setEnChango(Boolean.TRUE);
-                        listaActiva.getProductos().get(0).setEnChango(Boolean.TRUE);
-                        Collections.sort(listaActiva.getProductos(), new Comparator<ProductoEnLista>() {
-                            @Override
-                            public int compare(ProductoEnLista p1, ProductoEnLista p2) {
-                                return Boolean.compare(p1.getEnChango(), p2.getEnChango());
-                            }
-                        });
-                    }
-                }
-                ((PrincipalActivity) getActivity()).getSupportActionBar().setTitle(listaActiva.getNombre());
-                adapter = new ListaActivaViewAdapter(listaActiva.getProductos(), mListener);
-                recyclerView.setAdapter(adapter);
+                txtPendiente.setText("Pendientes: " + listaActiva.getPendiente().toString());
+                txtSeleccion.setText("Listos: " + listaActiva.getSeleccionado().toString());
             }
-            txtPendiente.setText("Pendientes: " + listaActiva.getPendiente().toString());
-            txtSeleccion.setText("Listos: " + listaActiva.getSeleccionado().toString());
         }
     }
 }

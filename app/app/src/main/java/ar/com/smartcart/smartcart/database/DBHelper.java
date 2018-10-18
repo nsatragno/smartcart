@@ -138,6 +138,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public Boolean insertarListaUsuario(ListaUsuario lista){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+        Long maxID = getMaxID(TBL_LISTA_USUTARIO);
+        lista.setId(maxID+1);
         contentValues.put(COL_ID, lista.getId());
         contentValues.put(COL_NOMBRE, lista.getNombre());
         contentValues.put(COL_ACTIVA, lista.getActiva());
@@ -146,6 +148,17 @@ public class DBHelper extends SQLiteOpenHelper {
             insertarProductosEnLista(lista);
         }
         return true;
+    }
+
+    public Long getMaxID(String tabla){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery( " SELECT MAX(" + COL_ID + ") AS " + COL_ID +
+                " FROM " + tabla, null );
+        res.moveToFirst();
+        if(res.isAfterLast() == Boolean.FALSE){
+            return res.getLong(res.getColumnIndex(COL_ID));
+        }
+        return null;
     }
 
     public Boolean insertarProductosEnLista(ListaUsuario lista){
@@ -296,7 +309,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void fillPlainListaUsuario(ListaUsuario lista, Cursor res){
         lista.setId(res.getLong(res.getColumnIndex(COL_ID)));
         lista.setNombre(res.getString(res.getColumnIndex(COL_NOMBRE)));
-        lista.setActiva(res.getLong(res.getColumnIndex(COL_ACTIVA)) == 1L
+        lista.setActiva(res.getInt(res.getColumnIndex(COL_ACTIVA)) == 1
                 ? Boolean.TRUE : Boolean.FALSE);
     }
 
@@ -373,12 +386,21 @@ public class DBHelper extends SQLiteOpenHelper {
         return false;
     }
 
+    public Boolean actualizarListaUsuario(ListaUsuario lista){
+        Boolean result = Boolean.FALSE;
+        result = actualizarPlainListaUsuario(lista);
+        if(result){
+            result = actualizarProdsListaUsuario(lista);
+        }
+        return result;
+    }
+
     public Boolean activarListaUsuario(Long id){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_ACTIVA, Boolean.TRUE);
         Integer result = db.update(TBL_LISTA_USUTARIO, contentValues,
-                COL_ID + " = ? ", new String[] {id.toString()});
+                COL_ID + " = ? ", new String[] {String.valueOf(id)});
         if(result == 1){
             return desactivarListas(id);
         }
@@ -391,7 +413,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(COL_ACTIVA, Boolean.FALSE);
         Integer result = db.update(TBL_LISTA_USUTARIO, contentValues,
                 COL_ID + " <> ? ", new String[] {id.toString()});
-        if(result == 1){
+        if(result > 0){
             return true;
         }
         return false;
@@ -415,4 +437,19 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return false;
     }
+
+//    private void copyDataBase() throws IOException {
+//        InputStream myInput = myContext.getAssets().open(DB_NAME);
+//        String outFileName = DB_PATH + DB_NAME;
+//        OutputStream myOutput = new FileOutputStream(outFileName);
+//        byte[] buffer = new byte[1024];
+//        int length;
+//        while ((length = myInput.read(buffer)) > 0) {
+//            myOutput.write(buffer, 0, length);
+//        }
+//        // Close the streams
+//        myOutput.flush();
+//        myOutput.close();
+//        myInput.close();
+//    }
 }

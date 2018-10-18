@@ -54,24 +54,9 @@ public class ListaUsuarioFragment extends android.support.v4.app.Fragment {
         fbtnNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent in = new Intent(getActivity(), EditListaUsuarioActivity.class);
-                startActivity(in);
+                ((PrincipalActivity) getActivity()).setFragment(((PrincipalActivity) getActivity()).EDIT_LISTA);
             }
         });
-
-        if(listas.isEmpty()){
-            listas = new ArrayList<ListaUsuario>();
-            ListaUsuario l1 = new ListaUsuario();
-            l1.setId(1l);
-            l1.setActiva(true);
-            l1.setNombre("Mi señora");
-            listas.add(l1);
-            ListaUsuario l2 = new ListaUsuario();
-            l2.setId(2l);
-            l2.setActiva(false);
-            l2.setNombre("Lionel List");
-            listas.add(l2);
-        }
         recyclerView.setAdapter(new ListaUsuarioViewAdapter(listas, mListener));
         return principalLayout;
     }
@@ -94,7 +79,6 @@ public class ListaUsuarioFragment extends android.support.v4.app.Fragment {
     }
 
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onListFragmentInteraction(ListaUsuario item);
     }
 }

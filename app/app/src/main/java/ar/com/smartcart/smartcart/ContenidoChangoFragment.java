@@ -6,9 +6,11 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -24,6 +26,7 @@ public class ContenidoChangoFragment extends android.support.v4.app.Fragment {
     private TextView txtCantidad;
     private TextView txtTotal;
     private RecyclerView recyclerView;
+    private ProductoEnChangoViewAdapter adapter;
 
     public ContenidoChangoFragment() {
     }
@@ -57,6 +60,20 @@ public class ContenidoChangoFragment extends android.support.v4.app.Fragment {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.search) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnListFragmentInteractionListener) {
@@ -78,8 +95,12 @@ public class ContenidoChangoFragment extends android.support.v4.app.Fragment {
         void onListFragmentInteraction(ProductoEnLista item);
     }
 
+    public ProductoEnChangoViewAdapter getAdapter() {
+        return adapter;
+    }
+
     public void updateView(){
-        ProductoEnChangoViewAdapter adapter = (ProductoEnChangoViewAdapter) recyclerView.getAdapter();
+        adapter = (ProductoEnChangoViewAdapter) recyclerView.getAdapter();
         Chango chango = ((PrincipalActivity) getActivity()).getChango();
         if(chango != null){
             if(adapter != null){
