@@ -36,4 +36,12 @@ public class ProductoEnLista {
     public void setEnChango(Boolean enChango) {
         this.enChango = enChango;
     }
+
+    public static ProductoEnLista parseEnLista(Producto prod){
+        ProductoEnLista pEnLisra = new ProductoEnLista();
+        pEnLisra.setProducto(prod);
+        pEnLisra.setCantidad(1l);
+        pEnLisra.setEnChango(Boolean.FALSE);
+        return pEnLisra;
+    }
 }

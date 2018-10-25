@@ -56,7 +56,8 @@ public class ListaActivaViewAdapter extends RecyclerView.Adapter<ListaActivaView
 
     public void marcarComoSeleccionado(ViewHolder holder){
         if(holder.mItem.getEnChango()){
-            holder.txtNombre.setPaintFlags(holder.txtNombre.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.txtNombre.setPaintFlags(holder.txtNombre.getPaintFlags()
+                                                        | Paint.STRIKE_THRU_TEXT_FLAG);
             holder.txtNombre.setTypeface(holder.txtNombre.getTypeface(), Typeface.ITALIC);
 
             //Imagen Blanco y Negro
@@ -65,6 +66,14 @@ public class ListaActivaViewAdapter extends RecyclerView.Adapter<ListaActivaView
                 matrix.setSaturation(0);
                 ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
                 holder.imgProd.setColorFilter(filter);
+            }
+        }else{
+            holder.txtNombre.setPaintFlags(0);
+            holder.txtNombre.setTypeface(holder.txtNombre.getTypeface(), Typeface.NORMAL);
+
+            //Imagen Color
+            if(holder.imgProd != null){
+                holder.imgProd.setColorFilter(null);
             }
         }
         holder.chkEnChango.setChecked(holder.mItem.getEnChango());
@@ -80,18 +89,18 @@ public class ListaActivaViewAdapter extends RecyclerView.Adapter<ListaActivaView
         public final CheckBox chkEnChango;
         public final ImageView imgProd;
         public final TextView txtNombre;
-        public final EditText txtCantidad;
+        public final TextView txtCantidad;
 
         public ProductoEnLista mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            chkEnChango = (CheckBox) view.findViewById(R.id.chk_en_chango);
+            chkEnChango = view.findViewById(R.id.chk_en_chango);
             chkEnChango.setEnabled(Boolean.FALSE);
-            imgProd = (ImageView) view.findViewById(R.id.img_prod);
-            txtNombre = (TextView) view.findViewById(R.id.nombre_prod);
-            txtCantidad = (EditText) view.findViewById(R.id.cant_prod);
+            imgProd = view.findViewById(R.id.img_prod);
+            txtNombre = view.findViewById(R.id.nombre_prod);
+            txtCantidad = view.findViewById(R.id.cant_prod);
         }
     }
 

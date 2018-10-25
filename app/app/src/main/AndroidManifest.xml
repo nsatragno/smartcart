@@ -11,41 +11,41 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature android:name="android.hardware.camera.flash" />
+
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/app_name">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".PrincipalActivity"
-            android:label="@string/app_name">
-        <meta-data
-            android:name="android.app.searchable"
-            android:resource="@xml/searchable" />
-        <intent-filter>
-            <action android:name="android.intent.action.SEARCH" />
-        </intent-filter>
-        </activity>
-        <activity
-            android:name=".DescProductoActivity"
-            android:label="@string/title_activity_desc_producto" />
+        <activity android:name=".PrincipalActivity"></activity>
+        <activity android:name=".DescProductoActivity"></activity>
         <activity
             android:name=".ConfigurarConexionActivity"
             android:label="@string/title_activity_configurar_conexion" />
+        <activity android:name=".SignupActivity"></activity>
+        >
+        <activity android:name=".BusquedaActivity">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+        </activity>
         <activity
-            android:name=".SignupActivity"
-            android:label="@string/title_activity_signup" />
+            android:name=".PromosActivity"
+            android:label="@string/title_activity_promos"></activity>
     </application>
+
 </manifest>

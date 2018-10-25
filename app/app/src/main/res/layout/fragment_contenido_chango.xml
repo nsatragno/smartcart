@@ -52,7 +52,7 @@
 
     <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/lista_productos_chango"
-        android:name="ar.com.smartcart.smartcart.ProductoFragment"
+        android:name="ar.com.smartcart.smartcart.ContenidoChangoFragment"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_centerHorizontal="true"

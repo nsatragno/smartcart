@@ -73,6 +73,7 @@ public class ListaActivaFragment extends android.support.v4.app.Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
         }
+        updateView();
     }
 
     @Override
@@ -87,15 +88,13 @@ public class ListaActivaFragment extends android.support.v4.app.Fragment {
     }
 
     public void updateView(){
-
         //Lista activa de DB
         listaActiva = DBHelper.getInstance(context).getListaUsuarioActiva();
-        Chango chango = ((PrincipalActivity) getActivity()).getChango();
-        if(chango != null){
-            if (listaActiva != null && listaActiva.getActiva() &&
-                                          !listaActiva.getProductos().isEmpty()){
+        if (listaActiva != null ){
+            Chango chango = ((PrincipalActivity) getActivity()).getChango();
+            if(chango != null){
                 for (ProductoEnLista prod : listaActiva.getProductos()) {
-                    prod.setEnChango(chango.getProductos().contains(prod));
+                    prod.setEnChango(enChango(prod));
                 }
                 Collections.sort(listaActiva.getProductos(), new Comparator<ProductoEnLista>() {
                     @Override
@@ -103,6 +102,8 @@ public class ListaActivaFragment extends android.support.v4.app.Fragment {
                         return Boolean.compare(p1.getEnChango(), p2.getEnChango());
                     }
                 });
+            }
+            if(recyclerView != null){
                 ListaActivaViewAdapter adapter = (ListaActivaViewAdapter) recyclerView.getAdapter();
                 if(adapter == null){
                     adapter = new ListaActivaViewAdapter(listaActiva.getProductos(), mListener);
@@ -112,7 +113,20 @@ public class ListaActivaFragment extends android.support.v4.app.Fragment {
                 adapter.notifyDataSetChanged();
                 txtPendiente.setText("Pendientes: " + listaActiva.getPendiente().toString());
                 txtSeleccion.setText("Listos: " + listaActiva.getSeleccionado().toString());
+                ((PrincipalActivity) getActivity()).getSupportActionBar()
+                        .setTitle(listaActiva.getNombre());
             }
         }
+    }
+
+    private Boolean enChango(ProductoEnLista prod){
+        Chango chango = ((PrincipalActivity) getActivity()).getChango();
+        for (ProductoEnLista prodChango : chango.getProductos()) {
+            if(prodChango.getProducto().getId().equals(prod.getProducto().getId())
+                    && prodChango.getCantidad().equals(prod.getCantidad())){
+                return Boolean.TRUE;
+            }
+        }
+        return  Boolean.FALSE;
     }
 }

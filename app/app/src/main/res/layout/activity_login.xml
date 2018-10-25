@@ -48,6 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="33dp"
+                android:textColor="#ce7b22"
                 android:textAlignment="center"
                 android:text="SmartCart" />
 
@@ -57,6 +58,9 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_email"
                 android:inputType="textEmailAddress"
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:background="@drawable/rounded_edittext"                android:layout_marginTop="10dp"
                 android:maxLines="1"
                 android:singleLine="true" />
 
@@ -64,9 +68,11 @@
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:hint="@string/prompt_password"
-                android:imeActionId="6"
-                android:imeActionLabel="@string/action_sign_in_short"
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:background="@drawable/rounded_edittext"                android:imeActionLabel="@string/action_sign_in_short"
                 android:imeOptions="actionUnspecified"
                 android:inputType="textPassword"
                 android:maxLines="1"
@@ -88,19 +94,20 @@
                 style="?android:textAppearanceLarge"
                 android:layout_width="340dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/action_sign_up"
-                android:textSize="20dp"
-                android:textColor="#253bb3"/>
+                android:textSize="15dp"
+                android:textColor="#ffff"/>
 
             <TextView
                 android:id="@+id/configurar_conexion"
                 style="?android:textAppearanceSmall"
                 android:layout_width="340dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
+                android:textAlignment="center"
                 android:text="@string/configurar_conexion"
-                android:textColor="#253bb3"/>
+                android:textColor="#ffffff"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

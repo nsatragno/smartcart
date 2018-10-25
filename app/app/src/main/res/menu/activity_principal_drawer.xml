@@ -5,32 +5,32 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_qr_scan"
             android:icon="@drawable/ic_menu_camera"
             android:title="Vincular Chango" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
+            android:id="@+id/nav_contenido_chango"
+            android:icon="@drawable/ic_contenido_chango_black_24dp"
             android:title="Contenido del Chango" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:id="@+id/nav_lista_activa"
+            android:icon="@drawable/ic_lista_activa_24dp"
             android:title="Lista Activa" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
+            android:id="@+id/nav_ubicacion"
+            android:icon="@drawable/ic_ubicacion_24dp"
             android:title="Ubicación de Productos" />
     </group>
 
     <item android:title="Administración">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
+                android:id="@+id/nav_admin_list"
+                android:icon="@drawable/ic_admin_list_black_24dp"
                 android:title="Administración de Listas" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
+                android:id="@+id/nav_promos"
+                android:icon="@drawable/ic_promos_24dp"
                 android:title="Promociones Vigentes" />
         </menu>
     </item>
@@ -39,7 +39,7 @@
         <menu>
             <item
                 android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_dialog_close_dark"
+                android:icon="@drawable/ic_logout_black_24dp"
                 android:title="Cerrar Sesión" />
         </menu>
     </item>

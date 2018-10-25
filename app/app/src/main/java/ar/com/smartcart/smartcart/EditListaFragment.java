@@ -1,7 +1,10 @@
 package ar.com.smartcart.smartcart;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,8 +17,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
+import ar.com.smartcart.smartcart.communication.ProductosManager;
 import ar.com.smartcart.smartcart.database.DBHelper;
 import ar.com.smartcart.smartcart.modelo.ListaUsuario;
+import ar.com.smartcart.smartcart.modelo.Producto;
 import ar.com.smartcart.smartcart.presentacion.EditListaViewAdapter;
 import ar.com.smartcart.smartcart.presentacion.ProductoEnLista;
 
@@ -54,15 +63,8 @@ public class EditListaFragment extends android.support.v4.app.Fragment {
                 R.layout.fragment_edit_lista, container, false);
         ((PrincipalActivity) getActivity()).getSupportActionBar().setTitle("Edición de Lista");
 
-        recyclerView = (RecyclerView) principalLayout.getChildAt(1);
-        DividerItemDecoration div = new DividerItemDecoration(recyclerView.getContext(),
-                                                                        LinearLayout.VERTICAL);
-        recyclerView.addItemDecoration(div);
-        context = recyclerView.getContext();
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-
-        LinearLayout bottomLayout = (LinearLayout) principalLayout.getChildAt(3);
-        txtNombreLista = bottomLayout.findViewById(R.id.txt_nombre_lista);
+        LinearLayout topLayout = principalLayout.findViewById(R.id.top_layout);
+        txtNombreLista = topLayout.findViewById(R.id.txt_nombre_lista);
         txtNombreLista.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 lista.setNombre(txtNombreLista.getText().toString());
@@ -70,6 +72,16 @@ public class EditListaFragment extends android.support.v4.app.Fragment {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
+
+        recyclerView = principalLayout.findViewById(R.id.lista_usuario_edit);
+
+        DividerItemDecoration div = new DividerItemDecoration(recyclerView.getContext(),
+                                                                    LinearLayout.VERTICAL);
+        recyclerView.addItemDecoration(div);
+        context = recyclerView.getContext();
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+        LinearLayout bottomLayout = principalLayout.findViewById(R.id.bottom_layout);
         btnGuardar = bottomLayout.findViewById(R.id.btn_guardar_lista);
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,10 +89,11 @@ public class EditListaFragment extends android.support.v4.app.Fragment {
                 if(lista.getId() == null){
                     DBHelper.getInstance(context).insertarListaUsuario(lista);
                 }else{
-                    DBHelper.getInstance(context).actualizarPlainListaUsuario(lista);
+                    DBHelper.getInstance(context).actualizarListaUsuario(lista);
                 }
+                Toast.makeText(getActivity(), lista.getNombre() + " guardada.", Toast.LENGTH_LONG).show();
                 ((PrincipalActivity) getActivity()).setFragment(
-                                    ((PrincipalActivity) getActivity()).ADMIN_LISTAS);
+                                    ((PrincipalActivity) getActivity()).ADMIN_LISTAS, null);
             }
         });
         btnCancelar = bottomLayout.findViewById(R.id.btn_cancelar_lista);
@@ -89,10 +102,19 @@ public class EditListaFragment extends android.support.v4.app.Fragment {
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "Edición de lista cancelada.", Toast.LENGTH_LONG).show();
                 ((PrincipalActivity) getActivity()).setFragment(
-                                    ((PrincipalActivity) getActivity()).ADMIN_LISTAS);
+                                    ((PrincipalActivity) getActivity()).ADMIN_LISTAS, null);
             }
         });
 
+        FloatingActionButton fbtnNew = principalLayout.findViewById(R.id.fbtn_nuevo_prod);
+        fbtnNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), BusquedaActivity.class);
+//                getActivity().startActivityForResult(intent, ((PrincipalActivity) getActivity()).BUSCADOR);
+                startActivityForResult(intent, ((PrincipalActivity) getActivity()).BUSCADOR);
+            }
+        });
         updateView();
         return principalLayout;
     }
@@ -125,7 +147,6 @@ public class EditListaFragment extends android.support.v4.app.Fragment {
             lista = DBHelper.getInstance(context).getListaUsuario(lista.getId());
         }else{
             lista = new ListaUsuario();
-            txtNombreLista.setText("Ingrese nombre de lista");
         }
         EditListaViewAdapter adapter = (EditListaViewAdapter) recyclerView.getAdapter();
         if(adapter == null){
@@ -133,7 +154,28 @@ public class EditListaFragment extends android.support.v4.app.Fragment {
             recyclerView.setAdapter(adapter);
         }else{
             adapter.setmValues(lista.getProductos());
+            adapter.notifyDataSetChanged();
+        }
+        if(lista.getNombre() != null){
             txtNombreLista.setText(lista.getNombre());
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case PrincipalActivity.BUSCADOR: {
+                if (resultCode == Activity.RESULT_OK) {
+                    Long id = (Long) data.getExtras().getLong(ProductosManager.PRODUCTO_ENCONTRADO);
+                    Producto prod = DBHelper.getInstance(context).getProducto(id);
+                    lista.getProductos().add(ProductoEnLista.parseEnLista(prod));
+                    EditListaViewAdapter adapter = (EditListaViewAdapter) recyclerView.getAdapter();
+                    adapter.setmValues(lista.getProductos());
+                    adapter.notifyDataSetChanged();
+                }
+                break;
+            }
         }
     }
 }

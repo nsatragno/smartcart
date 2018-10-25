@@ -50,12 +50,11 @@ public class PrincipalActivity extends AppCompatActivity
     public static final String DESC_PRODS = "DESC_PRODS";
     public static final String PROMOS = "PROMOS";
 
+    public static final int BUSCADOR = 1;
     public static final int READ_TIME = 3000;
-    private SearchView searchView;
     private Context context;
 
     private Chango chango;
-    private RecyclerView.Adapter adapter;
 
     public Chango getChango() {
         return chango;
@@ -68,18 +67,17 @@ public class PrincipalActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         context = getApplicationContext();
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         //Borrado de la BD
-        context.deleteDatabase(DBHelper.DATABASE_NAME);
+//        context.deleteDatabase(DBHelper.DATABASE_NAME);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         habilitarContenidoChangoMenuItem(Boolean.FALSE);
@@ -92,7 +90,30 @@ public class PrincipalActivity extends AppCompatActivity
             }
         };
         task.execute(context);
-        setFragment(INICIO);
+        setFragment(INICIO, null);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.principal, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_contenido_chango) {
+            NavigationView navigationView = findViewById(R.id.nav_view);
+            Menu menu = navigationView.getMenu();
+            MenuItem contChangoItem = menu.findItem(R.id.nav_contenido_chango);
+            if(contChangoItem != null && contChangoItem.isEnabled()){
+                setFragment(CONTENIDO_CHANGO, null);
+            }else{
+                Toast.makeText(this, "Chango no vinculado.", Toast.LENGTH_LONG).show();
+            }
+            return super.onOptionsItemSelected(item);
+        }
+        return true;
     }
 
     @Override
@@ -106,79 +127,29 @@ public class PrincipalActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.principal, menu);
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
-        //Obtengo el Fragment y su adapter
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-//                FragmentManager fragMng = getSupportFragmentManager();
-//                Fragment fragment = fragMng.findFragmentByTag(CONTENIDO_CHANGO);
-//                if(fragment instanceof ContenidoChangoFragment){
-//                    adapter = ((ContenidoChangoFragment) fragment).getAdapter();
-//                    ((ProductoEnChangoViewAdapter)adapter).getFilter().filter(query);
-//                }
-//                if(fragment instanceof EditListaFragment){
-//                    adapter = ((EditListaFragment) fragment).getAdapter();
-//                    ((EditListaFragment)adapter).getFilter().filter(query);
-//                }
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String query) {
-//                FragmentManager fragMng = getSupportFragmentManager();
-//                Fragment fragment = fragMng.findFragmentByTag(CONTENIDO_CHANGO);
-//                if(fragment instanceof ContenidoChangoFragment){
-//                    adapter = ((ContenidoChangoFragment) fragment).getAdapter();
-//                    ((ProductoEnChangoViewAdapter)adapter).getFilter().filter(query);
-//                }
-//                if(fragment instanceof EditListaFragment){
-//                    adapter = ((EditListaFragment) fragment).getAdapter();
-//                    ((EditListaFragment)adapter).getFilter().filter(query);
-//                }
-                return false;
-            }
-        });
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-         int id = item.getItemId();
-         if (id == R.id.action_search) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         item.setChecked(true);
-        if (id == R.id.nav_camera) {
-            setFragment(QR_SCAN);
-        } else if (id == R.id.nav_gallery) {
-            setFragment(CONTENIDO_CHANGO);
-        } else if (id == R.id.nav_slideshow) {
-            setFragment(LISTA_ACTIVA);
-        } else if (id == R.id.nav_manage) {
-            setFragment(UBIC_PRODS);
-        } else if (id == R.id.nav_share) {
-            setFragment(ADMIN_LISTAS);
-        } else if (id == R.id.nav_send) {
-            //Promos
+        if (id == R.id.nav_qr_scan) {
+            setFragment(QR_SCAN, null);
+        } else if (id == R.id.nav_contenido_chango) {
+            setFragment(CONTENIDO_CHANGO, null);
+        } else if (id == R.id.nav_lista_activa) {
+            setFragment(LISTA_ACTIVA, null);
+        } else if (id == R.id.nav_ubicacion) {
+            setFragment(UBIC_PRODS, null);
+        } else if (id == R.id.nav_admin_list) {
+            setFragment(ADMIN_LISTAS, null);
+        } else if (id == R.id.nav_promos) {
+            Intent intent = new Intent(this, PromosActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_logout) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             return true;
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -189,7 +160,7 @@ public class PrincipalActivity extends AppCompatActivity
         return fragment;
     }
 
-    public void setFragment(String position) {
+    public void setFragment(String position, Object[] params) {
         FragmentManager fragMng = getSupportFragmentManager();
         switch (position) {
             case INICIO:
@@ -220,7 +191,10 @@ public class PrincipalActivity extends AppCompatActivity
             case EDIT_LISTA:
                 EditListaFragment editListFrag = new EditListaFragment();
                 fragMng.beginTransaction().replace(R.id.fragment_container, editListFrag,
-                        EDIT_LISTA).commit();
+                                                                        EDIT_LISTA).commit();
+                if(params != null) {
+                    editListFrag.setLista((ListaUsuario) params[0]);
+                }
                 break;
         }
     }
@@ -262,11 +236,11 @@ public class PrincipalActivity extends AppCompatActivity
 
     @Override
     public void onFragmentInteraction(Long changoID, String changoCod) {
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        TextView txt = (TextView) navigationView.findViewById(R.id.textView);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        TextView txt = navigationView.findViewById(R.id.textView);
         txt.setText(changoCod);
         callContenidoChangoTask(changoID);
-        setFragment(CONTENIDO_CHANGO);
+        setFragment(CONTENIDO_CHANGO, null);
         habilitarContenidoChangoMenuItem(Boolean.TRUE);
     }
 
@@ -279,15 +253,13 @@ public class PrincipalActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(ListaUsuario item) {
-        setFragment(EDIT_LISTA);
-        EditListaFragment listFrag = (EditListaFragment) getFragment(EDIT_LISTA);
-        listFrag.setLista(item);
+        setFragment(EDIT_LISTA, new Object[] {item});
     }
 
     public void habilitarContenidoChangoMenuItem(Boolean enable){
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         Menu menu = navigationView.getMenu();
-        MenuItem item = menu.findItem(R.id.nav_gallery);
+        MenuItem item = menu.findItem(R.id.nav_contenido_chango);
         if(item != null){
             item.setEnabled(enable);
         }

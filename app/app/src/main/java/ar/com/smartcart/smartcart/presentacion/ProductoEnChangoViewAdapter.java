@@ -5,28 +5,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import ar.com.smartcart.smartcart.ContenidoChangoFragment.OnListFragmentInteractionListener;
 import ar.com.smartcart.smartcart.R;
 import ar.com.smartcart.smartcart.communication.DescargaImagenAsyncTask;
 import ar.com.smartcart.smartcart.communication.ProductosManager;
-
-import java.util.ArrayList;
 import java.util.List;
 
-public class ProductoEnChangoViewAdapter extends RecyclerView.Adapter<ProductoEnChangoViewAdapter.ViewHolder>
-        implements Filterable {
+public class ProductoEnChangoViewAdapter extends RecyclerView.Adapter<ProductoEnChangoViewAdapter.ViewHolder> {
 
     private List<ProductoEnLista> mValues;
-    private List<ProductoEnLista> mValuesFiltered;
     private final OnListFragmentInteractionListener mListener;
 
     public ProductoEnChangoViewAdapter(List<ProductoEnLista> items, OnListFragmentInteractionListener listener) {
         mValues = items;
-        mValuesFiltered = items;
         mListener = listener;
     }
 
@@ -65,38 +58,6 @@ public class ProductoEnChangoViewAdapter extends RecyclerView.Adapter<ProductoEn
     }
 
     @Override
-    public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence charSequence) {
-                String charString = charSequence.toString();
-                if (charString.isEmpty()) {
-                    mValuesFiltered = mValues;
-                } else {
-                    List<ProductoEnLista> filteredList = new ArrayList<>();
-                    for (ProductoEnLista row : mValues) {
-
-                        if (row.getProducto().getNombre().toLowerCase().contains
-                                (charString.toLowerCase())) {
-                            filteredList.add(row);
-                        }
-                    }
-                    mValuesFiltered = filteredList;
-                }
-                FilterResults filterResults = new FilterResults();
-                filterResults.values = mValuesFiltered;
-                return filterResults;
-            }
-
-            @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                mValuesFiltered = (ArrayList<ProductoEnLista>) filterResults.values;
-                notifyDataSetChanged();
-            }
-        };
-    }
-
-    @Override
     public int getItemCount() {
         return mValues.size();
     }
@@ -113,10 +74,10 @@ public class ProductoEnChangoViewAdapter extends RecyclerView.Adapter<ProductoEn
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            txtNombre = (TextView) view.findViewById(R.id.nombre_prod);
-            txtCantidad = (TextView) view.findViewById(R.id.cant_prod);
-            txtPrecio = (TextView) view.findViewById(R.id.precio_prod);
-            imgProd = (ImageView) view.findViewById(R.id.img_prod);
+            txtNombre = view.findViewById(R.id.nombre_prod);
+            txtCantidad = view.findViewById(R.id.cant_prod);
+            txtPrecio = view.findViewById(R.id.precio_prod);
+            imgProd = view.findViewById(R.id.img_prod);
         }
     }
 

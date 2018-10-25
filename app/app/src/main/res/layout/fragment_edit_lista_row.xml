@@ -24,11 +24,9 @@
 
     <EditText
         android:id="@+id/cant_prod"
-        android:layout_width="30dp"
+        android:layout_width="40dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
         android:textAppearance="?attr/textAppearanceListItem" />
 
     <ImageView
@@ -36,7 +34,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="30dp"
         android:contentDescription="icon"
         android:src="@drawable/ic_delete_black_24dp"/>
 </LinearLayout>

@@ -37,4 +37,5 @@
     <string name="title_activity_edit_lista_usuario">EditListaUsuarioActivity</string>
     <string name="title_activity_ejemplo">EjemploActivity</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_promos">Promociones Vigentes</string>
 </resources>

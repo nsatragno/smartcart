@@ -15,7 +15,6 @@ import java.util.List;
 import ar.com.smartcart.smartcart.EditListaFragment;
 import ar.com.smartcart.smartcart.R;
 import ar.com.smartcart.smartcart.communication.DescargaImagenAsyncTask;
-import ar.com.smartcart.smartcart.database.DBHelper;
 
 public class EditListaViewAdapter extends RecyclerView.Adapter<EditListaViewAdapter.ViewHolder> {
 
@@ -41,11 +40,23 @@ public class EditListaViewAdapter extends RecyclerView.Adapter<EditListaViewAdap
         holder.txtCantidad.setText(holder.mItem.getCantidad().toString());
         holder.txtCantidad.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
-                holder.mItem.setCantidad(Long.parseLong(holder.txtCantidad.getText().toString()));
+                holder.mItem.setCantidad(Long.parseLong(holder.txtCantidad.getText().toString().isEmpty() ?
+                        "1" : holder.txtCantidad.getText().toString()));
             }
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
+        holder.txtCantidad.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    if(holder.txtCantidad.getText().toString().isEmpty() ||
+                            holder.txtCantidad.getText().toString().equals("0")){
+                        holder.txtCantidad.setText("1");
+                    }
+                }
+            }
         });
         holder.imgDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,10 +93,10 @@ public class EditListaViewAdapter extends RecyclerView.Adapter<EditListaViewAdap
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            imgProd = (ImageView) view.findViewById(R.id.img_prod);
-            imgDelete = (ImageView) view.findViewById(R.id.ico_delete);
-            txtNombre = (TextView) view.findViewById(R.id.nombre_prod);
-            txtCantidad = (EditText) view.findViewById(R.id.cant_prod);
+            imgProd = view.findViewById(R.id.img_prod);
+            imgDelete = view.findViewById(R.id.ico_delete);
+            txtNombre = view.findViewById(R.id.nombre_prod);
+            txtCantidad = view.findViewById(R.id.cant_prod);
             txtCantidad.setInputType(InputType.TYPE_CLASS_NUMBER);
         }
     }

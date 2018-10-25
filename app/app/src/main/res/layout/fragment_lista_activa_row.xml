@@ -30,7 +30,7 @@
         android:layout_marginLeft="10dp"
         android:textAppearance="?attr/textAppearanceListItem" />
 
-    <EditText
+    <TextView
         android:id="@+id/cant_prod"
         android:layout_width="30dp"
         android:layout_height="60dp"

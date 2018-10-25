@@ -50,11 +50,12 @@ public class ListaUsuarioFragment extends android.support.v4.app.Fragment {
         ArrayList<ListaUsuario> listas = DBHelper.getInstance(
                 context).getAllPlainListaUsuario();
 
-        FloatingActionButton fbtnNew = (FloatingActionButton) principalLayout.findViewById(R.id.fbtn_nueva_list);
+        FloatingActionButton fbtnNew = principalLayout.findViewById(R.id.fbtn_nueva_list);
         fbtnNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((PrincipalActivity) getActivity()).setFragment(((PrincipalActivity) getActivity()).EDIT_LISTA);
+                ((PrincipalActivity) getActivity()).setFragment
+                        (((PrincipalActivity) getActivity()).EDIT_LISTA, null);
             }
         });
         recyclerView.setAdapter(new ListaUsuarioViewAdapter(listas, mListener));

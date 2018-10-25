@@ -112,6 +112,22 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(COL_URL, prod.getUrl());
         contentValues.put(COL_CATEGORIA_ID, prod.getCategoria().getId());
         db.insert(TBL_PRODUCTO, null, contentValues);
+        Categoria cat = getCategoria(prod.getCategoria().getId());
+        if(cat.getId() == null){
+            insertarCategoria(prod.getCategoria());
+        }
+        return true;
+    }
+
+    public Boolean insertarCategoria(Categoria cat)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_ID, cat.getId());
+        contentValues.put(COL_NOMBRE, cat.getNombre());
+        contentValues.put(COL_POS_X, cat.getPosicion_x().floatValue());
+        contentValues.put(COL_POS_Y, cat.getPosicion_x().floatValue());
+        db.insert(TBL_CATEGORIA, null, contentValues);
         return true;
     }
 
@@ -167,7 +183,7 @@ public class DBHelper extends SQLiteOpenHelper {
             ContentValues contentValues = new ContentValues();
             contentValues = new ContentValues();
             contentValues.put(COL_PRODUCTO_ID, prod.getProducto().getId());
-            contentValues.put(COL_LISTA_USUARIO_ID, prod.getCantidad());
+            contentValues.put(COL_LISTA_USUARIO_ID, lista.getId());
             contentValues.put(COL_CANTIDAD, prod.getCantidad());
             db.insert(TBL_PRODUCTO_LISTA, null, contentValues);
         }
@@ -188,6 +204,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public Boolean borrarAllProductos(){
         SQLiteDatabase db = this.getWritableDatabase();
         Integer result = db.delete(TBL_PRODUCTO, null, null);
+        result = db.delete(TBL_CATEGORIA, null, null);
         return true;
     }
 
@@ -238,12 +255,13 @@ public class DBHelper extends SQLiteOpenHelper {
         prod.setId(res.getLong(res.getColumnIndex(COL_ID)));
         prod.setNombre(res.getString(res.getColumnIndex(COL_NOMBRE)));
         prod.setDescripcion(res.getString(res.getColumnIndex(COL_DESC)));
-        prod.setPrecio(new BigDecimal(res.getFloat(res.getColumnIndex(COL_PRECIO))));
+        prod.setPrecio(BigDecimal.valueOf(res.getFloat(res.getColumnIndex(COL_PRECIO))));
         prod.setUrl(res.getString(res.getColumnIndex(COL_URL)));
-        prod.setApto_celiacos(res.getLong(res.getColumnIndex(COL_CELIACOS)) == 1L
-                ? Boolean.TRUE : Boolean.FALSE);
-        prod.setApto_celiacos(res.getLong(res.getColumnIndex(COL_CELIACOS)) == 1L
-                ? Boolean.TRUE : Boolean.FALSE);
+        prod.setApto_celiacos(res.getString(res.getColumnIndex(COL_CELIACOS)).equals("1"));
+        prod.setApto_diabeticos(res.getString(res.getColumnIndex(COL_DIABETICOS)).equals("1"));
+        Long catID = res.getLong(res.getColumnIndex(COL_CATEGORIA_ID));
+        Categoria cat = getCategoria(catID);
+        prod.setCategoria(cat);
     }
 
     public ArrayList<Producto> getAllProductos(){
@@ -261,13 +279,13 @@ public class DBHelper extends SQLiteOpenHelper {
         return productos;
     }
 
-    public List<Producto> getProductosLikeNombre(String nombre){
+    public ArrayList<Producto> getProductosLikeNombre(String nombre){
         ArrayList<Producto> productos = new ArrayList<Producto>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res =  db.rawQuery( " SELECT * " +
                                    " FROM " + TBL_PRODUCTO +
                                    " WHERE " + COL_NOMBRE +
-                                        " LIKE '" + nombre + "'", null );
+                                        " LIKE '%" + nombre + "%'", null );
         res.moveToFirst();
         while(res.isAfterLast() == Boolean.FALSE){
             Producto prod = new Producto();
@@ -309,8 +327,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void fillPlainListaUsuario(ListaUsuario lista, Cursor res){
         lista.setId(res.getLong(res.getColumnIndex(COL_ID)));
         lista.setNombre(res.getString(res.getColumnIndex(COL_NOMBRE)));
-        lista.setActiva(res.getInt(res.getColumnIndex(COL_ACTIVA)) == 1
-                ? Boolean.TRUE : Boolean.FALSE);
+        lista.setActiva(res.getString(res.getColumnIndex(COL_ACTIVA)).equals("1"));
     }
 
     public ListaUsuario getListaUsuario(Long id){
@@ -326,7 +343,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ListaUsuario lista = new ListaUsuario();
         Cursor res =  db.rawQuery( " SELECT * " +
                 " FROM " + TBL_LISTA_USUTARIO +
-                " WHERE " + COL_ACTIVA + " = " + 1, null );
+                " WHERE " + COL_ACTIVA + " = 1", null );
         res.moveToFirst();
         if(res.isAfterLast() == Boolean.FALSE){
             fillPlainListaUsuario(lista, res);
@@ -365,6 +382,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void fillProductoEnLista(ProductoEnLista prod, Cursor res){
         Producto p = new Producto();
         fillProducto(p, res);
+        prod.setProducto(p);
         prod.setCantidad(res.getLong(res.getColumnIndex(COL_CANTIDAD)));
     }
 
@@ -423,19 +441,33 @@ public class DBHelper extends SQLiteOpenHelper {
         if(getPlainListaUsuario(lista.getId()).getId() == null){
             return false;
         }
-        Boolean result = borrarProductosLista(lista.getId());
-        if(result){
-            return insertarProductosEnLista(lista);
-        }
-        return false;
+        borrarProductosLista(lista.getId());
+        return insertarProductosEnLista(lista);
     }
 
     public Boolean actualizarProductos(ArrayList<Producto> productos){
-        Boolean result = borrarAllProductos();
-        if(result){
+            borrarAllProductos();
             return insertarProductos(productos);
+    }
+
+    public Categoria getCategoria(Long id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Categoria cat = new Categoria();
+        Cursor res =  db.rawQuery( " SELECT * " +
+                " FROM " + TBL_CATEGORIA +
+                " WHERE " + COL_ID + " = " + id, null );
+        res.moveToFirst();
+        if(res.isAfterLast() == Boolean.FALSE){
+            fillCategoria(cat, res);
         }
-        return false;
+        return cat;
+    }
+
+    public void fillCategoria(Categoria cat, Cursor res) {
+        cat.setId(res.getLong(res.getColumnIndex(COL_ID)));
+        cat.setNombre(res.getString(res.getColumnIndex(COL_NOMBRE)));
+        cat.setPosicion_x(BigDecimal.valueOf(res.getFloat(res.getColumnIndex(COL_POS_X))));
+        cat.setPosicion_y(BigDecimal.valueOf(res.getFloat(res.getColumnIndex(COL_POS_Y))));
     }
 
 //    private void copyDataBase() throws IOException {

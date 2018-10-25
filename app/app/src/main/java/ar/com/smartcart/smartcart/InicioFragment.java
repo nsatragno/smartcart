@@ -28,15 +28,15 @@ public class InicioFragment extends Fragment {
 
         ((PrincipalActivity) getActivity()).getSupportActionBar().setTitle("Inicio SmartCart");
 
-        Button btnVincularChango = (Button) view.findViewById(R.id.btn_vincular);
-        Button btnAdminList = (Button) view.findViewById(R.id.btn_admin_list);
-        Button btnPromos = (Button) view.findViewById(R.id.btn_promos);
+        Button btnVincularChango = view.findViewById(R.id.btn_vincular);
+        Button btnAdminList = view.findViewById(R.id.btn_admin_list);
+        Button btnPromos = view.findViewById(R.id.btn_promos);
 
         btnVincularChango.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((PrincipalActivity) getActivity())
-                        .setFragment(((PrincipalActivity) getActivity()).QR_SCAN);
+                        .setFragment(((PrincipalActivity) getActivity()).QR_SCAN, null);
             }
         });
 
@@ -44,7 +44,7 @@ public class InicioFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ((PrincipalActivity) getActivity())
-                        .setFragment(((PrincipalActivity) getActivity()).ADMIN_LISTAS);
+                        .setFragment(((PrincipalActivity) getActivity()).ADMIN_LISTAS, null);
             }
         });
 
