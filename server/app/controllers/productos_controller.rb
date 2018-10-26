@@ -6,6 +6,12 @@
   # GET /productos
   # GET /productos.json
   def index
+    respond_to do |format|
+      format.html {
+        authenticate_usuario!
+      }
+      format.json {}
+    end
     @productos = Producto.all
   end
 
