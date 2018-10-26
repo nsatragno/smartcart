@@ -1,6 +1,6 @@
 ﻿class ProductosController < ApplicationController
-  #before_action :authenticate_usuario!
-  #before_action :validar_gestion
+  before_action :authenticate_usuario!, except: [:index]
+  before_action :validar_gestion, except: [:index]
   before_action :set_producto, only: [:show, :edit, :update, :destroy, :imagen]
 
   # GET /productos
