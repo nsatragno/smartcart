@@ -43,6 +43,9 @@ gem 'paperclip'
 # Generate QR codes
 gem 'rqrcode'
 
+# Generate placeholder files
+gem 'identicon'
+
 # Inspinia dependencies.
 gem 'jquery-rails', '4.2.1'
 gem 'font-awesome-rails', '~> 4.7.0.0'
