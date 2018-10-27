@@ -18,10 +18,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-
-import ar.com.smartcart.smartcart.communication.ProductosManager;
+import ar.com.smartcart.smartcart.communication.ProductoManager;
 import ar.com.smartcart.smartcart.database.DBHelper;
 import ar.com.smartcart.smartcart.modelo.ListaUsuario;
 import ar.com.smartcart.smartcart.modelo.Producto;
@@ -111,7 +108,6 @@ public class EditListaFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), BusquedaActivity.class);
-//                getActivity().startActivityForResult(intent, ((PrincipalActivity) getActivity()).BUSCADOR);
                 startActivityForResult(intent, ((PrincipalActivity) getActivity()).BUSCADOR);
             }
         });
@@ -167,7 +163,7 @@ public class EditListaFragment extends android.support.v4.app.Fragment {
         switch(requestCode) {
             case PrincipalActivity.BUSCADOR: {
                 if (resultCode == Activity.RESULT_OK) {
-                    Long id = (Long) data.getExtras().getLong(ProductosManager.PRODUCTO_ENCONTRADO);
+                    Long id = (Long) data.getExtras().getLong(ProductoManager.PRODUCTO_ENCONTRADO);
                     Producto prod = DBHelper.getInstance(context).getProducto(id);
                     lista.getProductos().add(ProductoEnLista.parseEnLista(prod));
                     EditListaViewAdapter adapter = (EditListaViewAdapter) recyclerView.getAdapter();

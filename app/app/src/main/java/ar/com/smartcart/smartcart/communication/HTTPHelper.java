@@ -61,10 +61,13 @@ public class HTTPHelper {
                 sb.append(inputLine);
             }
             in.close();
+            return sb.toString();
+        }catch(Exception e){
+            e.printStackTrace();
         } finally {
             conn.disconnect();
         }
-        return sb.toString();
+        return null;
     }
 
     public static Bitmap descargarImg(String uri) throws IOException {
@@ -82,8 +85,11 @@ public class HTTPHelper {
             Bitmap bmap = BitmapFactory.decodeStream(in);
             in.close();
             return bmap;
+        }catch(Exception e){
+            e.printStackTrace();
         } finally {
             conn.disconnect();
         }
+        return null;
     }
 }

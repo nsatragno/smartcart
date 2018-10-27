@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="33dp"
-                android:textColor="#ce7b22"
+                android:textColor="#74C0E4"
                 android:textAlignment="center"
                 android:text="SmartCart" />
 
@@ -81,7 +81,7 @@
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="10dp"
                 android:background="#cc0e07"
                 android:text="@string/action_sign_in"
                 android:textColor="#ffffff"
@@ -102,6 +102,7 @@
                 style="?android:textAppearanceSmall"
                 android:layout_width="340dp"
                 android:layout_height="wrap_content"
+                android:textSize="15dp"
                 android:layout_marginTop="30dp"
                 android:textAlignment="center"
 

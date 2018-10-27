@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:id="@+id/principal_layout"
     android:layout_height="@dimen/nav_header_height"
     android:background="@drawable/side_nav_bar"
     android:gravity="bottom"
@@ -14,27 +15,28 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="100dp"
-        android:layout_height="99dp"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
         android:contentDescription="@string/nav_header_desc"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
         app:srcCompat="@mipmap/ic_launcher" />
 
     <TextView
+        android:id="@+id/txt_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:textColor="#ffff"
+        android:layout_gravity="center"
         android:text="@string/nav_header_title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAlignment="center"
+        android:textColor="#ffff" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="181dp"
-        android:layout_height="wrap_content"
-        android:gravity="bottom"
+        android:id="@+id/txt_cod_chango"
+        android:layout_width="match_parent"
+        android:layout_height="29dp"
+        android:gravity="center"
         android:text="@string/nav_header_subtitle"
-        android:textColor="#ffff" />
+        android:textAlignment="center"
+        android:textColor="#74C0E4" />
 
 </LinearLayout>

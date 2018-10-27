@@ -12,7 +12,7 @@ import ar.com.smartcart.smartcart.modelo.Producto;
 import java.lang.reflect.Type;
 import com.google.gson.reflect.TypeToken;
 
-public class ProductosManager {
+public class ProductoManager {
     private final static String SERVICIO_CONTENIDO_CHANGO = "changos/{id}";
     private final static String SERVICIO_ALL_PRODUCTOS = "productos";
     public final static String PRODUCTO_ENCONTRADO = "PRODUCTO_ENCONTRADO";

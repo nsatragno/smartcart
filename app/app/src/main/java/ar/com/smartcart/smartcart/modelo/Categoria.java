@@ -7,6 +7,7 @@ public class Categoria {
     private String nombre;
     private BigDecimal posicion_x;
     private BigDecimal posicion_y;
+    private String url;
 
     public Long getId() {
         return id;

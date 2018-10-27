@@ -41,6 +41,14 @@ public class ListaActivaViewAdapter extends RecyclerView.Adapter<ListaActivaView
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.txtNombre.setText(holder.mItem.getProducto().getNombre());
+        holder.txtNombre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != mListener) {
+                    mListener.onListFragmentInteraction(holder.mItem);
+                }
+            }
+        });
         holder.txtCantidad.setText(holder.mItem.getCantidad().toString());
 
         //Ejecutar descarga imagen

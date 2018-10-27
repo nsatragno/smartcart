@@ -29,7 +29,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".PrincipalActivity"></activity>
-        <activity android:name=".DescProductoActivity"></activity>
         <activity
             android:name=".ConfigurarConexionActivity"
             android:label="@string/title_activity_configurar_conexion" />
@@ -44,9 +43,6 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".PromosActivity"
-            android:label="@string/title_activity_promos"></activity>
     </application>
 
 </manifest>

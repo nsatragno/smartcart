@@ -90,10 +90,10 @@ public class ListaUsuarioViewAdapter extends RecyclerView.Adapter<ListaUsuarioVi
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            rdbActiva = (RadioButton) view.findViewById(R.id.rdb_activa);
-            txtNombre = (TextView) view.findViewById(R.id.nombre_lista);
-            editView = (ImageView) view.findViewById(R.id.ico_edit);
-            deleteView = (ImageView) view.findViewById(R.id.ico_delete);
+            rdbActiva = view.findViewById(R.id.rdb_activa);
+            txtNombre = view.findViewById(R.id.nombre_lista);
+            editView = view.findViewById(R.id.ico_edit);
+            deleteView = view.findViewById(R.id.ico_delete);
         }
     }
 }

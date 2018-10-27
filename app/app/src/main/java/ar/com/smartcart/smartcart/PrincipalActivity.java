@@ -3,6 +3,7 @@ package ar.com.smartcart.smartcart;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,8 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,9 +82,16 @@ public class PrincipalActivity extends AppCompatActivity
         //Borrado de la BD
 //        context.deleteDatabase(DBHelper.DATABASE_NAME);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         habilitarContenidoChangoMenuItem(Boolean.FALSE);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+
+        //Obtengo mail del usuario logueado de la SM
+        SharedPreferences preferences = getSharedPreferences("smartcart", Context.MODE_PRIVATE);
+        String email = preferences.getString("USUARIO", "");
+        TextView txtEmail = headerView.findViewById(R.id.txt_email);
+        txtEmail.setText(email);
 
         AllProductosAsyncTask task = new AllProductosAsyncTask(){
             @Override
@@ -142,8 +152,7 @@ public class PrincipalActivity extends AppCompatActivity
         } else if (id == R.id.nav_admin_list) {
             setFragment(ADMIN_LISTAS, null);
         } else if (id == R.id.nav_promos) {
-            Intent intent = new Intent(this, PromosActivity.class);
-            startActivity(intent);
+            setFragment(PROMOS, null);
         } else if (id == R.id.nav_logout) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
@@ -152,12 +161,6 @@ public class PrincipalActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    public Fragment getFragment(String tag){
-        FragmentManager fragMng = getSupportFragmentManager();
-        Fragment fragment = fragMng.findFragmentByTag(tag);
-        return fragment;
     }
 
     public void setFragment(String position, Object[] params) {
@@ -194,6 +197,24 @@ public class PrincipalActivity extends AppCompatActivity
                                                                         EDIT_LISTA).commit();
                 if(params != null) {
                     editListFrag.setLista((ListaUsuario) params[0]);
+                }
+                break;
+            case UBIC_PRODS:
+                MapaFragment mapaFrag = new MapaFragment();
+                fragMng.beginTransaction().replace(R.id.fragment_container, mapaFrag,
+                        UBIC_PRODS).commit();
+                break;
+            case PROMOS:
+                PromosFragment promoFrag = new PromosFragment();
+                fragMng.beginTransaction().replace(R.id.fragment_container, promoFrag,
+                        PROMOS).commit();
+                break;
+            case DESC_PRODS:
+                DescProductoFragment descFrag = new DescProductoFragment();
+                fragMng.beginTransaction().replace(R.id.fragment_container, descFrag,
+                        DESC_PRODS).commit();
+                if(params != null) {
+                    descFrag.setProducto((Producto) params[0]);
                 }
                 break;
         }
@@ -237,8 +258,9 @@ public class PrincipalActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Long changoID, String changoCod) {
         NavigationView navigationView = findViewById(R.id.nav_view);
-        TextView txt = navigationView.findViewById(R.id.textView);
-        txt.setText(changoCod);
+        View headerView = navigationView.getHeaderView(0);
+        TextView txtCodChango = headerView.findViewById(R.id.txt_cod_chango);
+        txtCodChango.setText(changoCod);
         callContenidoChangoTask(changoID);
         setFragment(CONTENIDO_CHANGO, null);
         habilitarContenidoChangoMenuItem(Boolean.TRUE);
@@ -246,9 +268,7 @@ public class PrincipalActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(ProductoEnLista item) {
-        Toast.makeText(this, item.getProducto().getDescripcion(), Toast.LENGTH_LONG).show();
-        Intent myIntent = new Intent(PrincipalActivity.this, DescProductoActivity.class);;
-        startActivity(myIntent);
+        setFragment(DESC_PRODS, new Object[] {item.getProducto()});
     }
 
     @Override
