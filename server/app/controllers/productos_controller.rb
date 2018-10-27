@@ -9,6 +9,7 @@
     respond_to do |format|
       format.html {
         authenticate_usuario!
+        validar_gestion
       }
       format.json {}
     end
