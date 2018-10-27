@@ -106,7 +106,8 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(COL_ID, prod.getId());
         contentValues.put(COL_NOMBRE, prod.getNombre());
         contentValues.put(COL_DESC, prod.getDescripcion());
-        contentValues.put(COL_PRECIO, prod.getPrecio().floatValue());
+        contentValues.put(COL_PRECIO, prod.getPrecio() != null ?
+                            prod.getPrecio().floatValue() : null);
         contentValues.put(COL_CELIACOS, prod.getApto_celiacos());
         contentValues.put(COL_DIABETICOS, prod.getApto_diabeticos());
         contentValues.put(COL_URL, prod.getUrl());
@@ -125,8 +126,10 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_ID, cat.getId());
         contentValues.put(COL_NOMBRE, cat.getNombre());
-        contentValues.put(COL_POS_X, cat.getPosicion_x().floatValue());
-        contentValues.put(COL_POS_Y, cat.getPosicion_x().floatValue());
+        contentValues.put(COL_POS_X, cat.getPosicion_x() != null ?
+                                        cat.getPosicion_x().floatValue(): null);
+        contentValues.put(COL_POS_Y, cat.getPosicion_y() != null ?
+                cat.getPosicion_y().floatValue(): null);
         db.insert(TBL_CATEGORIA, null, contentValues);
         return true;
     }
@@ -145,8 +148,10 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_ID, cat.getId());
         contentValues.put(COL_NOMBRE, cat.getNombre());
-        contentValues.put(COL_POS_X, cat.getPosicion_x().floatValue());
-        contentValues.put(COL_POS_Y, cat.getPosicion_y().floatValue());
+        contentValues.put(COL_POS_X, cat.getPosicion_x() != null ?
+                cat.getPosicion_x().floatValue(): null);
+        contentValues.put(COL_POS_Y, cat.getPosicion_y() != null ?
+                cat.getPosicion_y().floatValue(): null);
         db.insert(TBL_CATEGORIA, null, contentValues);
         return true;
     }
@@ -469,19 +474,4 @@ public class DBHelper extends SQLiteOpenHelper {
         cat.setPosicion_x(BigDecimal.valueOf(res.getFloat(res.getColumnIndex(COL_POS_X))));
         cat.setPosicion_y(BigDecimal.valueOf(res.getFloat(res.getColumnIndex(COL_POS_Y))));
     }
-
-//    private void copyDataBase() throws IOException {
-//        InputStream myInput = myContext.getAssets().open(DB_NAME);
-//        String outFileName = DB_PATH + DB_NAME;
-//        OutputStream myOutput = new FileOutputStream(outFileName);
-//        byte[] buffer = new byte[1024];
-//        int length;
-//        while ((length = myInput.read(buffer)) > 0) {
-//            myOutput.write(buffer, 0, length);
-//        }
-//        // Close the streams
-//        myOutput.flush();
-//        myOutput.close();
-//        myInput.close();
-//    }
 }
