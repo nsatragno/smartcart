@@ -16,6 +16,7 @@
  *= require datatables/datatables.bootstrap.css
  *= require datatables/datatables.responsive.bootstrap.css
  *= require bootstrap-toggle/bootstrap-toggle.css
+ *= require datatables.min.css
  *= require productos
  *= require supermercado
  *= require style

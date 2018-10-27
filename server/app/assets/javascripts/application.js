@@ -14,4 +14,5 @@
 //= require rails-ujs
 //= require activestorage
 //= require toastr/toastr.js
+//= require datatables.min.js
 //= require_tree .

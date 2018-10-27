@@ -1,6 +1,6 @@
 class SupermercadosController < ApplicationController
-  before_action :authenticate_usuario!
-  before_action :validar_gestion
+  before_action :authenticate_usuario!, except: [:show]
+  before_action :validar_gestion, except: [:show]
 
   before_action :set_supermercado
 
@@ -21,7 +21,16 @@ class SupermercadosController < ApplicationController
   end
 
   def show
-    render :edit
+    respond_to do |format|
+      format.html {
+        authenticate_usuario!
+        validar_gestion
+        render :edit
+      }
+      format.json {
+        render :show
+      }
+    end
   end
 
   private
