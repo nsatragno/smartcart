@@ -8,7 +8,7 @@
       </div>
       <div class="ibox-content">
         <% if @productos.any? %>
-          <table class="table table-hover">
+          <table class="table table-hover" id="tabla-productos">
             <thead>
               <tr>
                 <th class="col-md-2">Nombre</th>
@@ -17,7 +17,8 @@
                 <th class="col-md-2">Precio</th>
                 <th class="col-md-1">Apto Celíacos</th>
                 <th class="col-md-1">Apto Diabéticos</th>
-                <th class="col-md-1" colspan="2"></th>
+                <th class="col-md-1"></th>
+                <th class="col-md-1"></th>
               </tr>
             </thead>
 
@@ -83,3 +84,11 @@
     </div>
   </div>
 </div>
+
+<% content_for :local_scripts do %>
+<script>
+  $(document).ready(function () {
+    $("#tabla-productos").DataTable();
+  });
+</script>
+<% end %>
