@@ -2,15 +2,18 @@ package ar.com.smartcart.smartcart.communication;
 
 import android.os.AsyncTask;
 import android.util.Log;
+
 import java.io.IOException;
+import java.util.ArrayList;
 
-import ar.com.smartcart.smartcart.modelo.Chango;
+import ar.com.smartcart.smartcart.modelo.Promocion;
+import ar.com.smartcart.smartcart.modelo.Supermercado;
 
-public class ContenidoChangoAsyncTask extends AsyncTask<Long, Void, Chango> {
+public class PromoAsyncTask extends AsyncTask<Long, Void, ArrayList<Promocion>> {
         @Override
-        protected Chango doInBackground(Long... params) {
+        protected ArrayList<Promocion> doInBackground(Long... params) {
             try {
-                return ProductoManager.getContenidoChango(params[0]);
+                return PromoManager.getPromociones();
             } catch (IOException e) {
                 e.printStackTrace();
                 Log.e("Smartcart", e.getMessage());

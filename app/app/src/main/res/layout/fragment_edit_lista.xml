@@ -20,7 +20,7 @@
             android:layout_height="412dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="#ff9c40"
+            android:background="#74C0E4"
             android:gravity="center"
             android:textAlignment="center"
             android:textColor="#ffffff"

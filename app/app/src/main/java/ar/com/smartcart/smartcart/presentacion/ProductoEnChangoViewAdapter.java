@@ -10,7 +10,7 @@ import android.widget.TextView;
 import ar.com.smartcart.smartcart.ContenidoChangoFragment.OnListFragmentInteractionListener;
 import ar.com.smartcart.smartcart.R;
 import ar.com.smartcart.smartcart.communication.DescargaImagenAsyncTask;
-import ar.com.smartcart.smartcart.communication.ProductosManager;
+import ar.com.smartcart.smartcart.communication.ProductoManager;
 import java.util.List;
 
 public class ProductoEnChangoViewAdapter extends RecyclerView.Adapter<ProductoEnChangoViewAdapter.ViewHolder> {
@@ -45,7 +45,7 @@ public class ProductoEnChangoViewAdapter extends RecyclerView.Adapter<ProductoEn
 
         holder.txtNombre.setText(holder.mItem.getProducto().getNombre());
         holder.txtCantidad.setText(holder.mItem.getCantidad().toString());
-        holder.txtPrecio.setText(ProductosManager.convertirEnPrecio(holder.mItem.getSubtotal()));
+        holder.txtPrecio.setText(ProductoManager.convertirEnPrecio(holder.mItem.getSubtotal()));
 
         holder.txtNombre.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -48,13 +48,13 @@ public class InicioFragment extends Fragment {
             }
         });
 
-//        btnPromos.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ((PrincipalActivity) getActivity())
-//                        .setFragment(((PrincipalActivity) getActivity()).PROMOS);
-//            }
-//        });
+        btnPromos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((PrincipalActivity) getActivity())
+                        .setFragment(((PrincipalActivity) getActivity()).PROMOS, null);
+            }
+        });
         return view;
     }
 }

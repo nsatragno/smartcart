@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import ar.com.smartcart.smartcart.communication.ProductosManager;
+import ar.com.smartcart.smartcart.communication.ProductoManager;
 import ar.com.smartcart.smartcart.database.DBHelper;
 import ar.com.smartcart.smartcart.modelo.Producto;
 import ar.com.smartcart.smartcart.presentacion.BusquedaProductoViewAdapter;
@@ -55,7 +55,7 @@ public class BusquedaActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(Producto item) {
                             Intent resultIntent = new Intent();
-                            resultIntent.putExtra(ProductosManager.PRODUCTO_ENCONTRADO, item.getId());
+                            resultIntent.putExtra(ProductoManager.PRODUCTO_ENCONTRADO, item.getId());
                             setResult(Activity.RESULT_OK, resultIntent);
                         Toast.makeText(BusquedaActivity.this,
                                 item.getNombre() + " agregado.", Toast.LENGTH_LONG).show();

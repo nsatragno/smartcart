@@ -10,12 +10,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.SearchView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import ar.com.smartcart.smartcart.communication.ProductosManager;
+import ar.com.smartcart.smartcart.communication.ProductoManager;
 import ar.com.smartcart.smartcart.modelo.Chango;
 import ar.com.smartcart.smartcart.presentacion.ProductoEnLista;
 import ar.com.smartcart.smartcart.presentacion.ProductoEnChangoViewAdapter;
@@ -106,7 +103,7 @@ public class ContenidoChangoFragment extends android.support.v4.app.Fragment {
                 recyclerView.setAdapter(adapter);
             }
             txtCantidad.setText("Cantidad: " + chango.getCantidadTotal().toString());
-            txtTotal.setText("Total: " + ProductosManager.convertirEnPrecio(
+            txtTotal.setText("Total: " + ProductoManager.convertirEnPrecio(
                     chango.getTotal()));
         }
     }

@@ -11,17 +11,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import ar.com.smartcart.smartcart.communication.ProductosManager;
 import ar.com.smartcart.smartcart.database.DBHelper;
 import ar.com.smartcart.smartcart.modelo.Chango;
 import ar.com.smartcart.smartcart.modelo.ListaUsuario;
-import ar.com.smartcart.smartcart.modelo.Producto;
 import ar.com.smartcart.smartcart.presentacion.ListaActivaViewAdapter;
-import ar.com.smartcart.smartcart.presentacion.ProductoEnChangoViewAdapter;
 import ar.com.smartcart.smartcart.presentacion.ProductoEnLista;
 
 public class ListaActivaFragment extends android.support.v4.app.Fragment {
@@ -90,7 +86,7 @@ public class ListaActivaFragment extends android.support.v4.app.Fragment {
     public void updateView(){
         //Lista activa de DB
         listaActiva = DBHelper.getInstance(context).getListaUsuarioActiva();
-        if (listaActiva != null ){
+        if (listaActiva.getId() != null ){
             Chango chango = ((PrincipalActivity) getActivity()).getChango();
             if(chango != null){
                 for (ProductoEnLista prod : listaActiva.getProductos()) {
