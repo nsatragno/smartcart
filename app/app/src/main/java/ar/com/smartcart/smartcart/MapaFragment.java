@@ -104,12 +104,12 @@ public class MapaFragment extends android.support.v4.app.Fragment {
                     Bitmap mutableBitmap = imagen.copy(Bitmap.Config.ARGB_8888, true);
                     Canvas canvas = new Canvas(mutableBitmap);
                     Paint paint = new Paint();
-                    paint.setColor(Color.YELLOW);
+                    paint.setColor(Color.parseColor("#333E50"));
                     paint.setFlags(Paint.ANTI_ALIAS_FLAG);
                     paint.setStrokeWidth(4);
                     canvas.drawCircle(prod.getCategoria().getPosicion_x().floatValue(),
                                       prod.getCategoria().getPosicion_y().floatValue(),
-                                      25, paint);
+                                      15, paint);
                     imgMapa.setImageBitmap(mutableBitmap);
                 }
                 break;
