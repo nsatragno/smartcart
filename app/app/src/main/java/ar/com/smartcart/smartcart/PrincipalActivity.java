@@ -96,7 +96,8 @@ public class PrincipalActivity extends AppCompatActivity
         AllProductosAsyncTask task = new AllProductosAsyncTask(){
             @Override
             protected void onPostExecute(final ArrayList<Producto> response) {
-                Toast.makeText(PrincipalActivity.this, "Productos actualizados correctamente.", Toast.LENGTH_LONG).show();
+                Toast.makeText(PrincipalActivity.this,
+                        "Productos actualizados correctamente.", Toast.LENGTH_LONG).show();
             }
         };
         task.execute(context);
@@ -132,7 +133,7 @@ public class PrincipalActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            drawer.openDrawer(GravityCompat.START);
         }
     }
 

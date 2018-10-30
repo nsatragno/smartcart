@@ -17,32 +17,43 @@
         android:label="SmartCart"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".LoginActivity">
 
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PrincipalActivity"></activity>
+
+        <activity
+            android:name=".PrincipalActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
         <activity
             android:name=".ConfigurarConexionActivity"
-            android:label="@string/title_activity_configurar_conexion" />
-        <activity android:name=".SignupActivity"></activity>
-        >
-        <activity android:name=".BusquedaActivity">
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".SignupActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".BusquedaActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
-
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
-    </application>
 
+    </application>
 </manifest>
