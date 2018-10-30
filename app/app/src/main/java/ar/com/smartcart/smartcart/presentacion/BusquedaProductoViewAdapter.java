@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -43,7 +44,13 @@ public class BusquedaProductoViewAdapter
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
         holder.txtNombre.setText(holder.mItem.getNombre());
-        holder.imgAdd.setOnClickListener(new View.OnClickListener() {
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(holder.mItem);
+            }
+        });
+        holder.btnSelec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.onItemClick(holder.mItem);
@@ -69,7 +76,7 @@ public class BusquedaProductoViewAdapter
         public final View mView;
         public final ImageView imgProd;
         public final TextView txtNombre;
-        public final ImageView imgAdd;
+        public final Button btnSelec;
 
         public Producto mItem;
 
@@ -77,7 +84,7 @@ public class BusquedaProductoViewAdapter
             super(view);
             mView = view;
             imgProd = view.findViewById(R.id.img_prod);
-            imgAdd = view.findViewById(R.id.ico_add);
+            btnSelec = view.findViewById(R.id.btn_selec);
             txtNombre = view.findViewById(R.id.nombre_prod);
         }
     }

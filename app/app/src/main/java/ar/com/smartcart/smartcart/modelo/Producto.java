@@ -1,8 +1,10 @@
 package ar.com.smartcart.smartcart.modelo;
 
+import android.support.annotation.NonNull;
+
 import java.math.BigDecimal;
 
-public class Producto {
+public class Producto implements Comparable{
 
     private Long id;
     private String nombre;
@@ -75,5 +77,10 @@ public class Producto {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    @Override
+    public int compareTo(@NonNull Object obj) {
+        return this.getId().compareTo(((Producto)obj).getId());
     }
 }

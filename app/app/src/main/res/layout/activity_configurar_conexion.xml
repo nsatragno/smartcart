@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        android:textColor="#ce7b22"
+        android:textColor="#74C0E4"
         android:textAlignment="center"
         android:text="URL o IP del servidor">
     </TextView>

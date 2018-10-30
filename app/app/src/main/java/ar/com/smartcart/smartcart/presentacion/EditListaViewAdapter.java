@@ -37,7 +37,7 @@ public class EditListaViewAdapter extends RecyclerView.Adapter<EditListaViewAdap
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
         holder.txtNombre.setText(holder.mItem.getProducto().getNombre());
-        holder.txtNombre.setOnClickListener(new View.OnClickListener() {
+        holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {

@@ -46,8 +46,7 @@ public class ProductoEnChangoViewAdapter extends RecyclerView.Adapter<ProductoEn
         holder.txtNombre.setText(holder.mItem.getProducto().getNombre());
         holder.txtCantidad.setText(holder.mItem.getCantidad().toString());
         holder.txtPrecio.setText(ProductoManager.convertirEnPrecio(holder.mItem.getSubtotal()));
-
-        holder.txtNombre.setOnClickListener(new View.OnClickListener() {
+        holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {

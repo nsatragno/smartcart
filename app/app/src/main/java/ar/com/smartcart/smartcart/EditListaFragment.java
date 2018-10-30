@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import ar.com.smartcart.smartcart.communication.ProductoManager;
 import ar.com.smartcart.smartcart.database.DBHelper;
+import ar.com.smartcart.smartcart.modelo.Chango;
 import ar.com.smartcart.smartcart.modelo.ListaUsuario;
 import ar.com.smartcart.smartcart.modelo.Producto;
 import ar.com.smartcart.smartcart.presentacion.EditListaViewAdapter;
@@ -165,7 +166,17 @@ public class EditListaFragment extends android.support.v4.app.Fragment {
                 if (resultCode == Activity.RESULT_OK) {
                     Long id = (Long) data.getExtras().getLong(ProductoManager.PRODUCTO_ENCONTRADO);
                     Producto prod = DBHelper.getInstance(context).getProducto(id);
-                    lista.getProductos().add(ProductoEnLista.parseEnLista(prod));
+                    Boolean enLista = Boolean.FALSE;
+                    for (ProductoEnLista prodLista : lista.getProductos()) {
+                        if(prodLista.getProducto().compareTo(prod) == 0){
+                            prodLista.setCantidad(prodLista.getCantidad() + 1);
+                            enLista = Boolean.TRUE;
+                            break;
+                        }
+                    }
+                    if(!enLista){
+                        lista.getProductos().add(ProductoEnLista.parseEnLista(prod));
+                    }
                     EditListaViewAdapter adapter = (EditListaViewAdapter) recyclerView.getAdapter();
                     adapter.setmValues(lista.getProductos());
                     adapter.notifyDataSetChanged();
