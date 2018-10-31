@@ -1,7 +1,10 @@
 package ar.com.smartcart.smartcart.presentacion;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ar.com.smartcart.smartcart.ListaUsuarioFragment.OnListFragmentInteractionListener;
 import ar.com.smartcart.smartcart.R;
@@ -65,12 +69,34 @@ public class ListaUsuarioViewAdapter extends RecyclerView.Adapter<ListaUsuarioVi
         holder.deleteView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DBHelper.getInstance(holder.mView.getContext())
-                        .borrarListaUsuario(holder.mItem.getId());
-                mValues.remove(position);
-                notifyDataSetChanged();
-            }
-        });
+                    AlertDialog.Builder builder = new AlertDialog.Builder(holder.mView.getContext());
+                    builder.setTitle("Eliminación de Lista");
+
+                    String message = "¿Estás seguro que querés eliminar la lista " +
+                                        "<b>" + holder.mItem.getNombre() + "</b>" + "?";
+
+                    builder.setMessage(Html.fromHtml(message));
+
+                    builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener(){
+                        public void onClick(DialogInterface dialog, int which) {
+                            DBHelper.getInstance(holder.mView.getContext())
+                                    .borrarListaUsuario(holder.mItem.getId());
+                            mValues.remove(position);
+                            Toast.makeText(holder.mView.getContext(),
+                                    holder.mItem.getNombre() + " eliminada.", Toast.LENGTH_LONG).show();
+                            notifyDataSetChanged();
+                            dialog.cancel();
+                        }
+                    });
+                    builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener(){
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            });
     }
 
     @Override

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="4">
+
+    <TextView
+        android:id="@+id/txt_cod_chango"
+        android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:background="#74C0E4"
+        android:gravity="center"
+        android:text="Código de Chango"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/txt_total"
+        android:layout_width="fill_parent"
+        android:layout_height="178dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="Total a Pagar"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:textSize="30dp" />
+
+    <ImageView
+        android:id="@+id/ico_cajas"
+        android:layout_width="53dp"
+        android:layout_height="53dp"
+        android:layout_gravity="center"
+        android:contentDescription="icon"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_cajas_black_24dp" />
+
+    <TextView
+        android:id="@+id/txt_cajas"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:background="#ffff"
+        android:gravity="center"
+        android:text="Acercáte a la sección de cajas"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="20dp" />
+</LinearLayout>

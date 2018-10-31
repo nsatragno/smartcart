@@ -1,6 +1,8 @@
 package ar.com.smartcart.smartcart;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ar.com.smartcart.smartcart.communication.ProductoManager;
 import ar.com.smartcart.smartcart.modelo.Chango;
@@ -23,6 +27,8 @@ public class ContenidoChangoFragment extends android.support.v4.app.Fragment {
     private TextView txtCantidad;
     private TextView txtTotal;
     private RecyclerView recyclerView;
+    private Button btnPagoEfvo;
+    private Button btnPagoTarj;
     private ProductoEnChangoViewAdapter adapter;
 
     public ContenidoChangoFragment() {
@@ -47,10 +53,43 @@ public class ContenidoChangoFragment extends android.support.v4.app.Fragment {
         Context context = recyclerView.getContext();
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-        LinearLayout bottomLayout = (LinearLayout) principalLayout.getChildAt(2);
-        txtCantidad = bottomLayout.findViewById(R.id.txt_cantidad);
-        txtTotal = bottomLayout.findViewById(R.id.txt_total);
+        LinearLayout segLayout = (LinearLayout) principalLayout.getChildAt(2);
+        txtCantidad = segLayout.findViewById(R.id.txt_cantidad);
+        txtTotal = segLayout.findViewById(R.id.txt_total);
 
+        btnPagoEfvo = segLayout.findViewById(R.id.btn_pago_efvo);
+        btnPagoEfvo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((PrincipalActivity)getActivity()).setFragment
+                            (((PrincipalActivity)getActivity()).PAGO_EFECTIVO, null);
+            }
+        });
+        btnPagoTarj = segLayout.findViewById(R.id.btn_pago_tarj);
+        btnPagoTarj.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                builder.setTitle("Pago con Tarjeta");
+                builder.setMessage("¿Estás seguro que querés realizar el pago de tu compra" +
+                        " con tarjeta?");
+
+                builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener(){
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getActivity(), "Pago realizado con éxito.",
+                                                                Toast.LENGTH_LONG).show();
+                        dialog.cancel();
+                    }
+                });
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener(){
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
         // Sets adapter
         updateView();
         return principalLayout;

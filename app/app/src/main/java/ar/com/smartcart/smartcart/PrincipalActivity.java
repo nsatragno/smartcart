@@ -52,6 +52,7 @@ public class PrincipalActivity extends AppCompatActivity
     public static final String EDIT_LISTA = "EDIT_LISTA";
     public static final String DESC_PRODS = "DESC_PRODS";
     public static final String PROMOS = "PROMOS";
+    public static final String PAGO_EFECTIVO = "PAGO_EFECTIVO";
 
     public static final int BUSCADOR = 1;
     public static final int READ_TIME = 3000;
@@ -218,6 +219,11 @@ public class PrincipalActivity extends AppCompatActivity
                     descFrag.setProducto((Producto) params[0]);
                 }
                 break;
+            case PAGO_EFECTIVO:
+                PagoEfectivoFragment evoFrag = new PagoEfectivoFragment();
+                fragMng.beginTransaction().replace(R.id.fragment_container, evoFrag,
+                        PAGO_EFECTIVO).commit();
+                break;
         }
     }
 
@@ -240,10 +246,16 @@ public class PrincipalActivity extends AppCompatActivity
                                 if(changoFrg != null){
                                     changoFrg.updateView();
                                 }else{
-                                    ListaActivaFragment listActviaFrg = ((ListaActivaFragment)fragMng
+                                    ListaActivaFragment listActivaFrg = ((ListaActivaFragment)fragMng
                                             .findFragmentByTag(LISTA_ACTIVA));
-                                    if(listActviaFrg != null){
-                                        listActviaFrg.updateView();
+                                    if(listActivaFrg != null){
+                                        listActivaFrg.updateView();
+                                    }else{
+                                        PagoEfectivoFragment efvoFrag = ((PagoEfectivoFragment)fragMng
+                                                .findFragmentByTag(PAGO_EFECTIVO));
+                                        if(efvoFrag != null){
+                                            efvoFrag.updateView();
+                                        }
                                     }
                                 }
                             }

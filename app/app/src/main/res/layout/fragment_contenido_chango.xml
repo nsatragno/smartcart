@@ -110,6 +110,7 @@
             android:weightSum="2">
 
             <Button
+                android:id="@+id/btn_pago_efvo"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
@@ -118,6 +119,7 @@
                 android:textColor="#ffffff" />
 
             <Button
+                android:id="@+id/btn_pago_tarj"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"

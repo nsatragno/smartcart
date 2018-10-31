@@ -1,7 +1,9 @@
 package ar.com.smartcart.smartcart;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,6 +11,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,14 +87,26 @@ public class EditListaFragment extends android.support.v4.app.Fragment {
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(lista.getId() == null){
-                    DBHelper.getInstance(context).insertarListaUsuario(lista);
+                if(lista.getNombre() == null || lista.getNombre().isEmpty()){
+                    AlertDialog dialog = new AlertDialog.Builder(context).create();
+                    dialog.setTitle("Error en la Lista");
+                    dialog.setMessage("No podés guardar una lista sin nombre");
+                    dialog.setButton("Ahora lo arreglo", new DialogInterface.OnClickListener(){
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    dialog.show();
                 }else{
-                    DBHelper.getInstance(context).actualizarListaUsuario(lista);
+                    if(lista.getId() == null){
+                        DBHelper.getInstance(context).insertarListaUsuario(lista);
+                    }else{
+                        DBHelper.getInstance(context).actualizarListaUsuario(lista);
+                    }
+                    Toast.makeText(getActivity(), lista.getNombre() + " guardada.", Toast.LENGTH_LONG).show();
+                    ((PrincipalActivity) getActivity()).setFragment(
+                            ((PrincipalActivity) getActivity()).ADMIN_LISTAS, null);
                 }
-                Toast.makeText(getActivity(), lista.getNombre() + " guardada.", Toast.LENGTH_LONG).show();
-                ((PrincipalActivity) getActivity()).setFragment(
-                                    ((PrincipalActivity) getActivity()).ADMIN_LISTAS, null);
             }
         });
         btnCancelar = bottomLayout.findViewById(R.id.btn_cancelar_lista);
