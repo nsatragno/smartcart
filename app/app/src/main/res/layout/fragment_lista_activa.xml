@@ -2,25 +2,26 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="6">
+    android:weightSum="1">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="181dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
         android:orientation="horizontal"
         android:weightSum="3">
 
         <TextView
-            android:layout_width="198dp"
-            android:layout_height="fill_parent"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@color/colorPrimary"
             android:gravity="center"
+            android:padding="10dp"
             android:text="Listo"
             android:textAlignment="center"
             android:textColor="#ffffff"
@@ -28,23 +29,25 @@
 
         <TextView
             android:layout_width="364dp"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@color/colorPrimary"
             android:gravity="center"
+            android:padding="10dp"
             android:text="Producto"
             android:textAlignment="center"
             android:textColor="#ffffff"
             android:textSize="14sp" />
 
         <TextView
-            android:layout_width="223dp"
-            android:layout_height="fill_parent"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@color/colorPrimary"
             android:gravity="center"
+            android:padding="10dp"
             android:text="Cant"
             android:textAlignment="center"
             android:textColor="#ffffff"
@@ -55,52 +58,53 @@
         android:id="@+id/lista_productos_activa"
         android:name="ar.com.smartcart.smartcart.ListaActivaFragment"
         android:layout_width="match_parent"
-        android:layout_height="760dp"
+        android:layout_height="fill_parent"
         android:layout_centerHorizontal="true"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:fadeScrollbars="false"
-        android:scrollbars="vertical"/>
+        android:scrollbars="vertical" />
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="2"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
         android:orientation="vertical"
-        android:paddingBottom="10dp"
         android:weightSum="2">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
             android:orientation="horizontal"
             android:weightSum="2">
 
             <TextView
                 android:id="@+id/txt_seleccion"
                 android:layout_width="fill_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
                 android:gravity="center"
+                android:padding="10dp"
                 android:text="Listos: "
                 android:textAlignment="center"
                 android:textColor="#ffffff"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/txt_pendiente"
                 android:layout_width="fill_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
                 android:gravity="center"
+                android:padding="10dp"
                 android:text="Pendientes: "
                 android:textAlignment="center"
                 android:textColor="#ffffff"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

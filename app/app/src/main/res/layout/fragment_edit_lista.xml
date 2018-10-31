@@ -1,104 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="5">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_weight="1">
 
     <LinearLayout
-        android:id="@+id/top_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="227dp"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:weightSum="2">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
 
         <EditText
             android:id="@+id/txt_nombre_lista"
-            android:layout_width="fill_parent"
-            android:layout_height="412dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="0"
             android:background="#74C0E4"
             android:gravity="center"
+            android:hint="Ingrese nombre de lista"
+            android:padding="10dp"
             android:textAlignment="center"
             android:textColor="#ffffff"
             android:textColorHint="#9fffffff"
-            android:hint="Ingrese nombre de lista"
             android:textSize="18sp" />
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_weight="0"
-        android:orientation="horizontal"
-        android:weightSum="3">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:orientation="horizontal"
+            android:weightSum="3">
 
-        <TextView
-            android:layout_width="520dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
+            <TextView
+                android:layout_width="520dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:text="Producto"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:text="Cant"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:text="Borrar"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/lista_usuario_edit"
+            android:name="ar.com.smartcart.smartcart.ListaActivaFragment"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerHorizontal="true"
             android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:text="Producto"
-            android:textAlignment="center"
-            android:textColor="#ffffff"
-            android:textSize="14sp" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:text="Cant"
-            android:textAlignment="center"
-            android:textColor="#ffffff"
-            android:textSize="14sp" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:text="Borrar"
-            android:textAlignment="center"
-            android:textColor="#ffffff"
-            android:textSize="14sp" />
-    </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/lista_usuario_edit"
-        android:name="ar.com.smartcart.smartcart.ListaActivaFragment"
-        android:layout_width="match_parent"
-        android:layout_height="515dp"
-        android:layout_centerHorizontal="true"
-        android:layout_weight="1"
-        android:fadeScrollbars="false"
-        android:scrollbars="vertical"
-        tools:context=".ListaActivaFragment" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fbtn_nuevo_prod"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginBottom="28dp"
-        android:layout_marginEnd="24dp"
-        android:backgroundTint="@color/zxing_viewfinder_laser"
-        android:src="@drawable/ic_new_white_24dp"/>
+            android:fadeScrollbars="false"
+            android:scrollbars="vertical"
+            tools:context=".ListaActivaFragment" />
 
         <LinearLayout
             android:id="@+id/bottom_layout"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="horizontal"
             android:weightSum="2">
 
@@ -120,4 +109,19 @@
                 android:text="Cancelar"
                 android:textColor="#ffffff" />
         </LinearLayout>
-</LinearLayout>
+    </LinearLayout>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fbtn_nuevo_prod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginBottom="60dp"
+        android:layout_marginEnd="28dp"
+        android:backgroundTint="@color/zxing_viewfinder_laser"
+        android:src="@drawable/ic_new_white_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

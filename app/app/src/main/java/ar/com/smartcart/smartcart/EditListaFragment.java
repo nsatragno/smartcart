@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -60,7 +61,7 @@ public class EditListaFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        LinearLayout principalLayout = (LinearLayout) inflater.inflate(
+        ConstraintLayout principalLayout = (ConstraintLayout) inflater.inflate(
                 R.layout.fragment_edit_lista, container, false);
         ((PrincipalActivity) getActivity()).getSupportActionBar().setTitle("Edición de Lista");
 
