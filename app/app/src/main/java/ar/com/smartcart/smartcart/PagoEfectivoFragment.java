@@ -54,9 +54,9 @@ public class PagoEfectivoFragment extends android.support.v4.app.Fragment {
     public void updateView(){
         Chango chango = ((PrincipalActivity) getActivity()).getChango();
         if(chango != null){
-            String codChango = "Código de Chango" + "\n" + "<b>" + chango.getCodigo() + "</b>";
+            String codChango = "Código de Chango" + "\r\n" + "<b>" + chango.getCodigo() + "</b>";
             txtCodChango.setText(Html.fromHtml(codChango));
-            String total = "Total a Pagar" + "\n" + "<b>" + ProductoManager.convertirEnPrecio(
+            String total = "Total a Pagar " + "\r\n" + "<b>" + ProductoManager.convertirEnPrecio(
                                                     chango.getTotal()) + "</b>";
             txtTotal.setText(Html.fromHtml(total));
         }

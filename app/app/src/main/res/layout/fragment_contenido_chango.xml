@@ -38,7 +38,7 @@
             android:textSize="14sp" />
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="435dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"

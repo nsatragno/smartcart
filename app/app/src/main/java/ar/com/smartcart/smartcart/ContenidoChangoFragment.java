@@ -3,6 +3,7 @@ package ar.com.smartcart.smartcart;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -79,11 +80,14 @@ public class ContenidoChangoFragment extends android.support.v4.app.Fragment {
                         Toast.makeText(getActivity(), "Pago realizado con éxito.",
                                                                 Toast.LENGTH_LONG).show();
                         dialog.cancel();
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(intent);
                     }
                 });
                 builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener(){
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
+
                     }
                 });
                 AlertDialog dialog = builder.create();
