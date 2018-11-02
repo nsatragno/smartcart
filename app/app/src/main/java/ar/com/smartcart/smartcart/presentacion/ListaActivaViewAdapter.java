@@ -51,6 +51,7 @@ public class ListaActivaViewAdapter extends RecyclerView.Adapter<ListaActivaView
         });
         holder.txtCantidad.setText(holder.mItem.getCantidad().toString());
         holder.setImagen(holder.mItem.getProducto().getUrl());
+        marcarComoSeleccionado(holder);
     }
 
     public void marcarComoSeleccionado(ViewHolder holder){
@@ -122,7 +123,29 @@ public class ListaActivaViewAdapter extends RecyclerView.Adapter<ListaActivaView
         return mValues;
     }
 
-    public void setmValues(List<ProductoEnLista> mValues) {
-        this.mValues = mValues;
+    public void actualizarLista(List<ProductoEnLista> newValues) {
+        for (int i = 0; i < this.mValues.size();) {
+            if (!newValues.contains(this.mValues.get(i))) {
+                this.mValues.remove(i);
+                notifyItemRemoved(i);
+            } else {
+                ++i;
+            }
+        }
+
+        for (ProductoEnLista producto : newValues) {
+            int index = this.mValues.indexOf(producto);
+            if (index == -1) {
+                this.mValues.add(producto);
+                notifyItemInserted(this.mValues.size());
+            } else {
+                if (!this.mValues.get(index).getCantidad().equals(producto.getCantidad()) ||
+                        !this.mValues.get(index).getEnChango().equals(producto.getEnChango())) {
+                    this.mValues.get(index).setCantidad(producto.getCantidad());
+                    this.mValues.get(index).setEnChango(producto.getEnChango());
+                    notifyItemChanged(index, producto);
+                }
+            }
+        }
     }
 }

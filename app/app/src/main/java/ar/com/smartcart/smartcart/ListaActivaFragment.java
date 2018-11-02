@@ -105,8 +105,7 @@ public class ListaActivaFragment extends android.support.v4.app.Fragment {
                     adapter = new ListaActivaViewAdapter(listaActiva.getProductos(), mListener);
                     recyclerView.setAdapter(adapter);
                 }
-                adapter.setmValues(listaActiva.getProductos());
-                adapter.notifyDataSetChanged();
+                adapter.actualizarLista(listaActiva.getProductos());
                 txtPendiente.setText("Pendientes: " + listaActiva.getPendiente().toString());
                 txtSeleccion.setText("Listos: " + listaActiva.getSeleccionado().toString());
                 ((PrincipalActivity) getActivity()).getSupportActionBar()
