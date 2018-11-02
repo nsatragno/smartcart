@@ -74,14 +74,7 @@ public class EditListaViewAdapter extends RecyclerView.Adapter<EditListaViewAdap
             }
         });
 
-        //Ejecutar descarga imagen
-        DescargaImagenAsyncTask task = new DescargaImagenAsyncTask(){
-            @Override
-            protected void onPostExecute(final Bitmap response) {
-                holder.imgProd.setImageBitmap(response);
-            }
-        };
-        task.execute(holder.mItem.getProducto().getUrl());
+        holder.setImagen(holder.mItem.getProducto().getUrl());
     }
 
     @Override
@@ -91,10 +84,11 @@ public class EditListaViewAdapter extends RecyclerView.Adapter<EditListaViewAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final ImageView imgProd;
+        private final ImageView imgProd;
         public final TextView txtNombre;
         public final EditText txtCantidad;
         public final ImageView imgDelete;
+        private DescargaImagenAsyncTask taskDescargarImagen;
 
         public ProductoEnLista mItem;
 
@@ -106,6 +100,20 @@ public class EditListaViewAdapter extends RecyclerView.Adapter<EditListaViewAdap
             txtNombre = view.findViewById(R.id.nombre_prod);
             txtCantidad = view.findViewById(R.id.cant_prod);
             txtCantidad.setInputType(InputType.TYPE_CLASS_NUMBER);
+        }
+
+        public void setImagen(String url) {
+            //Ejecutar descarga imagen
+            imgProd.setImageBitmap(null);
+            if (taskDescargarImagen != null)
+                taskDescargarImagen.cancel(true);
+            taskDescargarImagen = new DescargaImagenAsyncTask(){
+                @Override
+                protected void onPostExecute(final Bitmap response) {
+                    imgProd.setImageBitmap(response);
+                }
+            };
+            taskDescargarImagen.execute(url);
         }
     }
 

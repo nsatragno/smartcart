@@ -56,15 +56,7 @@ public class BusquedaProductoViewAdapter
                 listener.onItemClick(holder.mItem);
             }
         });
-
-        //Ejecutar descarga imagen
-        DescargaImagenAsyncTask task = new DescargaImagenAsyncTask(){
-            @Override
-            protected void onPostExecute(final Bitmap response) {
-                holder.imgProd.setImageBitmap(response);
-            }
-        };
-        task.execute(holder.mItem.getUrl());
+        holder.setImagen(holder.mItem.getUrl());
     }
 
     @Override
@@ -74,9 +66,10 @@ public class BusquedaProductoViewAdapter
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final ImageView imgProd;
+        private final ImageView imgProd;
         public final TextView txtNombre;
         public final Button btnSelec;
+        DescargaImagenAsyncTask taskDescargarImagen;
 
         public Producto mItem;
 
@@ -87,6 +80,21 @@ public class BusquedaProductoViewAdapter
             btnSelec = view.findViewById(R.id.btn_selec);
             txtNombre = view.findViewById(R.id.nombre_prod);
         }
+
+        public void setImagen(String url) {
+            //Ejecutar descarga imagen
+            imgProd.setImageBitmap(null);
+            if (taskDescargarImagen != null)
+                taskDescargarImagen.cancel(true);
+            taskDescargarImagen = new DescargaImagenAsyncTask(){
+                @Override
+                protected void onPostExecute(final Bitmap response) {
+                    imgProd.setImageBitmap(response);
+                }
+            };
+            taskDescargarImagen.execute(url);
+        }
+
     }
 
     public List<Producto> getmValues() {

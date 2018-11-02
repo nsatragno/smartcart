@@ -33,16 +33,7 @@ public class ProductoEnChangoViewAdapter extends RecyclerView.Adapter<ProductoEn
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-
-        //Ejecutar descarga imagen
-        DescargaImagenAsyncTask task = new DescargaImagenAsyncTask(){
-            @Override
-            protected void onPostExecute(final Bitmap response) {
-                holder.imgProd.setImageBitmap(response);
-            }
-        };
-        task.execute(holder.mItem.getProducto().getUrl());
-
+        holder.setImagen(holder.mItem.getProducto().getUrl());
         holder.txtNombre.setText(holder.mItem.getProducto().getNombre());
         holder.txtCantidad.setText(holder.mItem.getCantidad().toString());
         holder.txtPrecio.setText(ProductoManager.convertirEnPrecio(holder.mItem.getSubtotal()));
@@ -67,6 +58,7 @@ public class ProductoEnChangoViewAdapter extends RecyclerView.Adapter<ProductoEn
         public final TextView txtCantidad;
         public final TextView txtPrecio;
         public final ImageView imgProd;
+        private DescargaImagenAsyncTask taskDescargarImagen;
 
         public ProductoEnLista mItem;
 
@@ -78,7 +70,23 @@ public class ProductoEnChangoViewAdapter extends RecyclerView.Adapter<ProductoEn
             txtPrecio = view.findViewById(R.id.precio_prod);
             imgProd = view.findViewById(R.id.img_prod);
         }
+
+        public void setImagen(String url) {
+            //Ejecutar descarga imagen
+            imgProd.setImageBitmap(null);
+            if (taskDescargarImagen != null)
+                taskDescargarImagen.cancel(true);
+            taskDescargarImagen = new DescargaImagenAsyncTask(){
+                @Override
+                protected void onPostExecute(final Bitmap response) {
+                    imgProd.setImageBitmap(response);
+                }
+            };
+            taskDescargarImagen.execute(url);
+        }
     }
+
+
 
     public List<ProductoEnLista> getmValues() {
         return mValues;
