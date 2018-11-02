@@ -3,6 +3,7 @@ package ar.com.smartcart.smartcart.modelo;
 import android.support.annotation.NonNull;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class Producto implements Comparable{
 
@@ -82,5 +83,18 @@ public class Producto implements Comparable{
     @Override
     public int compareTo(@NonNull Object obj) {
         return this.getId().compareTo(((Producto)obj).getId());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Producto producto = (Producto) o;
+        return Objects.equals(id, producto.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

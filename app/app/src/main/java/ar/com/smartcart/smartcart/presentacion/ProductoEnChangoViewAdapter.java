@@ -11,6 +11,9 @@ import ar.com.smartcart.smartcart.ContenidoChangoFragment.OnListFragmentInteract
 import ar.com.smartcart.smartcart.R;
 import ar.com.smartcart.smartcart.communication.DescargaImagenAsyncTask;
 import ar.com.smartcart.smartcart.communication.ProductoManager;
+import ar.com.smartcart.smartcart.modelo.Producto;
+
+import java.util.Iterator;
 import java.util.List;
 
 public class ProductoEnChangoViewAdapter extends RecyclerView.Adapter<ProductoEnChangoViewAdapter.ViewHolder> {
@@ -59,6 +62,7 @@ public class ProductoEnChangoViewAdapter extends RecyclerView.Adapter<ProductoEn
         public final TextView txtPrecio;
         public final ImageView imgProd;
         private DescargaImagenAsyncTask taskDescargarImagen;
+        private String ultimaUrlImagen;
 
         public ProductoEnLista mItem;
 
@@ -72,6 +76,10 @@ public class ProductoEnChangoViewAdapter extends RecyclerView.Adapter<ProductoEn
         }
 
         public void setImagen(String url) {
+            if (url.equals(ultimaUrlImagen)) {
+                return;
+            }
+            ultimaUrlImagen = url;
             //Ejecutar descarga imagen
             imgProd.setImageBitmap(null);
             if (taskDescargarImagen != null)
@@ -92,7 +100,27 @@ public class ProductoEnChangoViewAdapter extends RecyclerView.Adapter<ProductoEn
         return mValues;
     }
 
-    public void setmValues(List<ProductoEnLista> mValues) {
-        this.mValues = mValues;
+    public void actualizarLista(List<ProductoEnLista> newValues) {
+        for (int i = 0; i < this.mValues.size();) {
+            if (!newValues.contains(this.mValues.get(i))) {
+                this.mValues.remove(i);
+                notifyItemRemoved(i);
+            } else {
+                ++i;
+            }
+        }
+
+        for (ProductoEnLista producto : newValues) {
+            int index = this.mValues.indexOf(producto);
+            if (index == -1) {
+                this.mValues.add(producto);
+                notifyItemInserted(this.mValues.size());
+            } else {
+                if (!this.mValues.get(index).getCantidad().equals(producto.getCantidad())) {
+                    this.mValues.get(index).setCantidad(producto.getCantidad());
+                    notifyItemChanged(index, producto);
+                }
+            }
+        }
     }
 }

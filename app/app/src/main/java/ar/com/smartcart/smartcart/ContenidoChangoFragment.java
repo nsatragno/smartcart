@@ -138,13 +138,12 @@ public class ContenidoChangoFragment extends android.support.v4.app.Fragment {
         adapter = (ProductoEnChangoViewAdapter) recyclerView.getAdapter();
         Chango chango = ((PrincipalActivity) getActivity()).getChango();
         if(chango != null){
-            if(adapter != null){
-                adapter.setmValues(chango.getProductos());
-                adapter.notifyDataSetChanged();
-            }else{
+            if(adapter == null) {
                 adapter = new ProductoEnChangoViewAdapter(chango.getProductos(), mListener);
                 recyclerView.setAdapter(adapter);
             }
+            adapter.actualizarLista(chango.getProductos());
+
             txtCantidad.setText("Cantidad: " + chango.getCantidadTotal().toString());
             txtTotal.setText("Total: " + ProductoManager.convertirEnPrecio(
                     chango.getTotal()));

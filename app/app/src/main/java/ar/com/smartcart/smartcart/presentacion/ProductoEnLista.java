@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
+import java.util.Objects;
 
 import ar.com.smartcart.smartcart.modelo.Producto;
 
@@ -46,5 +47,18 @@ public class ProductoEnLista {
         pEnLisra.setCantidad(1l);
         pEnLisra.setEnChango(Boolean.FALSE);
         return pEnLisra;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductoEnLista that = (ProductoEnLista) o;
+        return Objects.equals(producto, that.producto);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(producto);
     }
 }
