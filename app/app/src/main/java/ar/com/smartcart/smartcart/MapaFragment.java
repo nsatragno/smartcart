@@ -12,6 +12,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -54,13 +55,12 @@ public class MapaFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        LinearLayout principalLayout = (LinearLayout) inflater.inflate(
+        ConstraintLayout principalLayout = (ConstraintLayout) inflater.inflate(
                 R.layout.fragment_mapa, container, false);
         ((PrincipalActivity) getActivity()).getSupportActionBar().setTitle("Ubicación de Productos");
 
         context = getActivity().getApplicationContext();
-        LinearLayout topLayout = principalLayout.findViewById(R.id.top_layout);
-        txtNombreProd = topLayout.findViewById(R.id.txt_nombre_prod);
+        txtNombreProd = principalLayout.findViewById(R.id.txt_nombre_prod);
         imgMapa = principalLayout.findViewById(R.id.img_mapa);
 
         SupermercadoAsyncTask taskSuper = new SupermercadoAsyncTask(){
@@ -109,7 +109,11 @@ public class MapaFragment extends android.support.v4.app.Fragment {
                     paint.setStrokeWidth(4);
                     canvas.drawCircle(prod.getCategoria().getPosicion_x().floatValue(),
                                       prod.getCategoria().getPosicion_y().floatValue(),
-                                      15, paint);
+                                      40, paint);
+                    paint.setColor(Color.RED);
+                    canvas.drawCircle(prod.getCategoria().getPosicion_x().floatValue(),
+                            prod.getCategoria().getPosicion_y().floatValue(),
+                            20, paint);
                     imgMapa.setImageBitmap(mutableBitmap);
                 }
                 break;

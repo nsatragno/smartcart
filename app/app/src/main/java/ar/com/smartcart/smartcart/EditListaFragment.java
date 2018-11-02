@@ -65,8 +65,7 @@ public class EditListaFragment extends android.support.v4.app.Fragment {
                 R.layout.fragment_edit_lista, container, false);
         ((PrincipalActivity) getActivity()).getSupportActionBar().setTitle("Edición de Lista");
 
-        LinearLayout topLayout = principalLayout.findViewById(R.id.top_layout);
-        txtNombreLista = topLayout.findViewById(R.id.txt_nombre_lista);
+        txtNombreLista = principalLayout.findViewById(R.id.txt_nombre_lista);
         txtNombreLista.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 lista.setNombre(txtNombreLista.getText().toString());
