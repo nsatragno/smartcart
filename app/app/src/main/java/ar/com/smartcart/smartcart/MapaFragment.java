@@ -74,7 +74,7 @@ public class MapaFragment extends android.support.v4.app.Fragment {
                         original = response;
                     }
                 };
-                if(sup != null){
+                if(sup != null && sup.getPlano() != null){
                     taskImg.execute(sup.getPlano());
                 }
             }};
@@ -100,21 +100,23 @@ public class MapaFragment extends android.support.v4.app.Fragment {
                     Long id = (Long) data.getExtras().getLong(ProductoManager.PRODUCTO_ENCONTRADO);
                     Producto prod = DBHelper.getInstance(context).getProducto(id);
                     txtNombreProd.setText(prod.getNombre());
-                    Bitmap imagen = original;
-                    Bitmap mutableBitmap = imagen.copy(Bitmap.Config.ARGB_8888, true);
-                    Canvas canvas = new Canvas(mutableBitmap);
-                    Paint paint = new Paint();
-                    paint.setColor(Color.parseColor("#333E50"));
-                    paint.setFlags(Paint.ANTI_ALIAS_FLAG);
-                    paint.setStrokeWidth(4);
-                    canvas.drawCircle(prod.getCategoria().getPosicion_x().floatValue(),
-                                      prod.getCategoria().getPosicion_y().floatValue(),
-                                      40, paint);
-                    paint.setColor(Color.RED);
-                    canvas.drawCircle(prod.getCategoria().getPosicion_x().floatValue(),
-                            prod.getCategoria().getPosicion_y().floatValue(),
-                            20, paint);
-                    imgMapa.setImageBitmap(mutableBitmap);
+                    if(original != null){
+                        Bitmap imagen = original;
+                        Bitmap mutableBitmap = imagen.copy(Bitmap.Config.ARGB_8888, true);
+                        Canvas canvas = new Canvas(mutableBitmap);
+                        Paint paint = new Paint();
+                        paint.setColor(Color.parseColor("#333E50"));
+                        paint.setFlags(Paint.ANTI_ALIAS_FLAG);
+                        paint.setStrokeWidth(4);
+                        canvas.drawCircle(prod.getCategoria().getPosicion_x().floatValue(),
+                                          prod.getCategoria().getPosicion_y().floatValue(),
+                                          40, paint);
+                        paint.setColor(Color.RED);
+                        canvas.drawCircle(prod.getCategoria().getPosicion_x().floatValue(),
+                                prod.getCategoria().getPosicion_y().floatValue(),
+                                20, paint);
+                        imgMapa.setImageBitmap(mutableBitmap);
+                    }
                 }
                 break;
             }
