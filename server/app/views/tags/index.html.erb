@@ -8,12 +8,13 @@
       </div>
       <div class="ibox-content">
         <% if @tags.any? %>
-          <table class="table table-hover">
+          <table id="tabla-tags" class="table table-hover">
             <thead>
               <tr>
                 <th class="col-md-3">Producto</th>
-                <th class="col-md-8">RFID</th>
-                <th class="col-md-1" colspan="2"></th>
+                <th class="col-md-7">RFID</th>
+                <th class="col-md-1"></th>
+                <th class="col-md-1"></th>
               </tr>
             </thead>
 
@@ -77,3 +78,11 @@
     </div>
   </div>
 </div>
+
+<% content_for :local_scripts do %>
+<script>
+  $(document).ready(function () {
+    $("#tabla-tags").DataTable();
+  });
+</script>
+<% end %>
