@@ -173,11 +173,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public Long getMaxID(String tabla){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( " SELECT MAX(" + COL_ID + ") AS " + COL_ID +
-                " FROM " + tabla, null );
-        res.moveToFirst();
-        if(res.isAfterLast() == Boolean.FALSE){
-            return res.getLong(res.getColumnIndex(COL_ID));
+        try(Cursor res = db.rawQuery( " SELECT MAX(" + COL_ID + ") AS " + COL_ID +
+                " FROM " + tabla, null)) {
+            res.moveToFirst();
+            if (res.isAfterLast() == Boolean.FALSE) {
+                return res.getLong(res.getColumnIndex(COL_ID));
+            }
         }
         return null;
     }
@@ -246,14 +247,15 @@ public class DBHelper extends SQLiteOpenHelper {
     public Producto getProducto(Long id){
         SQLiteDatabase db = this.getReadableDatabase();
         Producto prod = new Producto();
-        Cursor res =  db.rawQuery( " SELECT * " +
+        try (Cursor res =  db.rawQuery( " SELECT * " +
                                    " FROM " + TBL_PRODUCTO +
-                                   " WHERE " + COL_ID + " = " + id, null );
-        res.moveToFirst();
-        if(res.isAfterLast() == Boolean.FALSE){
-          fillProducto(prod, res);
+                                   " WHERE " + COL_ID + " = " + id, null)) {
+            res.moveToFirst();
+            if (res.isAfterLast() == Boolean.FALSE) {
+                fillProducto(prod, res);
+            }
+            return prod;
         }
-        return prod;
     }
 
     public void fillProducto(Producto prod, Cursor res){
@@ -272,61 +274,65 @@ public class DBHelper extends SQLiteOpenHelper {
     public ArrayList<Producto> getAllProductos(){
         ArrayList<Producto> productos = new ArrayList<Producto>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( " SELECT * "
-                                + " FROM " + TBL_PRODUCTO, null );
-        res.moveToFirst();
-        while(res.isAfterLast() == Boolean.FALSE){
-            Producto prod = new Producto();
-            fillProducto(prod, res);
-            productos.add(prod);
-            res.moveToNext();
+        try (Cursor res =  db.rawQuery( " SELECT * "
+                                + " FROM " + TBL_PRODUCTO, null)) {
+            res.moveToFirst();
+            while (res.isAfterLast() == Boolean.FALSE) {
+                Producto prod = new Producto();
+                fillProducto(prod, res);
+                productos.add(prod);
+                res.moveToNext();
+            }
+            return productos;
         }
-        return productos;
     }
 
     public ArrayList<Producto> getProductosLikeNombre(String nombre){
         ArrayList<Producto> productos = new ArrayList<Producto>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( " SELECT * " +
+        try (Cursor res =  db.rawQuery( " SELECT * " +
                                    " FROM " + TBL_PRODUCTO +
                                    " WHERE " + COL_NOMBRE +
-                                        " LIKE '%" + nombre + "%'", null );
-        res.moveToFirst();
-        while(res.isAfterLast() == Boolean.FALSE){
-            Producto prod = new Producto();
-            fillProducto(prod, res);
-            productos.add(prod);
-            res.moveToNext();
+                                        " LIKE '%" + nombre + "%'", null)) {
+            res.moveToFirst();
+            while (res.isAfterLast() == Boolean.FALSE) {
+                Producto prod = new Producto();
+                fillProducto(prod, res);
+                productos.add(prod);
+                res.moveToNext();
+            }
+            return productos;
         }
-        return productos;
     }
 
     public ListaUsuario getPlainListaUsuario(Long id){
         SQLiteDatabase db = this.getReadableDatabase();
         ListaUsuario lista = new ListaUsuario();
-        Cursor res =  db.rawQuery( " SELECT * " +
+        try (Cursor res =  db.rawQuery( " SELECT * " +
                 " FROM " + TBL_LISTA_USUTARIO +
-                " WHERE " + COL_ID + " = " + id, null );
-        res.moveToFirst();
-        if(res.isAfterLast() == Boolean.FALSE){
-           fillPlainListaUsuario(lista, res);
+                " WHERE " + COL_ID + " = " + id, null)) {
+            res.moveToFirst();
+            if (res.isAfterLast() == Boolean.FALSE) {
+                fillPlainListaUsuario(lista, res);
+            }
+            return lista;
         }
-        return lista;
     }
 
     public ArrayList<ListaUsuario> getAllPlainListaUsuario(){
         ArrayList<ListaUsuario> listas = new ArrayList<ListaUsuario>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( " SELECT * "
-                + " FROM " + TBL_LISTA_USUTARIO, null );
-        res.moveToFirst();
-        while(res.isAfterLast() == Boolean.FALSE){
-            ListaUsuario lista = new ListaUsuario();
-            fillPlainListaUsuario(lista, res);
-            listas.add(lista);
-            res.moveToNext();
+        try (Cursor res =  db.rawQuery( " SELECT * "
+                + " FROM " + TBL_LISTA_USUTARIO, null)) {
+            res.moveToFirst();
+            while (res.isAfterLast() == Boolean.FALSE) {
+                ListaUsuario lista = new ListaUsuario();
+                fillPlainListaUsuario(lista, res);
+                listas.add(lista);
+                res.moveToNext();
+            }
+            return listas;
         }
-        return listas;
     }
 
     public void fillPlainListaUsuario(ListaUsuario lista, Cursor res){
@@ -346,36 +352,38 @@ public class DBHelper extends SQLiteOpenHelper {
     public ListaUsuario getListaUsuarioActiva(){
         SQLiteDatabase db = this.getReadableDatabase();
         ListaUsuario lista = new ListaUsuario();
-        Cursor res =  db.rawQuery( " SELECT * " +
+        try (Cursor res =  db.rawQuery( " SELECT * " +
                 " FROM " + TBL_LISTA_USUTARIO +
-                " WHERE " + COL_ACTIVA + " = 1", null );
-        res.moveToFirst();
-        if(res.isAfterLast() == Boolean.FALSE){
-            fillPlainListaUsuario(lista, res);
+                " WHERE " + COL_ACTIVA + " = 1", null)) {
+            res.moveToFirst();
+            if (res.isAfterLast() == Boolean.FALSE) {
+                fillPlainListaUsuario(lista, res);
+            }
+            if (lista.getId() != null) {
+                lista.setProductos(getProductosEnLista(lista.getId()));
+            }
+            return lista;
         }
-        if(lista.getId() != null){
-            lista.setProductos(getProductosEnLista(lista.getId()));
-        }
-        return lista;
     }
 
     public ArrayList<ProductoEnLista> getProductosEnLista(Long idLista){
         ArrayList<ProductoEnLista> productos = new ArrayList<ProductoEnLista>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( " SELECT * " +
+        try (Cursor res =  db.rawQuery( " SELECT * " +
                                 " FROM " + TBL_PRODUCTO_LISTA + " PL " +
                                     " JOIN " + TBL_PRODUCTO + " P " +
                                         " ON (PL." + COL_PRODUCTO_ID + " = " +
                                               "P." + COL_ID + ")" +
-                                " WHERE " + COL_LISTA_USUARIO_ID + " = " + idLista, null );
-        res.moveToFirst();
-        while(res.isAfterLast() == Boolean.FALSE){
-            ProductoEnLista prod = new ProductoEnLista();
-            fillProductoEnLista(prod, res);
-            productos.add(prod);
-            res.moveToNext();
+                                " WHERE " + COL_LISTA_USUARIO_ID + " = " + idLista, null)) {
+            res.moveToFirst();
+            while (res.isAfterLast() == Boolean.FALSE) {
+                ProductoEnLista prod = new ProductoEnLista();
+                fillProductoEnLista(prod, res);
+                productos.add(prod);
+                res.moveToNext();
+            }
+            return productos;
         }
-        return productos;
     }
 
     public Integer getCantAllProductos(){
@@ -458,14 +466,15 @@ public class DBHelper extends SQLiteOpenHelper {
     public Categoria getCategoria(Long id){
         SQLiteDatabase db = this.getReadableDatabase();
         Categoria cat = new Categoria();
-        Cursor res =  db.rawQuery( " SELECT * " +
+        try (Cursor res =  db.rawQuery( " SELECT * " +
                 " FROM " + TBL_CATEGORIA +
-                " WHERE " + COL_ID + " = " + id, null );
-        res.moveToFirst();
-        if(res.isAfterLast() == Boolean.FALSE){
-            fillCategoria(cat, res);
+                " WHERE " + COL_ID + " = " + id, null)) {
+            res.moveToFirst();
+            if (res.isAfterLast() == Boolean.FALSE) {
+                fillCategoria(cat, res);
+            }
+            return cat;
         }
-        return cat;
     }
 
     public void fillCategoria(Categoria cat, Cursor res) {
